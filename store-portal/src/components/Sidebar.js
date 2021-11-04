@@ -35,41 +35,42 @@ const Sidebar = () => {
           <ul className="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             {/* Add icons to the links using the .nav-icon class
            with font-awesome or any other icon font library */}
-            <li className="nav-item menu-open">
-              <a href="#" className="nav-link active">
-                <i className="nav-icon fas fa-tachometer-alt" />
+            <li className="nav-item">
+              <a href="#" className="nav-link">
+                <i className="nav-icon fas fa-edit" />
                 <p>
                   Products
-                  <i className="right fas fa-angle-left" />
+                  <i className="fas fa-angle-left right" />
                 </p>
               </a>
               <ul className="nav nav-treeview">
                 <li className="nav-item">
-                  <a href="./index.html" className="nav-link">
+                  <a href="#" className="nav-link">
                     <i className="far fa-circle nav-icon" />
                     <p>All Products</p>
                   </a>
                 </li>
                 <li className="nav-item">
-                  <a href="./index2.html" className="nav-link active">
+                  <a href="#" className="nav-link">
                     <i className="far fa-circle nav-icon" />
                     <p>Inventory</p>
                   </a>
                 </li>
                 <li className="nav-item">
-                  <a href="./index3.html" className="nav-link">
+                  <a href="#" className="nav-link">
                     <i className="far fa-circle nav-icon" />
                     <p>Transfers</p>
                   </a>
                 </li>
                 <li className="nav-item">
-                  <a href="./index3.html" className="nav-link">
+                  <a href="#" className="nav-link">
                     <i className="far fa-circle nav-icon" />
                     <p>Collections</p>
                   </a>
                 </li>
               </ul>
             </li>
+
 
             {/* now for orders */}
             <li className="nav-item">
@@ -82,19 +83,19 @@ const Sidebar = () => {
               </a>
               <ul className="nav nav-treeview">
                 <li className="nav-item">
-                  <a href="pages/forms/general.html" className="nav-link">
+                  <a href="#" className="nav-link">
                     <i className="far fa-circle nav-icon" />
                     <p>All Orders</p>
                   </a>
                 </li>
                 <li className="nav-item">
-                  <a href="pages/forms/advanced.html" className="nav-link">
+                  <a href="#" className="nav-link">
                     <i className="far fa-circle nav-icon" />
                     <p>Drafts</p>
                   </a>
                 </li>
                 <li className="nav-item">
-                  <a href="pages/forms/editors.html" className="nav-link">
+                  <a href="#" className="nav-link">
                     <i className="far fa-circle nav-icon" />
                     <p>Abandoned Checkouts</p>
                   </a>
@@ -103,7 +104,7 @@ const Sidebar = () => {
             </li>
 
             <li className="nav-item">
-              <a href="pages/gallery.html" className="nav-link">
+              <a href="#" className="nav-link">
                 <i className="nav-icon far fa-image" />
                 <p>
                   Customers
@@ -122,13 +123,13 @@ const Sidebar = () => {
               </a>
               <ul className="nav nav-treeview">
                 <li className="nav-item">
-                  <a href="pages/charts/chartjs.html" className="nav-link">
+                  <a href="#" className="nav-link">
                     <i className="far fa-circle nav-icon" />
                     <p>Dashboard</p>
                   </a>
                 </li>
                 <li className="nav-item">
-                  <a href="pages/charts/flot.html" className="nav-link">
+                  <a href="#" className="nav-link">
                     <i className="far fa-circle nav-icon" />
                     <p>Reports</p>
                   </a>
@@ -138,7 +139,7 @@ const Sidebar = () => {
 
 
             <li className="nav-item">
-              <a href="pages/gallery.html" className="nav-link">
+              <a href="#" className="nav-link">
                 <i className="nav-icon far fa-image" />
                 <p>
                   Discounts
@@ -150,7 +151,7 @@ const Sidebar = () => {
            
             <li className="nav-header">Sales Channel</li>
             <li className="nav-item">
-              <a href="pages/gallery.html" className="nav-link">
+              <a href="#" className="nav-link">
                 <i className="nav-icon fas fa-table" />
                 <p>
                   Online Store
