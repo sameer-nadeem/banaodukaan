@@ -27,6 +27,11 @@
 .App-link {
   color: #61dafb;
 }
+div.DraftEditor-root {
+  border: 1px solid #000;
+  height: 200px;
+
+}
 
 @keyframes App-logo-spin {
   from {

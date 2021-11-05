@@ -2,7 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import Sidebar from './components/Sidebar';
 import Navbar from './components/NavBar';
-import Products from './components/CenteredTabs';
+import Products from './pages/Products';
 import AddProducts from './pages/AddProducts'
 
 function App() {

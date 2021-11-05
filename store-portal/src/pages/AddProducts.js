@@ -1,198 +1,163 @@
 import * as React from 'react';
-import { Box, Card, IconButton, Input, FilledInput, OutlinedInput, InputLabel, InputAdornment, FormHelperText, FormControl, TextField } from '@material-ui/core';
+import { useState } from 'react';
+import { Box, Card, MenuItem, Select} from '@material-ui/core';
+import {Form,Button,Row,Col} from 'react-bootstrap'
+import { Editor } from "react-draft-wysiwyg";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import {EditorState} from 'draft-js';
 
 
 const AddProducts = () => {
-  const [values, setValues] = React.useState({
-    amount: '',
-    password: '',
-    weight: '',
-    weightRange: '',
-    showPassword: false,
-  });
+  
+  const [title, setTitle] = useState('')
+  const [description, setDescription] = useState('')
+  const [image, setImage] = useState([])
+  const [price, setPrice] = useState(0)
+  const [quantity, setQuantity] = useState(0)
+  const [brand, setBrand] = useState('')
+  const [collection, setCollection] = useState('')
+  const [status, setStatus] = useState('')
 
-  const handleChange = (prop) => (event) => {
-    setValues({ ...values, [prop]: event.target.value });
-  };
-
-  const handleClickShowPassword = () => {
-    setValues({
-      ...values,
-      showPassword: !values.showPassword,
-    });
-  };
-
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault();
-  };
+  const onChangeTitle = (event) => {
+    setTitle(event.target.value);
+  }
+  const onChangeDescription = (editorState, event) => {
+    const {value} = event.target
+    setDescription(value);
+  }
+  const onChangeImage = (event) => {
+      setImage(event.target.value);
+  } 
+  const onChangePrice = (event) => {
+      setPrice(event.target.value);
+  }
+  const onChangeQuantity = (event) => {
+    setQuantity(event.target.value);
+  }
+  const onChangeBrand = (event) => {
+      setBrand(event.target.value);
+  }  
+  const onChangeCollection = (event) => {
+      setCollection(event.target.value);
+  } 
+  const onChangeStatus = (event) => {
+      setStatus(event.target.value);
+  }
 
   return (
-    <Card>
-    <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
-      <div>
-        <TextField
-          label="With normal TextField"
-          id="outlined-start-adornment"
-          sx={{ m: 1, width: '25ch' }}
-          InputProps={{
-            startAdornment: <InputAdornment position="start">kg</InputAdornment>,
-          }}
-        />
-        <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
-          <OutlinedInput
-            id="outlined-adornment-weight"
-            value={values.weight}
-            onChange={handleChange('weight')}
-            endAdornment={<InputAdornment position="end">kg</InputAdornment>}
-            aria-describedby="outlined-weight-helper-text"
-            inputProps={{
-              'aria-label': 'weight',
-            }}
-          />
-          <FormHelperText id="outlined-weight-helper-text">Weight</FormHelperText>
-        </FormControl>
-        <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
-          <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
-          <OutlinedInput
-            id="outlined-adornment-password"
-            type={values.showPassword ? 'text' : 'password'}
-            value={values.password}
-            onChange={handleChange('password')}
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={handleClickShowPassword}
-                  onMouseDown={handleMouseDownPassword}
-                  edge="end"
-                >
-                  {/* {values.showPassword ? <VisibilityOff /> : <Visibility />} */}
-                </IconButton>
-              </InputAdornment>
-            }
-            label="Password"
-          />
-        </FormControl>
-        <FormControl fullWidth sx={{ m: 1 }}>
-          <InputLabel htmlFor="outlined-adornment-amount">Amount</InputLabel>
-          <OutlinedInput
-            id="outlined-adornment-amount"
-            value={values.amount}
-            onChange={handleChange('amount')}
-            startAdornment={<InputAdornment position="start">$</InputAdornment>}
-            label="Amount"
-          />
-        </FormControl>
+    <Box
+      component="form"
+      sx={{
+        '& .MuiTextField-root': { m: 1, width: '25ch' },
+      }}
+      noValidate
+      autoComplete="off"
+    >
+      <div style={{display:'flex', justifyContent:'center', padding: 20}}>
+      <Card style={{padding:40, paddingTop: 25, width:'85%' }}>
+        <div>
+          <h1 style={{fontSize:22}}>Add product</h1>
+        </div>
+        <Form style={{paddingTop: 25}}>
+          <Form.Group className="mb-3">
+            <Form.Label>Title</Form.Label>
+            <Form.Control placeholder="Short sleeve t-shirt" style={{backgroundColor: 'white', color:'black'}} onChange={onChangeTitle}/>
+            <Form.Text className="text-muted">
+              We'll never share your email with anyone else.
+            </Form.Text>
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>Description</Form.Label>
+            <Editor
+              toolbarClassName="toolbarClassName"
+              wrapperClassName="wrapperClassName"
+              editorClassName="editorClassName"
+              editorState={description}
+              onEditorStateChange={onChangeDescription}
+            />
+          </Form.Group>
+          <Row>
+            <Col>
+              <Form.Group controlId="formFile" className="mb-3">
+                <Form.Label>Upload File</Form.Label>
+                <Form.Control type="file" style={{backgroundColor: 'white', color:'black'}} onChange={onChangeImage}/>
+              </Form.Group>
+            </Col>
+            <Col>
+              <Form.Group className="mb-3" inline>
+                <Form.Label>Price</Form.Label>
+                <Form.Control type="email" placeholder="Enter Price" style={{backgroundColor: 'white', color:'black'}} onChange={onChangePrice} />
+              </Form.Group>
+            </Col>
+            <Col>
+              <Form.Group className="mb-3" inline>
+                <Form.Label>Quantity</Form.Label>
+                <Form.Control type="email" placeholder="Enter Price" style={{backgroundColor: 'white', color:'black'}} onChange={onChangeQuantity}/>
+              </Form.Group>
+            </Col>
+          </Row> 
+        </Form>
+      </Card>
       </div>
-      <div>
-        <TextField
-          label="With normal TextField"
-          id="filled-start-adornment"
-          sx={{ m: 1, width: '25ch' }}
-          InputProps={{
-            startAdornment: <InputAdornment position="start">kg</InputAdornment>,
-          }}
-          variant="filled"
-        />
-        <FormControl sx={{ m: 1, width: '25ch' }} variant="filled">
-          <FilledInput
-            id="filled-adornment-weight"
-            value={values.weight}
-            onChange={handleChange('weight')}
-            endAdornment={<InputAdornment position="end">kg</InputAdornment>}
-            aria-describedby="filled-weight-helper-text"
-            inputProps={{
-              'aria-label': 'weight',
-            }}
-          />
-          <FormHelperText id="filled-weight-helper-text">Weight</FormHelperText>
-        </FormControl>
-        <FormControl sx={{ m: 1, width: '25ch' }} variant="filled">
-          <InputLabel htmlFor="filled-adornment-password">Password</InputLabel>
-          <FilledInput
-            id="filled-adornment-password"
-            type={values.showPassword ? 'text' : 'password'}
-            value={values.password}
-            onChange={handleChange('password')}
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={handleClickShowPassword}
-                  onMouseDown={handleMouseDownPassword}
-                  edge="end"
-                >
-                  {/* {values.showPassword ? <VisibilityOff /> : <Visibility />} */}
-                </IconButton>
-              </InputAdornment>
-            }
-          />
-        </FormControl>
-        <FormControl fullWidth sx={{ m: 1 }} variant="filled">
-          <InputLabel htmlFor="filled-adornment-amount">Amount</InputLabel>
-          <FilledInput
-            id="filled-adornment-amount"
-            value={values.amount}
-            onChange={handleChange('amount')}
-            startAdornment={<InputAdornment position="start">$</InputAdornment>}
-          />
-        </FormControl>
-      </div>
-      <div>
-        <TextField
-          label="With normal TextField"
-          id="standard-start-adornment"
-          sx={{ m: 1, width: '25ch' }}
-          InputProps={{
-            startAdornment: <InputAdornment position="start">kg</InputAdornment>,
-          }}
-          variant="standard"
-        />
-        <FormControl variant="standard" sx={{ m: 1, mt: 3, width: '25ch' }}>
-          <Input
-            id="standard-adornment-weight"
-            value={values.weight}
-            onChange={handleChange('weight')}
-            endAdornment={<InputAdornment position="end">kg</InputAdornment>}
-            aria-describedby="standard-weight-helper-text"
-            inputProps={{
-              'aria-label': 'weight',
-            }}
-          />
-          <FormHelperText id="standard-weight-helper-text">Weight</FormHelperText>
-        </FormControl>
-        <FormControl sx={{ m: 1, width: '25ch' }} variant="standard">
-          <InputLabel htmlFor="standard-adornment-password">Password</InputLabel>
-          <Input
-            id="standard-adornment-password"
-            type={values.showPassword ? 'text' : 'password'}
-            value={values.password}
-            onChange={handleChange('password')}
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={handleClickShowPassword}
-                  onMouseDown={handleMouseDownPassword}
-                >
-                  {/* {values.showPassword ? <VisibilityOff /> : <Visibility />} */}
-                </IconButton>
-              </InputAdornment>
-            }
-          />
-        </FormControl>
-        <FormControl fullWidth sx={{ m: 1 }} variant="standard">
-          <InputLabel htmlFor="standard-adornment-amount">Amount</InputLabel>
-          <Input
-            id="standard-adornment-amount"
-            value={values.amount}
-            onChange={handleChange('amount')}
-            startAdornment={<InputAdornment position="start">$</InputAdornment>}
-          />
-        </FormControl>
+      <div style={{display:'flex', justifyContent:'center', padding: 20}}>
+      <Card style={{padding:40, paddingTop: 25, width:'85%' }}>
+      <Row>
+        <Col>
+          <Form.Group className="mb-3" inline>
+            <Form.Label>Brand</Form.Label>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              label="Brand"
+              style={{width: '100%'}}
+              onChange={onChangeBrand}
+            >
+              <MenuItem value={10}>Ten</MenuItem>
+              <MenuItem value={20}>Twenty</MenuItem>
+              <MenuItem value={30}>Thirty</MenuItem>
+            </Select>
+          </Form.Group>
+        </Col>
+        <Col>
+        <Form.Group className="mb-3" inline>
+          <Form.Label>Collection</Form.Label>
+          <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              label="Brand"
+              style={{width: '100%'}}
+              onChange={onChangeCollection}
+            >
+              <MenuItem value={10}>Ten</MenuItem>
+              <MenuItem value={20}>Twenty</MenuItem>
+              <MenuItem value={30}>Thirty</MenuItem>
+            </Select>
+      </Form.Group>
+        </Col>
+  </Row>
+  <Row >
+    
+    <Col>
+        <Form.Group className="mb-3" inline>
+          <Form.Label>Status</Form.Label>
+          <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              label="Brand"
+              style={{width: '100%'}}
+              onChange={onChangeStatus}
+            >
+              <MenuItem value={10}>Ten</MenuItem>
+              <MenuItem value={20}>Twenty</MenuItem>
+              <MenuItem value={30}>Thirty</MenuItem>
+            </Select>
+      </Form.Group>
+    </Col>
+  </Row>
+  <Button>Submit</Button>
+      </Card>
       </div>
     </Box>
-    </Card>
   );
 }
 
