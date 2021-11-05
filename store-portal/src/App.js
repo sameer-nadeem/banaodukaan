@@ -2,7 +2,8 @@ import logo from './logo.svg';
 import './App.css';
 import Sidebar from './components/Sidebar';
 import Navbar from './components/NavBar';
-import CenteredTabs from './components/CenteredTabs';
+import Products from './components/CenteredTabs';
+import AddProducts from './pages/AddProducts'
 
 function App() {
   return (
@@ -11,7 +12,8 @@ function App() {
       <Navbar />
       <Sidebar />
       <div className = "content-wrapper">
-      <CenteredTabs />
+        <AddProducts />
+      {/* <Products /> */}
       </div>
      
     </div>
