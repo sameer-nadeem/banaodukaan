@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Box, Tabs, Tab, CardContent, Card, CardActionArea, Typography, Button, Stack } from "@material-ui/core"
 import { DataGrid } from '@mui/x-data-grid'
 import axios from 'axios'
+import { uri } from '../api.json'
 
 const Products = () => {
   const [value, setValue] = React.useState(0);
@@ -9,6 +10,31 @@ const Products = () => {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  const [products, setProducts] = React.useState([])
+  const [newRows, setRows] = React.useState([])
+
+
+  const getProducts = async() => {
+    axios.get(`${uri}/product`, 
+      {
+        headers: {
+          "Content-Type": "application/json"  
+        }
+      }
+    ).then(res => {
+
+      console.log(res)
+      let list = res.data.products
+      setProducts(list)   
+      
+    })
+    .catch(err => {
+      console.log(err)
+    })
+
+  }
+
 
   const columns = [
     { field: 'id', headerName: 'ID', width: 70, headerAlign: 'center' },
@@ -31,7 +57,7 @@ const Products = () => {
     },
   ];
   
-  const rows = [
+  let rows = [
     { id: 1, title: 'Snow', status: 'Jon', stock: 35, collection: 'test' },
     { id: 2, title: 'Lannister', status: 'Cersei', stock: 42, collection: 'test'  },
     { id: 3, title: 'Lannister', status: 'Jaime', stock: 45, collection: 'test'  },
@@ -42,6 +68,37 @@ const Products = () => {
     { id: 8, title: 'Frances', status: 'Rossini', stock: 36, collection: 'test'  },
     { id: 9, title: 'Roxie', status: 'Harvey', stock: 65, collection: 'test'},
   ];
+
+
+  React.useEffect(async() => {
+    //Runs only on the first render 
+    getProducts()
+    
+  }, [])
+
+  React.useEffect(async() => {
+    console.log(products)
+    const Mows = []
+
+    products.map(function (product) {      
+    
+    const prod = {
+      id: product._id,
+      title: product.title,
+      status: null,
+      stock: product.stock,
+      collection: 'test'
+    
+    }
+
+    Mows.push(prod);
+      
+    })
+
+    setRows(Mows)
+
+  },[products])
+
 
   return (
     
@@ -56,10 +113,10 @@ const Products = () => {
         </div>
         </div>
           <DataGrid
-            rows={rows}
+            rows={newRows}
             columns={columns}
-            pageSize={5}
-            rowsPerPageOptions={[5]}
+            pageSize={20}
+            rowsPerPageOptions={[10]}
             checkboxSelection
             style={{alignContent: 'center', alignSelf: 'center'}}
           />

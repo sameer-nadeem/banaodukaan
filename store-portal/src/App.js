@@ -22,7 +22,6 @@ function App() {
           <Route path = "/addcollection" component = {AddCollections} />
         </Switch>
       </div>
-     
     </div>
   );
 }
