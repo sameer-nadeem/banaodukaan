@@ -1,8 +1,7 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import {EditorState} from 'draft-js';
 import axios from 'axios'
 import { uri } from '../api.json'
 
@@ -15,7 +14,9 @@ const AddProducts = () => {
   const [price, setPrice] = useState(0)
   const [quantity, setQuantity] = useState(0)
   const [brand, setBrand] = useState('')
+  const [fetchBrands, setFetchedBrands] = useState([])
   const [collection, setCollection] = useState('')
+  const [fetchCollections, setFetchedCollections] = useState([])
   const [status, setStatus] = useState('')
 
   const onChangeTitle = (event) => {
@@ -25,6 +26,7 @@ const AddProducts = () => {
     setDescription(editorState.blocks[0].text)
   }
   const onChangeImage = (event) => {
+      console.log(event.target.value)
       setImage(event.target.value);
   } 
   const onChangePrice = (event) => {
@@ -43,6 +45,33 @@ const AddProducts = () => {
       setStatus(event.target.value);
   }
 
+  const getCollections = async () => {
+    try{
+      const res = await axios.get(`${uri}/collection`)
+      setFetchedCollections(res.data.collections)
+      console.log(res.data.collections)
+    }
+    catch (err) {
+      console.log(err)
+    }
+  }
+
+  const getBrands = async () => {
+    try{
+      const res = await axios.get(`${uri}/brand`)
+      setFetchedBrands(res.data.brands)
+      console.log(res.data.brands)
+    }
+    catch (err) {
+      console.log(err)
+    }
+  }
+
+  useEffect(() => {
+      getCollections()
+      getBrands()
+  }, [])
+
   const addProducts = (event) => {
     event.preventDefault()
     const data = {
@@ -50,8 +79,10 @@ const AddProducts = () => {
       price: price,
       stock: quantity,
       description: description,
-      brandID: brand,
-      collectionID: collection,
+      brandId: brand,
+      collectionId: collection,
+      //status: status === "1" ? "Active" : "Draft" ,
+      //image: image
     }
     console.log(data)
     axios.post(`${uri}/product`, data, 
@@ -62,12 +93,12 @@ const AddProducts = () => {
       }
     ).then(res => {
       console.log(res)
+      window.location.reload(false);
     })
     .catch(err => {
       console.log(err)
     })
-
-
+    
   }
 
   return (
@@ -95,8 +126,11 @@ const AddProducts = () => {
           <div class="row">
             <div class="col">
             <div class="mb-3">
-              <label class="form-label" style={{color:'black'}}>File</label>
+            <form action="/uploadfile" enctype="multipart/form-data" method="POST"> 
+              <label class="form-label" style={{color:'black'}}>Image</label>
               <input class="form-control" type="file" style={{backgroundColor: 'white', color:'black'}} onChange={onChangeImage}/>
+              <input type="submit" value="Upload a file"/>
+            </form>
             </div>
             </div>
             <div class="col">
@@ -123,9 +157,11 @@ const AddProducts = () => {
             <label class="form-label" style={{color:'black'}}>Brand</label>
             <select class="form-select" style={{backgroundColor: 'white', color:'black'}} onChange={onChangeBrand}>
               <option selected>Pick a Brand</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
+              {
+                fetchBrands.map(b => (
+                  <option value={b._id} key={b._id}>{b.name}</option>
+                ))
+              }
             </select>
           </div>
         </div>
@@ -134,9 +170,11 @@ const AddProducts = () => {
             <label class="form-label" style={{color:'black'}}>Collection</label>
             <select class="form-select" style={{backgroundColor: 'white', color:'black'}} onChange={onChangeCollection}>
               <option selected>Pick a Collection</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
+              {
+                fetchCollections.map(c => (
+                  <option value={c._id} key={c._id}>{c.name}</option>
+                ))
+              }
             </select>
           </div>
         </div>
@@ -147,9 +185,8 @@ const AddProducts = () => {
         <label class="form-label" style={{color:'black'}}>Status</label>
         <select class="form-select" style={{backgroundColor: 'white', color:'black'}} onChange={onChangeStatus}>
           <option selected>Select Status</option>
-          <option value="1">One</option>
-          <option value="2">Two</option>
-          <option value="3">Three</option>
+          <option value="1">Active</option>
+          <option value="2">Draft</option>
         </select>
       </div>
     </div>
