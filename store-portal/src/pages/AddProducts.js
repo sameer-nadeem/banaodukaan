@@ -3,6 +3,8 @@ import { useState } from 'react';
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import {EditorState} from 'draft-js';
+import axios from 'axios'
+import { uri } from '../api.json'
 
 
 const AddProducts = () => {
@@ -41,6 +43,33 @@ const AddProducts = () => {
       setStatus(event.target.value);
   }
 
+  const addProducts = (event) => {
+    event.preventDefault()
+    const data = {
+      title: title,
+      price: price,
+      stock: quantity,
+      description: description,
+      brandID: brand,
+      collectionID: collection,
+    }
+    console.log(data)
+    axios.post(`${uri}/product`, data, 
+      {
+        headers: {
+          "Content-Type": "application/json"  
+        }
+      }
+    ).then(res => {
+      console.log(res)
+    })
+    .catch(err => {
+      console.log(err)
+    })
+
+
+  }
+
   return (
     <div>
       <div style={{display:'flex', justifyContent:'center', padding: 20}}>
@@ -61,8 +90,6 @@ const AddProducts = () => {
               wrapperClassName="wrapperClassName"
               editorClassName="editorClassName"
               onChange={onChangeDescription}
-              // editorState={description}
-              // onEditorStateChange={onChangeDescription}
             />
           </div>
           <div class="row">
@@ -127,7 +154,7 @@ const AddProducts = () => {
       </div>
     </div>
   </div>
-  <button type="button" class="btn btn-success" style={{width:'12%'}}>Add Product</button>
+  <button type="button" class="btn btn-success" style={{width:'12%'}} onClick={(e) =>addProducts(e)}>Add Product</button>
       </div>
       </div>
     </div>
