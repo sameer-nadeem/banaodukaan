@@ -6,6 +6,9 @@ const CollectionSchema = new Schema({
         type: String
 
     },
+    description:{
+        type: String
+    },
     deleteFlag:{
         type: Boolean,
         default: false
