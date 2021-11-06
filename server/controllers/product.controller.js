@@ -4,7 +4,7 @@ const Product = require("../models/product.model")
 
 const addProduct = async(req, res) => {
 
-    console.log(req.body)
+   
 
     try{
         var {
@@ -12,10 +12,12 @@ const addProduct = async(req, res) => {
             price,
             stock,
             description,
-            brandID,
-            inventoryID,
-            collectionID,
-            deleteFlag
+            brandId,
+            inventoryId,
+            collectionId,
+            deleteFlag,
+            status,
+            image
         } = req.body
 
         const product = new Product({
@@ -23,10 +25,12 @@ const addProduct = async(req, res) => {
             price,
             stock,
             description,
-            brandID,
-            inventoryID,
-            collectionID,
-            deleteFlag
+            brandId,
+            inventoryId,
+            collectionId,
+            deleteFlag,
+            status,
+            image
         })
 
         await product.save()
@@ -48,7 +52,7 @@ const addProduct = async(req, res) => {
   
   // get all products
   
-  const getProduct = async(req, res) => {
+  const getProducts = async(req, res) => {
 
     try{
         const products = await Product.find()
@@ -63,29 +67,42 @@ const addProduct = async(req, res) => {
 
   }
 
-  const deleteProduct = async(req,res)=>{
+  const getProduct = async(req, res) => {
     try {
+
 
         const id = req.params.id
 
-        const exists = await Product.exists({
-            _id: id
+        const product = await Product.findById(id)
+
+        return res.status(200).json({
+            product
         })
-
-        if (!exists) {
-            return res.status(400).json({
-                error: "Product Does Not Exist"
-            })
-        }
-
-        await Product.deleteOne({
-            _id: id
-        })
-
-        res.status(200).end()
-    } catch (err) {
+    }
+    catch (err) {
         console.log(err)
 
+        return res.status(500).json({
+            error: errors.SERVER_ERROR
+        })
+    }
+  }
+
+  const deleteProduct = async(req,res)=>{
+    try{
+        
+        const id = req.params.id
+        const product = await Product.findOne({
+            _id: id
+        })
+
+        product.deleteFlag = true
+
+        await product.save()
+        return res.status(200).json({
+            product
+        })
+      }catch (err) {
         return res.status(500).json({
             error: "Server Error"
         })
@@ -103,7 +120,9 @@ const addProduct = async(req, res) => {
             brandID,
             inventoryID,
             collectionID,
-            deleteFlag
+            deleteFlag,
+            status,
+            image
         } = req.body
 
         const id = req.params.id
@@ -119,7 +138,8 @@ const addProduct = async(req, res) => {
         product.inventoryID = inventoryID
         product.collectionID = collectionID
         product.deleteFlag = deleteFlag
-
+        product.status = status
+        product.image = image
         await product.save()
         return res.status(200).json({
             product
@@ -138,7 +158,8 @@ const addProduct = async(req, res) => {
     addProduct,
     getProduct,
     updateProduct,
-    deleteProduct
+    deleteProduct,
+    getProducts
 
 }
   

@@ -37,9 +37,14 @@ const ProductSchema = new Schema({
       type: Boolean,
       default: false
       
+  },
+  status:{
+      type: String,
+      enum :["Active","Draft"]
+  },
+  image:{
+      type:String
   }
-
-
 })
 
 
