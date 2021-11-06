@@ -12,7 +12,7 @@ function App() {
       <Navbar />
       <Sidebar />
       <div className = "content-wrapper">
-        <AddProducts />
+        <Products />
       {/* <Products /> */}
       </div>
      
