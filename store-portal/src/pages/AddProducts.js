@@ -71,7 +71,9 @@ const AddProducts = () => {
   }, [])
 
   const addProducts = (event) => {
-    if (image.length === 0 || title === '' || description === '' || brand === '' || collection === ''){
+    if (image.length === 0 || title === '' || description === '' || brand === '' || collection === '' || status === ''){
+      event.preventDefault()
+      alert("Please Check Fields")
       return
     }
     else
@@ -84,7 +86,7 @@ const AddProducts = () => {
         description: description,
         brandId: brand,
         collectionId: collection,
-        //status: status === "1" ? "Active" : "Draft" ,
+        status: status,
         image: path
       }
       axios.post(`${uri}/product`, data, 
@@ -138,10 +140,10 @@ const AddProducts = () => {
       <div style={{display:'flex', justifyContent:'center', padding: 20}}>
       <div class="card" style={{padding:40, paddingTop: 25, width:'85%', backgroundColor: 'white' }}>
         <div>
-          <h1 style={{fontSize:22, color: 'black'}}>Add product</h1>
+          <h1 style={{fontSize:24, color: 'black'}}>Add Products</h1>
         </div>
         
-          <div class="mb-3">
+          <div class="mb-3" style={{paddingTop: 25}}>
             <label class="form-label" style={{color:'black'}}>Title</label>
             <input class="form-control" style={{backgroundColor: 'white', color:'black'}} onChange={onChangeTitle} required/>
           </div>
@@ -218,8 +220,8 @@ const AddProducts = () => {
         <label class="form-label" style={{color:'black'}}>Status</label>
         <select class="form-select" style={{backgroundColor: 'white', color:'black'}} onChange={onChangeStatus} required>
           <option value="">Select Status</option>
-          <option value="1">Active</option>
-          <option value="2">Draft</option>
+          <option value="Active">Active</option>
+          <option value="Draft">Draft</option>
         </select>
       </div>
     </div>

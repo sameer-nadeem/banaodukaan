@@ -15,12 +15,13 @@ function App() {
       <Navbar />
       <Sidebar />
       <div className = "content-wrapper">
-        <Switch>
+        <AddProducts />
+        {/* <Switch>
           <Route path = "/products" component = {Products}/>
           <Route path = "/addproduct" component = {AddProducts}/>
           <Route path = "/collections" component = {Collections} />
           <Route path = "/addcollection" component = {AddCollections} />
-        </Switch>
+        </Switch> */}
       </div>
     </div>
   );
