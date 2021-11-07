@@ -6,6 +6,7 @@ import Products from './pages/Products';
 import AddProducts from './pages/AddProducts'
 import Collections from './pages/Collections';
 import AddCollections from './pages/AddCollections';
+import ProductDetail from './pages/ProductDetail';
 import { Route, Switch } from 'react-router-dom';
 
 function App() {
@@ -15,7 +16,8 @@ function App() {
       <Navbar />
       <Sidebar />
       <div className = "content-wrapper">
-        <AddProducts />
+        <ProductDetail />
+        {/* <AddProducts /> */}
         {/* <Switch>
           <Route path = "/products" component = {Products}/>
           <Route path = "/addproduct" component = {AddProducts}/>
