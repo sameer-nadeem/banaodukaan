@@ -12,8 +12,19 @@ const AddCollections = () => {
     const [description, setDescription] = useState('')
     
     const handleSubmit = (e) =>{
+        
+        if(title === '' && description == ''){
+            return
+            //we will add toastify here
+        }
         e.preventDefault()
-        console.log(title,description)
+        const body = {
+            title: title,
+            description: description
+        }
+        //post request here
+        
+        
 
     }
 
