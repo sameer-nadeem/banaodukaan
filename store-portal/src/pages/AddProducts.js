@@ -1,8 +1,7 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import {EditorState} from 'draft-js';
 import axios from 'axios'
 import { uri } from '../api.json'
 
@@ -15,8 +14,11 @@ const AddProducts = () => {
   const [price, setPrice] = useState(0)
   const [quantity, setQuantity] = useState(0)
   const [brand, setBrand] = useState('')
+  const [fetchBrands, setFetchedBrands] = useState([])
   const [collection, setCollection] = useState('')
+  const [fetchCollections, setFetchedCollections] = useState([])
   const [status, setStatus] = useState('')
+  const [path, setPath] = useState('')
 
   const onChangeTitle = (event) => {
     setTitle(event.target.value);
@@ -25,7 +27,7 @@ const AddProducts = () => {
     setDescription(editorState.blocks[0].text)
   }
   const onChangeImage = (event) => {
-      setImage(event.target.value);
+      setImage(event.target.files[0]);
   } 
   const onChangePrice = (event) => {
       setPrice(event.target.value);
@@ -43,76 +45,141 @@ const AddProducts = () => {
       setStatus(event.target.value);
   }
 
-  const addProducts = (event) => {
-    event.preventDefault()
-    const data = {
-      title: title,
-      price: price,
-      stock: quantity,
-      description: description,
-      brandID: brand,
-      collectionID: collection,
+  const getCollections = async () => {
+    try{
+      const res = await axios.get(`${uri}/collection`)
+      setFetchedCollections(res.data.collections)
     }
-    console.log(data)
-    axios.post(`${uri}/product`, data, 
-      {
-        headers: {
-          "Content-Type": "application/json"  
-        }
-      }
-    ).then(res => {
-      console.log(res)
-    })
-    .catch(err => {
+    catch (err) {
       console.log(err)
-    })
+    }
+  }
+
+  const getBrands = async () => {
+    try{
+      const res = await axios.get(`${uri}/brand`)
+      setFetchedBrands(res.data.brands)
+    }
+    catch (err) {
+      console.log(err)
+    }
+  }
+
+  useEffect(() => {
+      getCollections()
+      getBrands()
+  }, [])
+
+  const addProducts = (event) => {
+    if (image.length === 0 || title === '' || description === '' || brand === '' || collection === ''){
+      return
+    }
+    else
+    {
+      event.preventDefault()
+      const data = {
+        title: title,
+        price: price,
+        stock: quantity,
+        description: description,
+        brandId: brand,
+        collectionId: collection,
+        //status: status === "1" ? "Active" : "Draft" ,
+        image: path
+      }
+      axios.post(`${uri}/product`, data, 
+        {
+          headers: {
+            "Content-Type": "application/json"  
+          }
+        }
+      ).then(res => {
+        window.location.reload(false);
+      })
+      .catch(err => {
+        console.log(err)
+      })
+    }
+    
+  }
+
+  const uploadImages = (event) =>{
+    if (image.length === 0){
+      alert("Please Select Image First")
+    }
+    else
+    {
+      console.log(image)
+      event.preventDefault()
+      const formData = new FormData()
+      formData.append('myImage', image);
+          const config = {
+              headers: {
+                  'content-type': 'multipart/form-data'
+              }
+          };
+      axios.post(`${uri}/product/upload`, formData, config)
+      .then(res => {
+        alert('File has been uploaded successfully.')
+        setPath(res.data.path)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+    }
+
 
 
   }
 
   return (
     <div>
+      <form style={{paddingTop: 25}}>
       <div style={{display:'flex', justifyContent:'center', padding: 20}}>
       <div class="card" style={{padding:40, paddingTop: 25, width:'85%', backgroundColor: 'white' }}>
         <div>
           <h1 style={{fontSize:22, color: 'black'}}>Add product</h1>
         </div>
-        <form style={{paddingTop: 25}}>
-        <div class="mb-3">
-          <label class="form-label" style={{color:'black'}}>Title</label>
-          <input class="form-control" style={{backgroundColor: 'white', color:'black'}} onChange={onChangeTitle}/>
-        </div>
-        <div class="mb-3">
-          <label class="form-label" style={{color:'black'}}>Description</label>
-            <Editor
-              
-              toolbarClassName="toolbarClassName"
-              wrapperClassName="wrapperClassName"
-              editorClassName="editorClassName"
-              onChange={onChangeDescription}
-            />
+        
+          <div class="mb-3">
+            <label class="form-label" style={{color:'black'}}>Title</label>
+            <input class="form-control" style={{backgroundColor: 'white', color:'black'}} onChange={onChangeTitle} required/>
+          </div>
+          <div class="mb-3">
+            <label class="form-label" style={{color:'black'}}>Description</label>
+              <Editor
+                
+                toolbarClassName="toolbarClassName"
+                wrapperClassName="wrapperClassName"
+                editorClassName="editorClassName"
+                onChange={onChangeDescription}
+              />
           </div>
           <div class="row">
             <div class="col">
             <div class="mb-3">
-              <label class="form-label" style={{color:'black'}}>File</label>
-              <input class="form-control" type="file" style={{backgroundColor: 'white', color:'black'}} onChange={onChangeImage}/>
+            <form>
+              <label class="form-label" style={{color:'black'}}>Image</label>
+              <input class="form-control" type="file" name="myImage" style={{backgroundColor: 'white', color:'black'}} onChange={onChangeImage} required/>
+              <div style={{ marginTop: 5}}>
+              <button class="btn btn-success" style={{width:'30%',}} onClick={(e) =>uploadImages(e)}>Upload</button>
+              </div>
+            </form>
             </div>
             </div>
             <div class="col">
             <div class="mb-3">
               <label class="form-label" style={{color:'black'}}>Price</label>
-              <input class="form-control" type="number" style={{backgroundColor: 'white', color:'black'}} onChange={onChangePrice}/>
+              <input class="form-control" type="number" style={{backgroundColor: 'white', color:'black'}} onChange={onChangePrice} required/>
             </div>
             </div>
             <div class="col">
             <div class="mb-3">
               <label class="form-label" style={{color:'black'}}>Quantity</label>
-              <input class="form-control" type="number" style={{backgroundColor: 'white', color:'black'}} onChange={onChangeQuantity}/>
+              <input class="form-control" type="number" style={{backgroundColor: 'white', color:'black'}} onChange={onChangeQuantity} required/>
             </div>
             </div>
           </div> 
-        </form>
       </div>
       </div>
       <div style={{display:'flex', justifyContent:'center', padding: 20}}>
@@ -121,22 +188,26 @@ const AddProducts = () => {
         <div class="col">
           <div class="mb-3">
             <label class="form-label" style={{color:'black'}}>Brand</label>
-            <select class="form-select" style={{backgroundColor: 'white', color:'black'}} onChange={onChangeBrand}>
-              <option selected>Pick a Brand</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
+            <select class="form-select" style={{backgroundColor: 'white', color:'black'}} onChange={onChangeBrand} required>
+            <option value="">Pick a Brand</option>
+              {
+                fetchBrands.map(b => (
+                  <option value={b._id} key={b._id}>{b.name}</option>
+                ))
+              }
             </select>
           </div>
         </div>
         <div class="col">
         <div class="mb-3">
             <label class="form-label" style={{color:'black'}}>Collection</label>
-            <select class="form-select" style={{backgroundColor: 'white', color:'black'}} onChange={onChangeCollection}>
-              <option selected>Pick a Collection</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
+            <select class="form-select" style={{backgroundColor: 'white', color:'black'}} onChange={onChangeCollection} required>
+              <option value="">Pick a Collection</option>
+              {
+                fetchCollections.map(c => (
+                  <option value={c._id} key={c._id}>{c.name}</option>
+                ))
+              }
             </select>
           </div>
         </div>
@@ -145,18 +216,19 @@ const AddProducts = () => {
     <div class="col">
       <div class="mb-3">
         <label class="form-label" style={{color:'black'}}>Status</label>
-        <select class="form-select" style={{backgroundColor: 'white', color:'black'}} onChange={onChangeStatus}>
-          <option selected>Select Status</option>
-          <option value="1">One</option>
-          <option value="2">Two</option>
-          <option value="3">Three</option>
+        <select class="form-select" style={{backgroundColor: 'white', color:'black'}} onChange={onChangeStatus} required>
+          <option value="">Select Status</option>
+          <option value="1">Active</option>
+          <option value="2">Draft</option>
         </select>
       </div>
     </div>
   </div>
-  <button type="button" class="btn btn-success" style={{width:'12%'}} onClick={(e) =>addProducts(e)}>Add Product</button>
-      </div>
-      </div>
+    <button class="btn btn-success" style={{width:'18%'}} onClick={(e) =>addProducts(e)}>Add Product</button>
+    </div>
+    
+  </div>
+      </form>
     </div>
   );
 }
