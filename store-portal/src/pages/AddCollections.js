@@ -5,11 +5,15 @@ import BackspaceOutlinedIcon from '@mui/icons-material/BackspaceOutlined';
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import axios from 'axios'
 import { uri } from '../api.json'
+import { useHistory } from "react-router-dom";
+
 
 const AddCollections = () => {
 
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
+    let history = useHistory();
+
     
     const handleSubmit = (e) =>{
         
@@ -31,12 +35,12 @@ const AddCollections = () => {
           }
         }
       ).then(res => {
-        window.location.reload(false);
+        history.push("/collections");
       })
       .catch(err => {
         console.log(err)
       })
-
+      
     }
 
     const onChangeTitle = (event) => {
