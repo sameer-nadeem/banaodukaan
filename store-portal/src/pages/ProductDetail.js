@@ -7,8 +7,6 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { EditorState,convertFromHTML, ContentState} from 'draft-js';
 import { useLocation } from 'react-router';
 import { Link, useHistory } from "react-router-dom"
-import { createReactEditorJS } from 'react-editor-js'
-const ReactEditorJS = createReactEditorJS()
 
 const ProductDetail = () => {
   const [title, setTitle] = useState('')

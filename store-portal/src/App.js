@@ -8,11 +8,11 @@ import Collections from './pages/Collections';
 import AddCollections from './pages/AddCollections';
 import ProductDetail from './pages/ProductDetail';
 import { Route, Switch } from 'react-router-dom';
+import CollectionDetail from './pages/CollectionDetail';
 
 function App() {
   return (
     <div className="wrapper">
-      
       <Navbar />
       <Sidebar />
       <div className = "content-wrapper">
@@ -22,6 +22,7 @@ function App() {
           <Route path = "/collections" component = {Collections} />
           <Route path = "/addcollection" component = {AddCollections} />
           <Route path = "/productdetail" component = {ProductDetail} />
+          <Route path = "/collectiondetail" component = {CollectionDetail} />
         </Switch>
       </div>
     </div>
