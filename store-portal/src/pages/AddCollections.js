@@ -19,12 +19,23 @@ const AddCollections = () => {
         }
         e.preventDefault()
         const body = {
-            title: title,
+            name: title,
             description: description
         }
         //post request here
         
-        
+        axios.post(`${uri}/collection`, body, 
+        {
+          headers: {
+            "Content-Type": "application/json"  
+          }
+        }
+      ).then(res => {
+        window.location.reload(false);
+      })
+      .catch(err => {
+        console.log(err)
+      })
 
     }
 
