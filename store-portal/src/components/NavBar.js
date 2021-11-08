@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link, useHistory } from "react-router-dom";
 
 const Navbar = () => {
   return (
@@ -10,7 +11,9 @@ const Navbar = () => {
             <a className="nav-link" data-widget="pushmenu" href="#" role="button"><i className="fas fa-bars" /></a>
           </li>
           <li className="nav-item d-none d-sm-inline-block">
-            <a href="/" className="nav-link">Home</a>
+            <Link to = "/">
+              <div className="nav-link">Home</div>
+            </Link>
           </li>
         </ul>
         {/* Right navbar links */}
