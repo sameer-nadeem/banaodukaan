@@ -57,7 +57,7 @@ const Sidebar = () => {
                   </a>
                 </li>
                 <li className="nav-item">
-                  <a href="#" className="nav-link">
+                  <a href="/" className="nav-link">
                     <i className="far fa-circle nav-icon" />
                     <p>Transfers</p>
                   </a>
@@ -74,7 +74,7 @@ const Sidebar = () => {
 
             {/* now for orders */}
             <li className="nav-item">
-              <a href="#" className="nav-link">
+              <a href="/" className="nav-link">
                 <i className="nav-icon fas fa-edit" />
                 <p>
                   Orders
@@ -83,19 +83,19 @@ const Sidebar = () => {
               </a>
               <ul className="nav nav-treeview">
                 <li className="nav-item">
-                  <a href="#" className="nav-link">
+                  <a href="/" className="nav-link">
                     <i className="far fa-circle nav-icon" />
                     <p>All Orders</p>
                   </a>
                 </li>
                 <li className="nav-item">
-                  <a href="#" className="nav-link">
+                  <a href="/" className="nav-link">
                     <i className="far fa-circle nav-icon" />
                     <p>Drafts</p>
                   </a>
                 </li>
                 <li className="nav-item">
-                  <a href="#" className="nav-link">
+                  <a href="/" className="nav-link">
                     <i className="far fa-circle nav-icon" />
                     <p>Abandoned Checkouts</p>
                   </a>
@@ -104,7 +104,7 @@ const Sidebar = () => {
             </li>
 
             <li className="nav-item">
-              <a href="#" className="nav-link">
+              <a href="/" className="nav-link">
                 <i className="nav-icon far fa-image" />
                 <p>
                   Customers
@@ -114,7 +114,7 @@ const Sidebar = () => {
 
             
             <li className="nav-item">
-              <a href="#" className="nav-link">
+              <a href="/" className="nav-link">
                 <i className="nav-icon fas fa-chart-pie" />
                 <p>
                   Analytics
@@ -123,13 +123,13 @@ const Sidebar = () => {
               </a>
               <ul className="nav nav-treeview">
                 <li className="nav-item">
-                  <a href="#" className="nav-link">
+                  <a href="/" className="nav-link">
                     <i className="far fa-circle nav-icon" />
                     <p>Dashboard</p>
                   </a>
                 </li>
                 <li className="nav-item">
-                  <a href="#" className="nav-link">
+                  <a href="/" className="nav-link">
                     <i className="far fa-circle nav-icon" />
                     <p>Reports</p>
                   </a>
@@ -139,7 +139,7 @@ const Sidebar = () => {
 
 
             <li className="nav-item">
-              <a href="#" className="nav-link">
+              <a href="/" className="nav-link">
                 <i className="nav-icon far fa-image" />
                 <p>
                   Discounts
@@ -151,7 +151,7 @@ const Sidebar = () => {
            
             <li className="nav-header">Sales Channel</li>
             <li className="nav-item">
-              <a href="#" className="nav-link">
+              <a href="/" className="nav-link">
                 <i className="nav-icon fas fa-table" />
                 <p>
                   Online Store
