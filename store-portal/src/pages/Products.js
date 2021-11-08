@@ -3,6 +3,8 @@ import { Box, Tabs, Tab, CardContent, Card, CardActionArea, Typography, Button, 
 import { DataGrid } from '@mui/x-data-grid'
 import axios from 'axios'
 import { uri } from '../api.json'
+import MUIDataTable from "mui-datatables";
+
 
 const Products = () => {
   const [value, setValue] = React.useState(0);
@@ -57,17 +59,17 @@ const Products = () => {
     },
   ];
   
-  let rows = [
-    { id: 1, title: 'Snow', status: 'Jon', stock: 35, collection: 'test' },
-    { id: 2, title: 'Lannister', status: 'Cersei', stock: 42, collection: 'test'  },
-    { id: 3, title: 'Lannister', status: 'Jaime', stock: 45, collection: 'test'  },
-    { id: 4, title: 'Stark', status: 'Arya', stock: 16, collection: 'test' },
-    { id: 5, title: 'Targaryen', status: 'Daenerys', stock: 55, collection: 'test'  },
-    { id: 6, title: 'Melisandre', status: null, stock: 150, collection: 'test'  },
-    { id: 7, title: 'Clifford', status: 'Ferrara', stock: 44, collection: 'test'  },
-    { id: 8, title: 'Frances', status: 'Rossini', stock: 36, collection: 'test'  },
-    { id: 9, title: 'Roxie', status: 'Harvey', stock: 65, collection: 'test'},
-  ];
+  // let rows = [
+  //   { id: 1, title: 'Snow', status: 'Jon', stock: 35, collection: 'test' },
+  //   { id: 2, title: 'Lannister', status: 'Cersei', stock: 42, collection: 'test'  },
+  //   { id: 3, title: 'Lannister', status: 'Jaime', stock: 45, collection: 'test'  },
+  //   { id: 4, title: 'Stark', status: 'Arya', stock: 16, collection: 'test' },
+  //   { id: 5, title: 'Targaryen', status: 'Daenerys', stock: 55, collection: 'test'  },
+  //   { id: 6, title: 'Melisandre', status: null, stock: 150, collection: 'test'  },
+  //   { id: 7, title: 'Clifford', status: 'Ferrara', stock: 44, collection: 'test'  },
+  //   { id: 8, title: 'Frances', status: 'Rossini', stock: 36, collection: 'test'  },
+  //   { id: 9, title: 'Roxie', status: 'Harvey', stock: 65, collection: 'test'},
+  // ];
 
 
   React.useEffect(async() => {
@@ -81,17 +83,17 @@ const Products = () => {
     const Mows = []
 
     products.map(function (product) {      
-    
-    const prod = {
-      id: product._id,
-      title: product.title,
-      status: null,
-      stock: product.stock,
-      collection: 'test'
-    
-    }
-
-    Mows.push(prod);
+    if (product.deleteFlag == false){
+      const prod = {
+        id: product._id,
+        title: product.title,
+        status: null,
+        stock: product.stock,
+        collection: 'test'
+      
+      }
+      Mows.push(prod);}
+      else {}
       
     })
 
