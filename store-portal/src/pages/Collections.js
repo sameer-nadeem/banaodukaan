@@ -38,15 +38,36 @@ const Collections = () => {
 
   }
 
+  const deleteCollection = async(id) => {
+    axios.delete(`${uri}/collection/${id}`, 
+      {
+        headers: {
+          "Content-Type": "application/json"  
+        }
+      }
+    )
+    .catch(err => {
+      console.log(err)
+    })
+
+  }
+
   const options = {
     filterType: 'checkbox',
     pagination: false,
-    onRowClick: (rowData, rowState) => {
-      console.log(rowData, rowState);
-    },
-    onRowsDelete:(rowsDeleted, dataRows)=>{
-      const idsToDelete = dataRows.map(d => newRows[d.dataIndex]);
-      console.log("ids here", idsToDelete)
+    onRowsDelete : (rowData, newTable) => {
+      for (let i = 0; i < rowData.data.length; i++) {
+        let idx = rowData.data[i].dataIndex
+        let id = newRows[idx][0]
+        deleteCollection(id)
+      }
+      setTimeout(function(){
+        getCollections()
+      }, 200)
+      
+      ;},
+    onRowClick:(rowData) => {
+      history.push('/collectiondetail', rowData)
     }
   };
 
@@ -61,20 +82,20 @@ const Collections = () => {
     console.log(collections)
     const Mows = []
 
-    collections.map(function (collection) {      
-    
+    collections.map(function (collection) {   
     const coll = [
       collection._id,
       collection.name,
       collection.description 
     ]
-
-    Mows.push(coll);
+    if (collection.deleteFlag === false){
+      Mows.push(coll);
+    }
       
     })
 
     setRows(Mows)
-    console.log(newRows)
+    
 
   },[collections])
 
