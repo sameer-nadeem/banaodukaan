@@ -9,11 +9,13 @@ const addCollection = async(req, res) => {
     
     try{
         var {
-           name
+           name,
+           description
         } = req.body
 
         const collection = new Collection({
-            name
+            name,
+            description
         })
 
         await collection.save()
@@ -102,7 +104,8 @@ const updateCollection = async (req,res) =>
     try{
         var {
             name,
-            deleteFlag
+            deleteFlag,
+            description
         } = req.body
 
         const id = req.params.id
@@ -112,6 +115,7 @@ const updateCollection = async (req,res) =>
 
         collection.name = name
         collection.deleteFlag = deleteFlag
+        collection.description = description
 
         await collection.save()
 
