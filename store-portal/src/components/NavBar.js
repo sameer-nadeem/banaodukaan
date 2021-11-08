@@ -10,14 +10,14 @@ const Navbar = () => {
             <a className="nav-link" data-widget="pushmenu" href="#" role="button"><i className="fas fa-bars" /></a>
           </li>
           <li className="nav-item d-none d-sm-inline-block">
-            <a href="#" className="nav-link">Home</a>
+            <a href="/" className="nav-link">Home</a>
           </li>
         </ul>
         {/* Right navbar links */}
         <ul className="navbar-nav ml-auto">
           {/* Navbar Search */}
           <li className="nav-item">
-            <a className="nav-link" data-widget="navbar-search" href="#" role="button">
+            <a className="nav-link" data-widget="navbar-search" href="/" role="button">
               <i className="fas fa-search" />
             </a>
             <div className="navbar-search-block">

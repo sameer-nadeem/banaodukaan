@@ -9,6 +9,7 @@ import AddCollections from './pages/AddCollections';
 import ProductDetail from './pages/ProductDetail';
 import { Route, Switch } from 'react-router-dom';
 import CollectionDetail from './pages/CollectionDetail';
+import LandingPage from './pages/LandingPage';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path = "/addcollection" component = {AddCollections} />
           <Route path = "/productdetail" component = {ProductDetail} />
           <Route path = "/collectiondetail" component = {CollectionDetail} />
+          <Route path = "/" component = {LandingPage} />
         </Switch>
       </div>
     </div>
