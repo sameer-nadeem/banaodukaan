@@ -4,7 +4,7 @@ import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import axios from 'axios'
 import { uri } from '../api.json'
-
+import { useHistory } from "react-router-dom"
 
 const AddProducts = () => {
   
@@ -19,7 +19,7 @@ const AddProducts = () => {
   const [fetchCollections, setFetchedCollections] = useState([])
   const [status, setStatus] = useState('')
   const [path, setPath] = useState('')
-
+  const history = useHistory();
   const onChangeTitle = (event) => {
     setTitle(event.target.value);
   }
@@ -96,7 +96,7 @@ const AddProducts = () => {
           }
         }
       ).then(res => {
-        window.location.reload(false);
+        history.push('/products')
       })
       .catch(err => {
         console.log(err)
