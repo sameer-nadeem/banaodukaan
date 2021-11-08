@@ -18,6 +18,8 @@ const ProductDetail = () => {
   const [status, setStatus] = useState('')
   const [path, setPath] = useState('')
   const [product, setProduct] = useState([])
+  const [imgFile, setImgFile] = useState('')
+  const [actualImgFile, setActualImgFile] = useState('')
 
   const onChangeTitle = (event) => {
     setTitle(event.target.value);
@@ -66,19 +68,33 @@ const ProductDetail = () => {
 
   const getProductById = async () => {
     try{
-        const res = await axios.get(`${uri}/product/6187daf510b8e4349f830937`)
+        const res = await axios.get(`${uri}/product/6188ff505c7df3a79b615fe1`)
         console.log(res)
         setProduct(res.data.product)
+        setImgFile(res.data.product.path)
       }
     catch (err) {
     console.log(err)
     }
   }
 
+  const getImages = async() => {
+    // try{
+    //     const res = await axios.get(`${uri}/product/getImage/${imgFile}`)
+    //     console.log(res)
+    //     setActualImgFile(res)
+    // }
+    // catch (err) {
+    //   console.log(err)
+    // }
+
+  }
+
   useEffect(() => {
       getCollections()
       getBrands()
       getProductById()
+      // getImages()
   }, [])
 
   const updateProducts = (event) => {
@@ -141,6 +157,8 @@ const ProductDetail = () => {
       })
     }
 
+  
+
 
 
   }
@@ -150,7 +168,7 @@ const ProductDetail = () => {
           <div style={{display:'flex', justifyContent:'center', padding: 20}}>
           <div class="card" style={{padding:40, paddingTop: 25, width:'85%', backgroundColor: 'white' }}>
             <div>
-              <h1 style={{fontSize:24, color: 'black'}}>Product Name</h1>
+              <h1 style={{fontSize:24, color: 'black'}}>{product === undefined ? '' : product.title}</h1>
             </div>
             
               <div class="mb-3" style={{paddingTop: 25}}>
@@ -177,8 +195,8 @@ const ProductDetail = () => {
                 </div>
                 <div class="col">
                 <div class="mb-3">
-                  <label class="form-label" value={product.stock} style={{color:'black'}}>Quantity</label>
-                  <input class="form-control" type="number" style={{backgroundColor: 'white', color:'black'}} onChange={onChangeQuantity} required/>
+                  <label class="form-label" style={{color:'black'}}>Quantity</label>
+                  <input class="form-control" value={product.stock} type="number" style={{backgroundColor: 'white', color:'black'}} onChange={onChangeQuantity} required/>
                 </div>
                 </div>
               </div> 
@@ -189,7 +207,7 @@ const ProductDetail = () => {
             <div class="col">
                 <h1 style={{fontSize:20, color: 'black'}}>Media</h1>
                 <div>
-                    {/* <img src={require("/public/uploads/IMAGE-1636293353497.jpg")}/> */}
+                    {/* <img > {actualImgFile} </img> */}
                 </div>
                 <div class="mb-3">
                 <form>
@@ -210,7 +228,7 @@ const ProductDetail = () => {
               <div class="mb-3">
                 <label class="form-label" style={{color:'black'}}>Brand</label>
                 <select class="form-select" style={{backgroundColor: 'white', color:'black'}} onChange={onChangeBrand} required>
-                <option selected value={product.brandId === undefined ? '' : product.brandId._id}>{product.brandId === undefined ? 'Pick a Brand' : product.brandId.title}</option>
+                <option selected value={product.brandId === undefined ? '' : product.brandId._id}>{product.brandId === undefined ? 'Pick a Brand' : product.brandId.name}</option>
                   {
                     fetchBrands.map(b => (
                       <option value={b._id} key={b._id}>{b.name}</option>
@@ -223,7 +241,7 @@ const ProductDetail = () => {
             <div class="mb-3">
                 <label class="form-label" style={{color:'black'}}>Collection</label>
                 <select class="form-select" style={{backgroundColor: 'white', color:'black'}} onChange={onChangeCollection} required>
-                <option selected value={product.collectionId === undefined ? '' : product.collectionId._id}>{product.collection === undefined ? 'Pick a Collection' : product.collectionId.title}</option>
+                <option selected value={product.collectionId === undefined ? '' : product.collectionId._id}>{product.collectionId === undefined ? 'Pick a Collection' : product.collectionId.name}</option>
                   {
                     fetchCollections.map(c => (
                       <option value={c._id} key={c._id}>{c.name}</option>

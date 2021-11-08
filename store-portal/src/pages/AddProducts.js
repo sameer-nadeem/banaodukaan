@@ -123,7 +123,7 @@ const AddProducts = () => {
       axios.post(`${uri}/product/upload`, formData, config)
       .then(res => {
         alert('File has been uploaded successfully.')
-        setPath(res.data.path)
+        setPath(res.data.filename)
       })
       .catch(err => {
         console.log(err)
