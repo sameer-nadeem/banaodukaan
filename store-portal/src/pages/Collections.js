@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { Card, Button } from "@material-ui/core"
-import { DataGrid } from '@mui/x-data-grid'
 import MUIDataTable from "mui-datatables";
 import axios from 'axios'
 import { ThemeProvider } from "@mui/styles";
@@ -12,8 +11,9 @@ const Collections = () => {
 
   let theme = createTheme();
   theme = responsiveFontSizes(theme);
+  const history = useHistory();
   
-  const columns = ["Title", "Description"];
+  const columns = ["Id", "Title", "Description"];
   
   const [collections, setCollections] = React.useState([])
   const [newRows, setRows] = React.useState([])
@@ -27,7 +27,7 @@ const Collections = () => {
       }
     ).then(res => {
 
-      console.log(res)
+      console.log("collections here", res.data.collections)
       let list = res.data.collections
       setCollections(list)   
       
@@ -38,14 +38,16 @@ const Collections = () => {
 
   }
 
-  const data = [
-    ["Home page","This is the homepage collection"],
-    ["Shirts", "This is the collection for shirts"]
-  ];
-
   const options = {
     filterType: 'checkbox',
     pagination: false,
+    onRowClick: (rowData, rowState) => {
+      console.log(rowData, rowState);
+    },
+    onRowsDelete:(rowsDeleted, dataRows)=>{
+      const idsToDelete = dataRows.map(d => newRows[d.dataIndex]);
+      console.log("ids here", idsToDelete)
+    }
   };
 
   React.useEffect(async() => {
@@ -62,6 +64,7 @@ const Collections = () => {
     collections.map(function (collection) {      
     
     const coll = [
+      collection._id,
       collection.name,
       collection.description 
     ]
@@ -91,8 +94,7 @@ const Collections = () => {
         </div>
         <div style = {{padding: '2%'}}>
           <ThemeProvider theme={theme}>
-            <MUIDataTable
-              
+            <MUIDataTable 
               data={newRows}
               columns={columns}
               options={options}
