@@ -6,6 +6,7 @@ import Products from './pages/Products';
 import AddProducts from './pages/AddProducts'
 import Collections from './pages/Collections';
 import AddCollections from './pages/AddCollections';
+import ProductDetail from './pages/ProductDetail';
 import { Route, Switch } from 'react-router-dom';
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
           <Route path = "/addproduct" component = {AddProducts}/>
           <Route path = "/collections" component = {Collections} />
           <Route path = "/addcollection" component = {AddCollections} />
+          <Route path = "/productdetail" component = {ProductDetail} />
         </Switch>
       </div>
     </div>

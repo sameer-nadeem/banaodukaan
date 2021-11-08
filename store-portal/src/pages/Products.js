@@ -1,11 +1,20 @@
 import * as React from 'react';
 import { Box, Tabs, Tab, CardContent, Card, CardActionArea, Typography, Button, Stack } from "@material-ui/core"
 import { DataGrid } from '@mui/x-data-grid'
+import MUIDataTable from "mui-datatables";
+import { ThemeProvider } from "@mui/styles";
+import { createTheme, responsiveFontSizes } from '@mui/material/styles';
 import axios from 'axios'
 import { uri } from '../api.json'
+import { Link, useHistory } from "react-router-dom"
+
 
 const Products = () => {
   const [value, setValue] = React.useState(0);
+  let theme = createTheme();
+  theme = responsiveFontSizes(theme);
+  const history = useHistory();
+
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -36,26 +45,29 @@ const Products = () => {
   }
 
 
-  const columns = [
-    { field: 'id', headerName: 'ID', width: 70, headerAlign: 'center' },
-    { field: 'title', headerName: 'Title', width: 150, headerAlign: 'center' },
-    { field: 'status', headerName: 'Status', width: 150, headerAlign: 'center'},
-    {
-      field: 'stock',
-      headerName: 'Inventory',
-      type: 'number',
-      width: 150,
-      headerAlign: 'center'
-    },
-    {
-      field: 'collection',
-      headerName: 'Collection',
-      description: 'This column has a value getter and is not sortable.',
-      sortable: false,
-      width: 160,
-      headerAlign: 'center'
-    },
-  ];
+  // const columns = [
+  //   { field: 'id', headerName: 'ID', width: 70, headerAlign: 'center' },
+  //   { field: 'title', headerName: 'Title', width: 150, headerAlign: 'center' },
+  //   { field: 'status', headerName: 'Status', width: 150, headerAlign: 'center'},
+  //   {
+  //     field: 'stock',
+  //     headerName: 'Inventory',
+  //     type: 'number',
+  //     width: 150,
+  //     headerAlign: 'center'
+  //   },
+  //   {
+  //     field: 'collection',
+  //     headerName: 'Collection',
+  //     description: 'This column has a value getter and is not sortable.',
+  //     sortable: false,
+  //     width: 160,
+  //     headerAlign: 'center'
+  //   },
+  // ];
+
+  const columns = ["Id", "Title", "Status", "Stock", "Collection"]
+  
   
   let rows = [
     { id: 1, title: 'Snow', status: 'Jon', stock: 35, collection: 'test' },
@@ -68,6 +80,13 @@ const Products = () => {
     { id: 8, title: 'Frances', status: 'Rossini', stock: 36, collection: 'test'  },
     { id: 9, title: 'Roxie', status: 'Harvey', stock: 65, collection: 'test'},
   ];
+  const options = {
+    filterType: 'checkbox',
+    pagination: false,
+    onRowClick:(rowData) => {
+      history.push('/productdetail', rowData)
+    }
+  };
 
 
   React.useEffect(async() => {
@@ -82,14 +101,13 @@ const Products = () => {
 
     products.map(function (product) {      
     
-    const prod = {
-      id: product._id,
-      title: product.title,
-      status: null,
-      stock: product.stock,
-      collection: 'test'
-    
-    }
+    const prod = [
+      product._id,
+      product.title,
+      null,
+      product.stock,
+      'test'
+    ]
 
     Mows.push(prod);
       
@@ -112,14 +130,22 @@ const Products = () => {
           <Button variant="outlined" style={{backgroundColor: '#12824C', color: '#FFFFFF'}}>Add Product</Button>
         </div>
         </div>
-          <DataGrid
+          <ThemeProvider theme={theme}>
+            <MUIDataTable  
+              data={newRows}
+              columns={columns}
+              options={options}
+            />
+          </ThemeProvider>
+
+          {/* <DataGrid
             rows={newRows}
             columns={columns}
             pageSize={20}
             rowsPerPageOptions={[10]}
             checkboxSelection
             style={{alignContent: 'center', alignSelf: 'center'}}
-          />
+          /> */}
       </Card>
     </div>
   );
