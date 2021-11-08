@@ -4,8 +4,11 @@ import axios from 'axios'
 import { uri } from '../api.json'
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import {EditorState,convertFromHTML, ContentState} from 'draft-js';
+import { EditorState,convertFromHTML, ContentState} from 'draft-js';
 import { useLocation } from 'react-router';
+import { Link, useHistory } from "react-router-dom"
+import { createReactEditorJS } from 'react-editor-js'
+const ReactEditorJS = createReactEditorJS()
 
 const ProductDetail = () => {
   const [title, setTitle] = useState('')
@@ -24,7 +27,7 @@ const ProductDetail = () => {
 
   const location = useLocation();
   const rowData = location.state;
-
+  const history = useHistory();
 
   const onChangeTitle = (event) => {
     setTitle(event.target.value);
@@ -77,6 +80,14 @@ const ProductDetail = () => {
         console.log(res)
         setProduct(res.data.product)
         setImgFile(res.data.product.path)
+        setTitle(res.data.product.title)
+        setDescription(res.data.product.description)
+        setPrice(res.data.product.price)
+        setQuantity(res.data.product.stock)
+        setBrand(res.data.product.brandId)
+        setCollection(res.data.product.collectionId)
+        setStatus(res.data.product.status)
+        setPath(res.data.product.image)
       }
     catch (err) {
     console.log(err)
@@ -90,7 +101,7 @@ const ProductDetail = () => {
   }, [])
 
   const updateProducts = (event) => {
-    if (image.length === 0 || title === '' || description === '' || brand === '' || collection === '' || status === ''){
+    if (title === '' || description === '' || brand === '' || collection === '' || status === ''){
       event.preventDefault()
       alert("Please Check Fields")
       return
@@ -108,14 +119,14 @@ const ProductDetail = () => {
         status: status,
         image: path
       }
-      axios.post(`${uri}/product`, data, 
+      axios.put(`${uri}/product/${product._id}`, data, 
         {
           headers: {
             "Content-Type": "application/json"  
           }
         }
       ).then(res => {
-        window.location.reload(false);
+        history.push('/products')
       })
       .catch(err => {
         console.log(err)
@@ -149,6 +160,8 @@ const ProductDetail = () => {
       })
     }
   }
+
+  
     return (
         <div>
           <form style={{paddingTop: 25}}>
@@ -160,30 +173,36 @@ const ProductDetail = () => {
             
               <div class="mb-3" style={{paddingTop: 25}}>
                 <label class="form-label" style={{color:'black'}}>Title</label>
-                <input class="form-control" value={product.title} style={{backgroundColor: 'white', color:'black'}} onChange={onChangeTitle} required/>
+                <input class="form-control" value={title} style={{backgroundColor: 'white', color:'black'}} onChange={onChangeTitle} required/>
               </div>
               <div class="mb-3">
-                <label class="form-label" style={{color:'black'}}>Description</label>
+                <label class="form-label" style={{color:'black'}}>Current Description</label>
+                <div> 
+                <textarea class="form-control" style={{backgroundColor: 'white', color:'black'}} value={product.description} disabled="disabled" id="exampleFormControlTextarea1" rows="3"/>
+                </div>
+                <div>
+                <label class="form-label" style={{color:'black', paddingTop: 25}}>New Description</label>
+                
                   <Editor
-                    editorState={EditorState.createWithContent(ContentState.createFromText(description))}
                     toolbarClassName="toolbarClassName"
                     wrapperClassName="wrapperClassName"
                     editorClassName="editorClassName"
                     onChange={onChangeDescription}
                   />
+                  </div>
               </div>
               <div class="row">
                 
                 <div class="col">
                 <div class="mb-3">
                   <label class="form-label" style={{color:'black'}}>Price</label>
-                  <input class="form-control" value={product.price} type="number" style={{backgroundColor: 'white', color:'black'}} onChange={onChangePrice} required/>
+                  <input class="form-control" value={price} type="number" style={{backgroundColor: 'white', color:'black'}} onChange={onChangePrice} required/>
                 </div>
                 </div>
                 <div class="col">
                 <div class="mb-3">
                   <label class="form-label" style={{color:'black'}}>Quantity</label>
-                  <input class="form-control" value={product.stock} type="number" style={{backgroundColor: 'white', color:'black'}} onChange={onChangeQuantity} required/>
+                  <input class="form-control" value={quantity} type="number" style={{backgroundColor: 'white', color:'black'}} onChange={onChangeQuantity} required/>
                 </div>
                 </div>
               </div> 
@@ -215,7 +234,7 @@ const ProductDetail = () => {
               <div class="mb-3">
                 <label class="form-label" style={{color:'black'}}>Brand</label>
                 <select class="form-select" style={{backgroundColor: 'white', color:'black'}} onChange={onChangeBrand} required>
-                <option selected value={product.brandId === undefined ? '' : product.brandId._id}>{product.brandId === undefined ? 'Pick a Brand' : product.brandId.name}</option>
+                <option selected value={brand === undefined ? '' : brand._id}>{brand === undefined ? 'Pick a Brand' : brand.name}</option>
                   {
                     fetchBrands.map(b => (
                       <option value={b._id} key={b._id}>{b.name}</option>
@@ -228,7 +247,7 @@ const ProductDetail = () => {
             <div class="mb-3">
                 <label class="form-label" style={{color:'black'}}>Collection</label>
                 <select class="form-select" style={{backgroundColor: 'white', color:'black'}} onChange={onChangeCollection} required>
-                <option selected value={product.collectionId === undefined ? '' : product.collectionId._id}>{product.collectionId === undefined ? 'Pick a Collection' : product.collectionId.name}</option>
+                <option selected value={collection === undefined ? '' : collection._id}>{collection === undefined ? 'Pick a Collection' : collection.name}</option>
                   {
                     fetchCollections.map(c => (
                       <option value={c._id} key={c._id}>{c.name}</option>
@@ -243,7 +262,7 @@ const ProductDetail = () => {
           <div class="mb-3">
             <label class="form-label" style={{color:'black'}}>Status</label>
             <select class="form-select" style={{backgroundColor: 'white', color:'black'}} onChange={onChangeStatus} required>
-              <option selected value={product.status}>{product.status}</option>
+              <option selected value={status}>{status}</option>
               <option value="Active">Active</option>
               <option value="Draft">Draft</option>
             </select>

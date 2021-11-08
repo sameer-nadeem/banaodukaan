@@ -120,6 +120,14 @@ const Products = () => {
         sort: false,
       }
       },
+      {
+        name: "brand",
+        label: "Brand",
+        options: {
+          filter: true,
+          sort: false,
+        }
+        },
   ];
   
   let rows = [
@@ -172,9 +180,10 @@ const Products = () => {
       const prod = {
         id: product._id,
         title: product.title,
-        status: null,
+        status: product.status,
         stock: product.stock,
-        collection: 'test'
+        collection: product.collectionId.name,
+        brand: product.brandId.name
       
       }
       Mows.push(prod);}
@@ -196,7 +205,9 @@ const Products = () => {
           <h1 style={{fontSize: 24}}>Products</h1>
         </div>
         <div style={{justifyContent: 'flex-end', padding: 20}}>
+          <Link to="/addproduct"> 
           <Button variant="outlined" style={{backgroundColor: '#12824C', color: '#FFFFFF'}}>Add Product</Button>
+          </Link>
         </div>
         </div>
         <ThemeProvider theme={theme}>

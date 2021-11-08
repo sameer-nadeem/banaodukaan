@@ -69,7 +69,7 @@ const addProduct = async(req, res) => {
   const getProducts = async(req, res) => {
 
     try{
-        const products = await Product.find()
+        const products = await Product.find().populate(['collectionId', 'brandId'])
         return res.status(200).json({
             products
         })
