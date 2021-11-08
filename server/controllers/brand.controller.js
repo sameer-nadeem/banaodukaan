@@ -1,27 +1,23 @@
-const { collection } = require("../models/collection.model")
-const Collection = require("../models/collection.model")
+const { brand } = require("../models/brand.model")
+const Brand = require("../models/brand.model")
 const Product = require("../models/product.model")
 
-
-
-const addCollection = async(req, res) => {
+const addBrand = async(req, res) => {
 
     
     try{
         var {
-           name,
-           description
+           name
         } = req.body
 
-        const collection = new Collection({
-            name,
-            description
+        const brand = new Brand({
+            name
         })
 
-        await collection.save()
+        await brand.save()
 
         return res.status(200).json({
-            collection
+            brand
         })
     } 
     catch (err) {
@@ -32,17 +28,17 @@ const addCollection = async(req, res) => {
     }
 }
 
-const getCollection = async(req,res) =>
+const getBrand = async(req,res) =>
 {
     try {
 
 
         const id = req.params.id
 
-        const collection = await Collection.findById(id)
+        const brand = await Brand.findById(id)
 
         return res.status(200).json({
-            collection
+            brand
         })
     }
     catch (err) {
@@ -55,16 +51,16 @@ const getCollection = async(req,res) =>
 }
 
 
-const getCollections = async(req,res) =>
+const getBrands = async(req,res) =>
 {
     try {
 
 
         
-        const collections = await Collection.find()
+        const brands = await Brand.find()
 
         return res.status(200).json({
-            collections
+            brands
         })
     }
     catch (err) {
@@ -76,20 +72,20 @@ const getCollections = async(req,res) =>
     }
 }
 
-const deleteCollection = async (req,res) =>{
+const deleteBrand = async (req,res) =>{
     
     try{
         
         const id = req.params.id
-        const collection = await Collection.findOne({
+        const brand = await Brand.findOne({
             _id: id
         })
 
-        collection.deleteFlag = true
+        brand.deleteFlag = true
 
-        await collection.save()
+        await brand.save()
         return res.status(200).json({
-            collection
+            brand
         })
       }catch (err) {
         return res.status(500).json({
@@ -99,28 +95,26 @@ const deleteCollection = async (req,res) =>{
 
 }
 
-const updateCollection = async (req,res) =>
+const updateBrand = async (req,res) =>
 {
     try{
         var {
             name,
-            deleteFlag,
-            description
+            deleteFlag
         } = req.body
 
         const id = req.params.id
-        const collection = await Collection.findOne({
+        const brand = await Brand.findOne({
             _id: id
         })
 
-        collection.name = name
-        collection.deleteFlag = deleteFlag
-        collection.description = description
+        brand.name = name
+        brand.deleteFlag = deleteFlag
 
-        await collection.save()
+        await brand.save()
 
         return res.status(200).json({
-            collection
+            brand
         })
       }catch (err) {
         return res.status(500).json({
@@ -131,10 +125,10 @@ const updateCollection = async (req,res) =>
 }
 
 module.exports = {
-    addCollection,
-    deleteCollection,
-    getCollection,
-    getCollections,
-    updateCollection
+    addBrand,
+    deleteBrand,
+    getBrand,
+    getBrands,
+    updateBrand
 }
   

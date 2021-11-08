@@ -40,7 +40,8 @@ const ProductSchema = new Schema({
   },
   status:{
       type: String,
-      enum :["Active","Draft"]
+      enum :["Active","Draft"],
+      default: "Active"
   },
   image:{
       type:String
