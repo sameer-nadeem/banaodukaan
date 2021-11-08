@@ -6,9 +6,6 @@ import { ThemeProvider } from "@mui/styles";
 import { createTheme, responsiveFontSizes } from '@mui/material/styles';
 import axios from 'axios'
 import { uri } from '../api.json'
-import MUIDataTable from "mui-datatables";
-import { ThemeProvider } from "@mui/styles";
-import { createTheme, responsiveFontSizes } from '@mui/material/styles';
 import { Link, useHistory } from "react-router-dom"
 
 
@@ -158,8 +155,7 @@ const Products = () => {
       }
     }
 
-  let theme = createTheme();
-  theme = responsiveFontSizes(theme);
+
 
   React.useEffect(async() => {
     //Runs only on the first render 
