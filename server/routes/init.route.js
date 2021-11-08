@@ -5,10 +5,10 @@ const brandRouter = require('./brand.route')
 
 
 const init = (app) => {
-  app.use('/example', exampleRouter)
-  app.use('/product', productRouter)
-  app.use('/collection',collectionRouter)
-  app.use('/brand',brandRouter)
+  app.use('/api/example', exampleRouter)
+  app.use('/api/product', productRouter)
+  app.use('/api/collection', collectionRouter)
+  app.use('/api/brand', brandRouter)
 }
 
 
