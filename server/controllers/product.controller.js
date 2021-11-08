@@ -85,6 +85,7 @@ const addProduct = async(req, res) => {
 //upload an image using multer in add product
   const uploadImage = (req, res) =>{
       upload(req, res, (err) => {
+          console.log(res)
           res.send(req.file)
       })
   }
@@ -95,7 +96,7 @@ const addProduct = async(req, res) => {
 
         const id = req.params.id
 
-        const product = await Product.findById(id)
+        const product = await Product.findById(id).populate(['collectionId', 'brandId'])
 
         return res.status(200).json({
             product

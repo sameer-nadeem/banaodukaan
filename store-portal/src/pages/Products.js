@@ -1,15 +1,23 @@
 import * as React from 'react';
 import { Box, Tabs, Tab, CardContent, Card, CardActionArea, Typography, Button, Stack } from "@material-ui/core"
 import { DataGrid } from '@mui/x-data-grid'
+import MUIDataTable from "mui-datatables";
+import { ThemeProvider } from "@mui/styles";
+import { createTheme, responsiveFontSizes } from '@mui/material/styles';
 import axios from 'axios'
 import { uri } from '../api.json'
 import MUIDataTable from "mui-datatables";
 import { ThemeProvider } from "@mui/styles";
 import { createTheme, responsiveFontSizes } from '@mui/material/styles';
+import { Link, useHistory } from "react-router-dom"
 
 
 const Products = () => {
   const [value, setValue] = React.useState(0);
+  let theme = createTheme();
+  theme = responsiveFontSizes(theme);
+  const history = useHistory();
+
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -145,8 +153,9 @@ const Products = () => {
       }, 200)
       
       ;},
-    onRowClick: (rowData, rowState) => {
-      console.log("bye");}
+      onRowClick:(rowData) => {
+        history.push('/productdetail', rowData)
+      }
     }
 
   let theme = createTheme();
