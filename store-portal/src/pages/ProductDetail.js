@@ -4,6 +4,8 @@ import axios from 'axios'
 import { uri } from '../api.json'
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import {EditorState,convertFromHTML, ContentState} from 'draft-js';
+import { useLocation } from 'react-router';
 
 const ProductDetail = () => {
   const [title, setTitle] = useState('')
@@ -19,7 +21,10 @@ const ProductDetail = () => {
   const [path, setPath] = useState('')
   const [product, setProduct] = useState([])
   const [imgFile, setImgFile] = useState('')
-  const [actualImgFile, setActualImgFile] = useState('')
+
+  const location = useLocation();
+  const rowData = location.state;
+
 
   const onChangeTitle = (event) => {
     setTitle(event.target.value);
@@ -68,7 +73,7 @@ const ProductDetail = () => {
 
   const getProductById = async () => {
     try{
-        const res = await axios.get(`${uri}/product/6188ff505c7df3a79b615fe1`)
+        const res = await axios.get(`${uri}/product/${rowData[0]}`)
         console.log(res)
         setProduct(res.data.product)
         setImgFile(res.data.product.path)
@@ -78,23 +83,10 @@ const ProductDetail = () => {
     }
   }
 
-  const getImages = async() => {
-    // try{
-    //     const res = await axios.get(`${uri}/product/getImage/${imgFile}`)
-    //     console.log(res)
-    //     setActualImgFile(res)
-    // }
-    // catch (err) {
-    //   console.log(err)
-    // }
-
-  }
-
   useEffect(() => {
       getCollections()
       getBrands()
       getProductById()
-      // getImages()
   }, [])
 
   const updateProducts = (event) => {
@@ -150,17 +142,12 @@ const ProductDetail = () => {
       axios.post(`${uri}/product/upload`, formData, config)
       .then(res => {
         alert('File has been uploaded successfully.')
-        setPath(res.data.path)
+        setPath(res.data.filename)
       })
       .catch(err => {
         console.log(err)
       })
     }
-
-  
-
-
-
   }
     return (
         <div>
@@ -178,7 +165,7 @@ const ProductDetail = () => {
               <div class="mb-3">
                 <label class="form-label" style={{color:'black'}}>Description</label>
                   <Editor
-                    value={product.description}
+                    editorState={EditorState.createWithContent(ContentState.createFromText(description))}
                     toolbarClassName="toolbarClassName"
                     wrapperClassName="wrapperClassName"
                     editorClassName="editorClassName"
@@ -206,8 +193,8 @@ const ProductDetail = () => {
             <div class="card" style={{padding:40, paddingTop: 25, width:'85%', backgroundColor: 'white' }}>
             <div class="col">
                 <h1 style={{fontSize:20, color: 'black'}}>Media</h1>
-                <div>
-                    {/* <img > {actualImgFile} </img> */}
+                <div  style={{display:'flex', justifyContent:'center'}}>
+                    <img src = {`${uri}/uploads/${path === '' ? product.image : path}`} width='400' height='400'/>
                 </div>
                 <div class="mb-3">
                 <form>
