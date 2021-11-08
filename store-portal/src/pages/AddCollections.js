@@ -12,8 +12,30 @@ const AddCollections = () => {
     const [description, setDescription] = useState('')
     
     const handleSubmit = (e) =>{
+        
+        if(title === '' && description == ''){
+            return
+            //we will add toastify here
+        }
         e.preventDefault()
-        console.log(title,description)
+        const body = {
+            name: title,
+            description: description
+        }
+        //post request here
+        
+        axios.post(`${uri}/collection`, body, 
+        {
+          headers: {
+            "Content-Type": "application/json"  
+          }
+        }
+      ).then(res => {
+        window.location.reload(false);
+      })
+      .catch(err => {
+        console.log(err)
+      })
 
     }
 
