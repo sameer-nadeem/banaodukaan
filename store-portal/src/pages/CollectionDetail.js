@@ -29,7 +29,8 @@ const CollectionDetail = () => {
     event.preventDefault()
     const body = {
         name: title,
-        description: description
+        description: description,
+        deleteFlag: false
     }
     axios.put(`${uri}/collection/${collection._id}`, body, 
         {
@@ -91,7 +92,7 @@ const CollectionDetail = () => {
                   />
                   </div>
             </div>
-            <button class="btn btn-success" style={{width:'18%'}} onClick={(e) =>updateCollection(e)}>Update Collection</button>
+            <button class="btn btn-success" style={{width:'25%'}} onClick={(e) =>updateCollection(e)}>Update Collection</button>
           </div>
           
         </div>
