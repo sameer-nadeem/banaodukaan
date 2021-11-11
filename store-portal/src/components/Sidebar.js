@@ -82,6 +82,14 @@ const Sidebar = () => {
                     </Link>
                   </div>
                 </li>
+                <li className="nav-item">
+                  <div className="nav-link">
+                    <Link to = "/brands">
+                      <i className="far fa-circle nav-icon" />
+                      <p>Brands</p>
+                    </Link>
+                  </div>
+                </li>
               </ul>
             </li>
 

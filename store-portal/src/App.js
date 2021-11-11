@@ -10,6 +10,9 @@ import ProductDetail from './pages/ProductDetail';
 import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
 import CollectionDetail from './pages/CollectionDetail';
 import LandingPage from './pages/LandingPage';
+import AddBrands from './pages/AddBrands';
+import Brands from './pages/Brands';
+import BrandDetail from './pages/BrandDetail'
 
 function App() {
   return (
@@ -25,6 +28,9 @@ function App() {
             <Route path="/addcollection" component={AddCollections} />
             <Route path="/productdetail" component={ProductDetail} />
             <Route path="/collectiondetail" component={CollectionDetail} />
+            <Route path="/addbrand" component={AddBrands} />
+            <Route path="/brands" component={Brands} />
+            <Route path="/branddetail" component={BrandDetail} />
             <Route path="/" component={LandingPage} />
           </Switch>
         </div>

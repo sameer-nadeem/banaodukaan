@@ -267,7 +267,7 @@ const ProductDetail = () => {
               <h1 style={{ fontSize: 20, color: "black" }}>Media</h1>
               <div style={{ display: "flex", justifyContent: "center" }}>
                 <img
-                  src={`${uri}/uploads/${path === "" ? product.image : path}`}
+                  src={`/uploads/${path === "" ? product.image : path}`}
                   width="400"
                   height="400"
                 />
