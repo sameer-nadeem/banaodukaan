@@ -257,9 +257,10 @@ const AddProducts = () => {
                   >
                     <option value="">Pick a Brand</option>
                     {fetchBrands.map((b) => (
-                      <option value={b._id} key={b._id}>
+                      b.deleteFlag === false ?
+                      (<option value={b._id} key={b._id}>
                         {b.name}
-                      </option>
+                      </option>) : null
                     ))}
                   </select>
                 </div>

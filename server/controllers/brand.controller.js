@@ -1,17 +1,17 @@
-const { brand } = require("../models/brand.model")
 const Brand = require("../models/brand.model")
-const Product = require("../models/product.model")
 
 const addBrand = async(req, res) => {
 
     
     try{
         var {
-           name
+           name,
+           description
         } = req.body
 
         const brand = new Brand({
-            name
+            name,
+            description
         })
 
         await brand.save()
@@ -100,7 +100,8 @@ const updateBrand = async (req,res) =>
     try{
         var {
             name,
-            deleteFlag
+            deleteFlag,
+            description
         } = req.body
 
         const id = req.params.id
@@ -110,6 +111,7 @@ const updateBrand = async (req,res) =>
 
         brand.name = name
         brand.deleteFlag = deleteFlag
+        brand.description = description
 
         await brand.save()
 

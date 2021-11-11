@@ -2,11 +2,17 @@ const mongoose = require("mongoose")
 const Schema = mongoose.Schema
 
 const BrandSchema = new Schema({
-    brandId:{
-        type: mongoose.Schema.Types.ObjectId
-    },
     name:{
-        type:String
+        type: String
+
+    },
+    description:{
+        type: String
+    },
+    deleteFlag:{
+        type: Boolean,
+        default: false
+        
     }
 })
 
