@@ -1,12 +1,12 @@
 const Brand = require("../models/brand.model")
 
-const addBrand = async(req, res) => {
+const addBrand = async (req, res) => {
 
-    
-    try{
+
+    try {
         var {
-           name,
-           description
+            name,
+            description
         } = req.body
 
         const brand = new Brand({
@@ -19,7 +19,7 @@ const addBrand = async(req, res) => {
         return res.status(200).json({
             brand
         })
-    } 
+    }
     catch (err) {
         console.log(err)
         return res.status(500).json({
@@ -28,8 +28,7 @@ const addBrand = async(req, res) => {
     }
 }
 
-const getBrand = async(req,res) =>
-{
+const getBrand = async (req, res) => {
     try {
 
 
@@ -51,13 +50,12 @@ const getBrand = async(req,res) =>
 }
 
 
-const getBrands = async(req,res) =>
-{
+const getBrands = async (req, res) => {
     try {
 
 
-        
-        const brands = await Brand.find()
+
+        const brands = await Brand.find({ deleteFlag: false })
 
         return res.status(200).json({
             brands
@@ -72,10 +70,10 @@ const getBrands = async(req,res) =>
     }
 }
 
-const deleteBrand = async (req,res) =>{
-    
-    try{
-        
+const deleteBrand = async (req, res) => {
+
+    try {
+
         const id = req.params.id
         const brand = await Brand.findOne({
             _id: id
@@ -87,7 +85,7 @@ const deleteBrand = async (req,res) =>{
         return res.status(200).json({
             brand
         })
-      }catch (err) {
+    } catch (err) {
         return res.status(500).json({
             error: "Server Error"
         })
@@ -95,9 +93,8 @@ const deleteBrand = async (req,res) =>{
 
 }
 
-const updateBrand = async (req,res) =>
-{
-    try{
+const updateBrand = async (req, res) => {
+    try {
         var {
             name,
             deleteFlag,
@@ -118,7 +115,7 @@ const updateBrand = async (req,res) =>
         return res.status(200).json({
             brand
         })
-      }catch (err) {
+    } catch (err) {
         return res.status(500).json({
             error: "Server Error"
         })
@@ -133,4 +130,3 @@ module.exports = {
     getBrands,
     updateBrand
 }
-  

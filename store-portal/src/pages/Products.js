@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useEffect, useState } from "react";
 import {
   Card,
   Button,
@@ -11,45 +11,39 @@ import { uri } from "../api.json";
 import { Link, useHistory } from "react-router-dom";
 
 const Products = () => {
-  const [value, setValue] = React.useState(0);
   let theme = createTheme();
   theme = responsiveFontSizes(theme);
   const history = useHistory();
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-
-  const [products, setProducts] = React.useState([]);
-  const [newRows, setRows] = React.useState([]);
+  const [products, setProducts] = useState([]);
+  const [newRows, setRows] = useState([]);
 
   const getProducts = async () => {
-    axios
-      .get(`${uri}/product`, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-      .then((res) => {
-        console.log(res);
-        let list = res.data.products;
-        setProducts(list);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    try {
+      const res = await axios
+        .get(`${uri}/product`, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+      console.log(res);
+      let list = res.data.products;
+      setProducts(list);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const deleteProduct = async (id) => {
-    axios
-      .delete(`${uri}/product/${id}`, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    try {
+      await axios
+        .delete(`${uri}/product/${id}`, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const columns = [
@@ -126,35 +120,33 @@ const Products = () => {
       }, 200);
     },
     onRowClick: (rowData) => {
-      history.push("/productdetail", rowData);
+      console.log(rowData)
+      history.push(`/product/${rowData[0]}`);
     },
   };
 
-  React.useEffect(async () => {
+  useEffect(() => {
     //Runs only on the first render
     getProducts();
   }, []);
 
-  React.useEffect(async () => {
+  useEffect(() => {
     console.log(products);
-    const Mows = [];
+    const cleanedProducts = [];
 
-    products.map(function (product) {
-      if (product.deleteFlag == false) {
-        const prod = {
-          id: product._id,
-          title: product.title,
-          status: product.status,
-          stock: product.stock,
-          collection: product.collectionId.name,
-          brand: product.brandId.name,
-        };
-        Mows.push(prod);
-      } else {
-      }
+    products.forEach(function (product) {
+      const prod = {
+        id: product._id,
+        title: product.title,
+        status: product.status,
+        stock: product.stock,
+        collection: product.collectionId.name,
+        brand: product.brandId.name,
+      };
+      cleanedProducts.push(prod);
     });
 
-    setRows(Mows);
+    setRows(cleanedProducts);
   }, [products]);
 
   return (
@@ -165,7 +157,7 @@ const Products = () => {
             <h1 style={{ fontSize: 24 }}>Products</h1>
           </div>
           <div style={{ justifyContent: "flex-end", padding: 20 }}>
-            <Link to="/addproduct">
+            <Link to="/products/new">
               <Button
                 variant="outlined"
                 style={{ backgroundColor: "#12824C", color: "#FFFFFF" }}

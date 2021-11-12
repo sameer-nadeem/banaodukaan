@@ -4,7 +4,7 @@ import axios from "axios";
 import { uri } from "../api.json";
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import { useLocation } from "react-router";
+import { useParams } from "react-router";
 import { useHistory } from "react-router-dom";
 
 const ProductDetail = () => {
@@ -20,10 +20,9 @@ const ProductDetail = () => {
   const [status, setStatus] = useState("");
   const [path, setPath] = useState("");
   const [product, setProduct] = useState([]);
-  const [imgFile, setImgFile] = useState("");
 
-  const location = useLocation();
-  const rowData = location.state;
+  const { id: productId } = useParams()
+
   const history = useHistory();
 
   const onChangeTitle = (event) => {
@@ -51,50 +50,53 @@ const ProductDetail = () => {
     setStatus(event.target.value);
   };
 
-  const getCollections = async () => {
-    try {
-      const res = await axios.get(`${uri}/collection`);
-      setFetchedCollections(res.data.collections);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const getBrands = async () => {
-    try {
-      const res = await axios.get(`${uri}/brand`);
-      setFetchedBrands(res.data.brands);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const getProductById = async () => {
-    try {
-      const res = await axios.get(`${uri}/product/${rowData[0]}`);
-      console.log(res);
-      setProduct(res.data.product);
-      setImgFile(res.data.product.path);
-      setTitle(res.data.product.title);
-      setDescription(res.data.product.description);
-      setPrice(res.data.product.price);
-      setQuantity(res.data.product.stock);
-      setBrand(res.data.product.brandId);
-      setCollection(res.data.product.collectionId);
-      setStatus(res.data.product.status);
-      setPath(res.data.product.image);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  useEffect(() => {
+    const getCollections = async () => {
+      try {
+        const res = await axios.get(`${uri}/collection`);
+        setFetchedCollections(res.data.collections);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getCollections()
+  }, [])
 
   useEffect(() => {
-    getCollections();
-    getBrands();
-    getProductById();
-  }, []);
+    const getBrands = async () => {
+      try {
+        const res = await axios.get(`${uri}/brand`);
+        setFetchedBrands(res.data.brands);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getBrands()
+  }, [])
 
-  const updateProducts = (event) => {
+  useEffect(() => {
+    const getProductById = async (id) => {
+      try {
+        const res = await axios.get(`${uri}/product/${productId}`);
+        console.log(res);
+        setProduct(res.data.product);
+        setTitle(res.data.product.title);
+        setDescription(res.data.product.description);
+        setPrice(res.data.product.price);
+        setQuantity(res.data.product.stock);
+        setBrand(res.data.product.brandId);
+        setCollection(res.data.product.collectionId);
+        setStatus(res.data.product.status);
+        setPath(res.data.product.image);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    getProductById();
+  }, [productId]);
+
+  const updateProducts = async (event) => {
     if (
       title === "" ||
       description === "" ||
@@ -118,22 +120,22 @@ const ProductDetail = () => {
         status: status,
         image: path,
       };
-      axios
-        .put(`${uri}/product/${product._id}`, data, {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        })
-        .then((res) => {
-          history.push("/products");
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+
+      try {
+        await axios
+          .put(`${uri}/product/${product._id}`, data, {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          })
+        history.push("/products");
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
 
-  const uploadImages = (event) => {
+  const uploadImages = async (event) => {
     if (image.length === 0) {
       alert("Please Select Image First");
     } else {
@@ -146,15 +148,15 @@ const ProductDetail = () => {
           "content-type": "multipart/form-data",
         },
       };
-      axios
-        .post(`${uri}/product/upload`, formData, config)
-        .then((res) => {
-          alert("File has been uploaded successfully.");
-          setPath(res.data.filename);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+
+      try {
+        const res = await axios
+          .post(`${uri}/product/upload`, formData, config)
+        alert("File has been uploaded successfully.");
+        setPath(res.data.filename);
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
 
@@ -270,6 +272,7 @@ const ProductDetail = () => {
                   src={`/uploads/${path === "" ? product.image : path}`}
                   width="400"
                   height="400"
+                  alt=""
                 />
               </div>
               <div class="mb-3">

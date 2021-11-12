@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useEffect, useState } from "react";
 import { Card, Button } from "@material-ui/core";
 import MUIDataTable from "mui-datatables";
 import axios from "axios";
@@ -14,8 +14,8 @@ const Brands = () => {
 
   const columns = ["Id", "Title", "Description"];
 
-  const [brands, setBrands] = React.useState([]);
-  const [newRows, setRows] = React.useState([]);
+  const [brands, setBrands] = useState([]);
+  const [newRows, setRows] = useState([]);
 
   const getBrands = async () => {
     axios
@@ -60,27 +60,25 @@ const Brands = () => {
       }, 200);
     },
     onRowClick: (rowData) => {
-      history.push("/branddetail", rowData);
+      history.push(`/brand/${rowData[0]}`);
     },
   };
 
-  React.useEffect(async () => {
+  useEffect(() => {
     //Runs only on the first render
     getBrands();
   }, []);
 
-  React.useEffect(async () => {
+  useEffect(() => {
     console.log(brands);
-    const Mows = [];
+    const cleanedBrands = [];
 
-    brands.map(function (brand) {
+    brands.forEach(function (brand) {
       const coll = [brand._id, brand.name, brand.description];
-      if (brand.deleteFlag === false) {
-        Mows.push(coll);
-      }
+      cleanedBrands.push(coll);
     });
 
-    setRows(Mows);
+    setRows(cleanedBrands);
   }, [brands]);
 
   return (
@@ -91,7 +89,7 @@ const Brands = () => {
             <h1 style={{ fontSize: 24 }}>Brands</h1>
           </div>
           <div style={{ justifyContent: "flex-end", padding: 20 }}>
-            <Link to="/addbrand">
+            <Link to="/brands/new">
               <Button
                 variant="outlined"
                 style={{ backgroundColor: "#12824C", color: "#FFFFFF" }}

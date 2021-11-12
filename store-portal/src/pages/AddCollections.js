@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import axios from "axios";
@@ -12,7 +12,7 @@ const AddCollections = () => {
   let history = useHistory();
 
   const handleSubmit = (e) => {
-    if (title === "" && description == "") {
+    if (title === "" && description === "") {
       return;
       //we will add toastify here
     }
