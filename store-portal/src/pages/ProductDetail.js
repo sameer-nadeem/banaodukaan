@@ -6,8 +6,18 @@ import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { useParams } from "react-router";
 import { useHistory } from "react-router-dom";
+import Alert from "../components/Alerts/Alert";
 
 const ProductDetail = () => {
+  //success modal
+  const [show, setShow] = useState(false);
+  const handleClose = () => {
+    setShow(false)
+    history.push('/products')
+  }
+  const handleShow = () => setShow(true);
+  //success modal states end
+
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [image, setImage] = useState([]);
@@ -128,7 +138,7 @@ const ProductDetail = () => {
               "Content-Type": "application/json",
             },
           })
-        history.push("/products");
+        handleShow()
       } catch (err) {
         console.log(err);
       }
@@ -162,6 +172,14 @@ const ProductDetail = () => {
 
   return (
     <div>
+      <Alert
+        title="Product Updated"
+        message="The product was succesfuly updated."
+        show={show}
+        variant="success"
+        handleClose={handleClose}
+        handleShow={handleShow}
+      />
       <form style={{ paddingTop: 25 }}>
         <div style={{ display: "flex", justifyContent: "center", padding: 20 }}>
           <div

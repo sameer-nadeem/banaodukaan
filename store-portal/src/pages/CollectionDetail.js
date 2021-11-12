@@ -6,6 +6,7 @@ import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { useParams } from 'react-router';
 import { useHistory } from "react-router-dom"
+import Alert from '../components/Alerts/Alert';
 
 
 const CollectionDetail = () => {
@@ -14,7 +15,14 @@ const CollectionDetail = () => {
   const [collection, setCollection] = useState([])
   const { id: collectionId } = useParams()
   const history = useHistory();
-
+  //success modal
+  const [show, setShow] = useState(false);
+  const handleClose = () => {
+    setShow(false)
+    history.push('/collections')
+  }
+  const handleShow = () => setShow(true);
+  //success modal states end
   const onChangeTitle = (event) => {
     setTitle(event.target.value);
   }
@@ -37,7 +45,7 @@ const CollectionDetail = () => {
           }
         }
       )
-      history.push('/collections')
+      handleShow()
     }
     catch (err) {
       console.log(err)
@@ -64,6 +72,14 @@ const CollectionDetail = () => {
 
   return (
     <div>
+      <Alert
+        title="Collection Updated"
+        message="The collection was succesfuly updated."
+        show={show}
+        variant="success"
+        handleClose={handleClose}
+        handleShow={handleShow}
+      />
       <form style={{ paddingTop: 25 }}>
         <div style={{ display: 'flex', justifyContent: 'center', padding: 20 }}>
           <div class="card" style={{ padding: 40, paddingTop: 25, width: '85%', backgroundColor: 'white' }}>

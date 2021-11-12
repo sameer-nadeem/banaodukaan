@@ -5,11 +5,21 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import axios from "axios";
 import { uri } from "../api.json";
 import { useHistory } from "react-router-dom";
+import Alert from "../components/Alerts/Alert";
 
 const AddBrands = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   let history = useHistory();
+
+  //success modal
+  const [show, setShow] = useState(false);
+  const handleClose = () => {
+    setShow(false)
+    history.push('/brands')
+  }
+  const handleShow = () => setShow(true);
+  //success modal states end
 
   const addBrand = (e) => {
     if (title === "" && description === "") {
@@ -30,7 +40,7 @@ const AddBrands = () => {
         },
       })
       .then((res) => {
-        history.push("/brands");
+        handleShow()
       })
       .catch((err) => {
         console.log(err);
@@ -47,6 +57,14 @@ const AddBrands = () => {
 
   return (
     <div>
+      <Alert
+        title="Brand Added"
+        message="The brand was succesfuly added to the store"
+        show={show}
+        variant="success"
+        handleClose={handleClose}
+        handleShow={handleShow}
+      />
       <div style={{ display: "flex", justifyContent: "center", padding: 20 }}>
         <div
           class="card"
