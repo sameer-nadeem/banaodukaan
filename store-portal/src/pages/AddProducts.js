@@ -4,9 +4,19 @@ import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import axios from "axios";
 import { uri } from "../api.json";
+import { Modal, Button } from "react-bootstrap"
 import { useHistory } from "react-router-dom";
-
+import Alert from '../components/Alerts/Alert'
 const AddProducts = () => {
+  //success modal
+  const [show, setShow] = useState(false);
+  const handleClose = () => {
+    setShow(false)
+    history.push('/products')
+  }
+  const handleShow = () => setShow(true);
+
+
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [image, setImage] = useState([]);
@@ -102,7 +112,7 @@ const AddProducts = () => {
           },
         })
         .then((res) => {
-          history.push("/products");
+          handleShow()
         })
         .catch((err) => {
           console.log(err);
@@ -138,6 +148,14 @@ const AddProducts = () => {
 
   return (
     <div>
+      <Alert
+        title="Product Added"
+        message="The product was succesfuly added to the store"
+        show={show}
+        variant="success"
+        handleClose={handleClose}
+        handleShow={handleShow}
+      />
       <form style={{ paddingTop: 25 }}>
         <div style={{ display: "flex", justifyContent: "center", padding: 20 }}>
           <div
@@ -258,9 +276,9 @@ const AddProducts = () => {
                     <option value="">Pick a Brand</option>
                     {fetchBrands.map((b) => (
                       b.deleteFlag === false ?
-                      (<option value={b._id} key={b._id}>
-                        {b.name}
-                      </option>) : null
+                        (<option value={b._id} key={b._id}>
+                          {b.name}
+                        </option>) : null
                     ))}
                   </select>
                 </div>

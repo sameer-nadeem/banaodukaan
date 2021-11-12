@@ -5,7 +5,7 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import axios from "axios";
 import { uri } from "../api.json";
 import { useHistory } from "react-router-dom";
-
+import Alert from "../components/Alerts/Alert"
 const AddCollections = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -30,7 +30,7 @@ const AddCollections = () => {
         },
       })
       .then((res) => {
-        history.push("/collections");
+        handleShow()
       })
       .catch((err) => {
         console.log(err);
@@ -45,8 +45,23 @@ const AddCollections = () => {
     setDescription(editorState.blocks[0].text);
   };
 
+  const [show, setShow] = useState(false);
+  const handleClose = () => {
+    setShow(false)
+    history.push('/collections')
+  }
+  const handleShow = () => setShow(true);
+
   return (
     <div>
+      <Alert
+        title="Collection Added"
+        message="The collection was succesfuly added to the store"
+        show={show}
+        variant="success"
+        handleClose={handleClose}
+        handleShow={handleShow}
+      />
       <div style={{ display: "flex", justifyContent: "center", padding: 20 }}>
         <div
           class="card"
