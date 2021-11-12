@@ -64,7 +64,7 @@ const AddCollections = () => {
       />
       <div style={{ display: "flex", justifyContent: "center", padding: 20 }}>
         <div
-          class="card"
+          className="card"
           style={{
             padding: 40,
             paddingTop: 25,
@@ -76,18 +76,18 @@ const AddCollections = () => {
             <h1 style={{ fontSize: 22, color: "black" }}>Create Collection</h1>
           </div>
           <form style={{ paddingTop: 25 }} onSubmit={handleSubmit}>
-            <div class="mb-3">
-              <label class="form-label" style={{ color: "black" }}>
+            <div className="mb-3">
+              <label className="form-label" style={{ color: "black" }}>
                 Title
               </label>
               <input
-                class="form-control"
+                className="form-control"
                 style={{ backgroundColor: "white", color: "black" }}
                 onChange={onChangeTitle}
               />
             </div>
-            <div class="mb-3">
-              <label class="form-label" style={{ color: "black" }}>
+            <div className="mb-3">
+              <label className="form-label" style={{ color: "black" }}>
                 Description
               </label>
               <Editor
@@ -99,7 +99,7 @@ const AddCollections = () => {
             </div>
             <button
               type="submit"
-              class="btn btn-success"
+              className="btn btn-success"
               style={{ width: "12%" }}
             >
               Save

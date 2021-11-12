@@ -5,13 +5,21 @@ import { uri } from '../api.json'
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { useParams, useHistory } from "react-router-dom"
+import Alert from '../components/Alerts/Alert';
 
 
 const BrandDetail = () => {
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const [brand, setBrand] = useState([])
-
+  //success modal
+  const [show, setShow] = useState(false);
+  const handleClose = () => {
+    setShow(false)
+    history.push('/brands')
+  }
+  const handleShow = () => setShow(true);
+  //success modal states end
   const history = useHistory();
   const { id: brandId } = useParams()
   const onChangeTitle = (event) => {
@@ -35,7 +43,7 @@ const BrandDetail = () => {
         }
       }
     ).then(res => {
-      history.push('/brands')
+      handleShow()
     })
       .catch(err => {
         console.log(err)
@@ -62,6 +70,14 @@ const BrandDetail = () => {
 
   return (
     <div>
+      <Alert
+        title="Brand Updated"
+        message="The brand was succesfuly updated."
+        show={show}
+        variant="success"
+        handleClose={handleClose}
+        handleShow={handleShow}
+      />
       <form style={{ paddingTop: 25 }}>
         <div style={{ display: 'flex', justifyContent: 'center', padding: 20 }}>
           <div class="card" style={{ padding: 40, paddingTop: 25, width: '85%', backgroundColor: 'white' }}>

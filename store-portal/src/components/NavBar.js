@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   return (
@@ -8,10 +8,10 @@ const Navbar = () => {
         {/* Left navbar links */}
         <ul className="navbar-nav">
           <li className="nav-item">
-            <a className="nav-link" data-widget="pushmenu" href="#" role="button"><i className="fas fa-bars" /></a>
+            <a className="nav-link" data-widget="pushmenu" href="!#" role="button"><i className="fas fa-bars" /></a>
           </li>
           <li className="nav-item d-none d-sm-inline-block">
-            <Link to = "/">
+            <Link to="/">
               <div className="nav-link">Home</div>
             </Link>
           </li>
@@ -40,7 +40,7 @@ const Navbar = () => {
             </div>
           </li>
           <li className="nav-item">
-            <a className="nav-link" data-widget="fullscreen" href="#" role="button">
+            <a className="nav-link" data-widget="fullscreen" href="!#" role="button">
               <i className="fas fa-expand-arrows-alt" />
             </a>
           </li>
