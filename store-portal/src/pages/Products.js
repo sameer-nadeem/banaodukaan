@@ -70,6 +70,14 @@ const Products = () => {
       },
     },
     {
+      name: "thumbnail",
+      label: "Picture",
+      options: {
+        filter: false,
+        sort: false,
+      },
+    },
+    {
       name: "status",
       label: "Status",
       options: {
