@@ -5,22 +5,22 @@ const path = require("path")
 
 const Storage = multer.diskStorage({
     destination: "./public/uploads",
-    filename: function(req, file, cb){
-        cb(null,"IMAGE-" + Date.now() + path.extname(file.originalname));
- }
+    filename: function (req, file, cb) {
+        cb(null, "IMAGE-" + Date.now() + path.extname(file.originalname));
+    }
 })
 
 const upload = multer({
     storage: Storage,
-    limits:{fileSize: 1000000},
+    limits: { fileSize: 1000000 },
 }).single('myImage')
 
 
-const addProduct = async(req, res) => {
+const addProduct = async (req, res) => {
 
-   
 
-    try{
+
+    try {
         var {
             title,
             price,
@@ -52,7 +52,7 @@ const addProduct = async(req, res) => {
         return res.status(200).json({
             product
         })
-    } 
+    }
     catch (err) {
         console.log(err)
         return res.status(500).json({
@@ -60,37 +60,39 @@ const addProduct = async(req, res) => {
         })
     }
 
-    
 
-  }
-  
-  // get all products
-  
-  const getProducts = async(req, res) => {
 
-    try{
-        const products = await Product.find().populate(['collectionId', 'brandId'])
+}
+
+// get all products
+
+const getProducts = async (req, res) => {
+
+    try {
+        const products = await Product.find({
+            deleteFlag: false
+        }).populate(['collectionId', 'brandId'])
         return res.status(200).json({
             products
         })
-    }catch (err) {
+    } catch (err) {
         return res.status(500).json({
             error: "Server Error"
         })
     }
 
-  }
+}
 
 
 //upload an image using multer in add product
-  const uploadImage = (req, res) =>{
-      upload(req, res, (err) => {
-          console.log(res)
-          res.send(req.file)
-      })
-  }
+const uploadImage = (req, res) => {
+    upload(req, res, (err) => {
+        console.log(res)
+        res.send(req.file)
+    })
+}
 
-  const getProduct = async(req, res) => {
+const getProduct = async (req, res) => {
     try {
 
 
@@ -109,11 +111,11 @@ const addProduct = async(req, res) => {
             error: errors.SERVER_ERROR
         })
     }
-  }
+}
 
-  const deleteProduct = async(req,res)=>{
-    try{
-        
+const deleteProduct = async (req, res) => {
+    try {
+
         const id = req.params.id
         const product = await Product.findOne({
             _id: id
@@ -125,16 +127,16 @@ const addProduct = async(req, res) => {
         return res.status(200).json({
             product
         })
-      }catch (err) {
+    } catch (err) {
         return res.status(500).json({
             error: "Server Error"
         })
     }
 
-  }
+}
 // update product
-  const updateProduct = async(req,res) =>{
-      try{
+const updateProduct = async (req, res) => {
+    try {
         var {
             title,
             price,
@@ -167,17 +169,17 @@ const addProduct = async(req, res) => {
         return res.status(200).json({
             product
         })
-      }catch (err) {
+    } catch (err) {
         return res.status(500).json({
             error: "Server Error"
         })
     }
 
-  }
+}
 
 
 
-  module.exports = {
+module.exports = {
     addProduct,
     getProduct,
     uploadImage,
@@ -186,4 +188,3 @@ const addProduct = async(req, res) => {
     getProducts
 
 }
-  

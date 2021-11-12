@@ -4,13 +4,13 @@ const Product = require("../models/product.model")
 
 
 
-const addCollection = async(req, res) => {
+const addCollection = async (req, res) => {
 
-    
-    try{
+
+    try {
         var {
-           name,
-           description
+            name,
+            description
         } = req.body
 
         const collection = new Collection({
@@ -23,7 +23,7 @@ const addCollection = async(req, res) => {
         return res.status(200).json({
             collection
         })
-    } 
+    }
     catch (err) {
         console.log(err)
         return res.status(500).json({
@@ -32,8 +32,7 @@ const addCollection = async(req, res) => {
     }
 }
 
-const getCollection = async(req,res) =>
-{
+const getCollection = async (req, res) => {
     try {
 
 
@@ -55,13 +54,12 @@ const getCollection = async(req,res) =>
 }
 
 
-const getCollections = async(req,res) =>
-{
+const getCollections = async (req, res) => {
     try {
 
 
-        
-        const collections = await Collection.find()
+
+        const collections = await Collection.find({ deleteFlag: false })
 
         return res.status(200).json({
             collections
@@ -76,10 +74,10 @@ const getCollections = async(req,res) =>
     }
 }
 
-const deleteCollection = async (req,res) =>{
-    
-    try{
-        
+const deleteCollection = async (req, res) => {
+
+    try {
+
         const id = req.params.id
         const collection = await Collection.findOne({
             _id: id
@@ -91,7 +89,7 @@ const deleteCollection = async (req,res) =>{
         return res.status(200).json({
             collection
         })
-      }catch (err) {
+    } catch (err) {
         return res.status(500).json({
             error: "Server Error"
         })
@@ -99,9 +97,8 @@ const deleteCollection = async (req,res) =>{
 
 }
 
-const updateCollection = async (req,res) =>
-{
-    try{
+const updateCollection = async (req, res) => {
+    try {
         var {
             name,
             deleteFlag,
@@ -122,7 +119,7 @@ const updateCollection = async (req,res) =>
         return res.status(200).json({
             collection
         })
-      }catch (err) {
+    } catch (err) {
         return res.status(500).json({
             error: "Server Error"
         })
@@ -137,4 +134,3 @@ module.exports = {
     getCollections,
     updateCollection
 }
-  

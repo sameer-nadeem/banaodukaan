@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useEffect, useState } from "react";
 import { Card, Button } from "@material-ui/core";
 import MUIDataTable from "mui-datatables";
 import axios from "axios";
@@ -14,8 +14,8 @@ const Collections = () => {
 
   const columns = ["Id", "Title", "Description"];
 
-  const [collections, setCollections] = React.useState([]);
-  const [newRows, setRows] = React.useState([]);
+  const [collections, setCollections] = useState([]);
+  const [newRows, setRows] = useState([]);
 
   const getCollections = async () => {
     axios
@@ -60,27 +60,25 @@ const Collections = () => {
       }, 200);
     },
     onRowClick: (rowData) => {
-      history.push("/collectiondetail", rowData);
+      history.push(`/collection/${rowData[0]}`);
     },
   };
 
-  React.useEffect(async () => {
+  useEffect(() => {
     //Runs only on the first render
     getCollections();
   }, []);
 
-  React.useEffect(async () => {
+  useEffect(() => {
     console.log(collections);
-    const Mows = [];
+    const cleanedCollections = [];
 
-    collections.map(function (collection) {
+    collections.forEach(function (collection) {
       const coll = [collection._id, collection.name, collection.description];
-      if (collection.deleteFlag === false) {
-        Mows.push(coll);
-      }
+      cleanedCollections.push(coll);
     });
 
-    setRows(Mows);
+    setRows(cleanedCollections);
   }, [collections]);
 
   return (
@@ -91,7 +89,7 @@ const Collections = () => {
             <h1 style={{ fontSize: 24 }}>Collections</h1>
           </div>
           <div style={{ justifyContent: "flex-end", padding: 20 }}>
-            <Link to="/addcollection">
+            <Link to="/collections/new">
               <Button
                 variant="outlined"
                 style={{ backgroundColor: "#12824C", color: "#FFFFFF" }}

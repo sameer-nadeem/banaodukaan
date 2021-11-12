@@ -5,8 +5,17 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import axios from "axios";
 import { uri } from "../api.json";
 import { useHistory } from "react-router-dom";
-
+import Alert from '../components/Alerts/Alert'
 const AddProducts = () => {
+  //success modal
+  const [show, setShow] = useState(false);
+  const handleClose = () => {
+    setShow(false)
+    history.push('/products')
+  }
+  const handleShow = () => setShow(true);
+  //success modal states end
+
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [image, setImage] = useState([]);
@@ -68,7 +77,7 @@ const AddProducts = () => {
     getBrands();
   }, []);
 
-  const addProducts = (event) => {
+  const addProducts = async (event) => {
     if (
       image.length === 0 ||
       title === "" ||
@@ -95,22 +104,21 @@ const AddProducts = () => {
         status: status,
         image: path,
       };
-      axios
-        .post(`${uri}/product`, data, {
+      try {
+        await axios.post(`${uri}/product`, data, {
           headers: {
             "Content-Type": "application/json",
           },
         })
-        .then((res) => {
-          history.push("/products");
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+        handleShow()
+      }
+      catch (err) {
+        console.log(err);
+      }
     }
   };
 
-  const uploadImages = (event) => {
+  const uploadImages = async (event) => {
     if (image.length === 0) {
       alert("Please Select Image First");
     } else {
@@ -123,21 +131,27 @@ const AddProducts = () => {
           "content-type": "multipart/form-data",
         },
       };
-      axios
-        .post(`${uri}/product/upload`, formData, config)
-        .then((res) => {
-          alert("File has been uploaded successfully.");
-          setButtonCheck(true);
-          setPath(res.data.filename);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      try {
+        const res = await axios.post(`${uri}/product/upload`, formData, config)
+        alert("File has been uploaded successfully.");
+        setButtonCheck(true);
+        setPath(res.data.filename);
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
 
   return (
     <div>
+      <Alert
+        title="Product Added"
+        message="The product was succesfuly added to the store"
+        show={show}
+        variant="success"
+        handleClose={handleClose}
+        handleShow={handleShow}
+      />
       <form style={{ paddingTop: 25 }}>
         <div style={{ display: "flex", justifyContent: "center", padding: 20 }}>
           <div
@@ -258,9 +272,9 @@ const AddProducts = () => {
                     <option value="">Pick a Brand</option>
                     {fetchBrands.map((b) => (
                       b.deleteFlag === false ?
-                      (<option value={b._id} key={b._id}>
-                        {b.name}
-                      </option>) : null
+                        (<option value={b._id} key={b._id}>
+                          {b.name}
+                        </option>) : null
                     ))}
                   </select>
                 </div>
