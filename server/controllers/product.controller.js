@@ -4,7 +4,7 @@ const multer = require('multer')
 const path = require("path")
 
 const Storage = multer.diskStorage({
-    destination: "./public/uploads",
+    destination: "./uploads",
     filename: function (req, file, cb) {
         cb(null, "IMAGE-" + Date.now() + path.extname(file.originalname));
     }
@@ -87,8 +87,8 @@ const getProducts = async (req, res) => {
 //upload an image using multer in add product
 const uploadImage = (req, res) => {
     upload(req, res, (err) => {
-        console.log(res)
-        res.send(req.file)
+        console.log(req.file.path)
+        res.send(`/${req.file.path}`)
     })
 }
 

@@ -70,7 +70,7 @@ const Products = () => {
         filter: false,
         sort: false,
         customBodyRender: (p) => (
-          <img alt="" width="75px" src={`/uploads/${p}`} >
+          <img alt="" width="75px" src={p} >
           </img>
         )
       },

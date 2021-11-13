@@ -163,7 +163,7 @@ const ProductDetail = () => {
         const res = await axios
           .post(`${uri}/product/upload`, formData, config)
         alert("File has been uploaded successfully.");
-        setPath(res.data.filename);
+        setPath(res.data);
       } catch (err) {
         console.log(err);
       }
@@ -287,7 +287,7 @@ const ProductDetail = () => {
               <h1 style={{ fontSize: 20, color: "black" }}>Media</h1>
               <div style={{ display: "flex", justifyContent: "center" }}>
                 <img
-                  src={`/uploads/${path === "" ? product.image : path}`}
+                  src={`${path === "" ? product.image : path}`}
                   width="400"
                   height="400"
                   alt=""

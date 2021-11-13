@@ -6,7 +6,7 @@ const app = express()
 const cors = require('cors')
 
 app.use(express.json())
-app.use(express.static(path.join(__dirname, 'public')))
+app.use("/uploads", express.static(path.join(__dirname, 'uploads')))
 const initRoutes = require('./routes/init.route')
 const connectDb = require('./db/connectDb')
 app.use(cors())
