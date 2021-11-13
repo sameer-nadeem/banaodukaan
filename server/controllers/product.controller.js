@@ -1,20 +1,4 @@
-const { collection } = require("../models/product.model")
 const Product = require("../models/product.model")
-const multer = require('multer')
-const path = require("path")
-
-const Storage = multer.diskStorage({
-    destination: "./uploads/images",
-    filename: function (req, file, cb) {
-        cb(null, "IMAGE-" + Date.now() + path.extname(file.originalname));
-    }
-})
-
-const upload = multer({
-    storage: Storage,
-    limits: { fileSize: 1000000 },
-}).single('myImage')
-
 
 const addProduct = async (req, res) => {
 
@@ -84,13 +68,6 @@ const getProducts = async (req, res) => {
 }
 
 
-//upload an image using multer in add product
-const uploadImage = (req, res) => {
-    upload(req, res, (err) => {
-        console.log(req.file.path)
-        res.send(`/${req.file.path}`)
-    })
-}
 
 const getProduct = async (req, res) => {
     try {
@@ -182,7 +159,6 @@ const updateProduct = async (req, res) => {
 module.exports = {
     addProduct,
     getProduct,
-    uploadImage,
     updateProduct,
     deleteProduct,
     getProducts

@@ -161,7 +161,7 @@ const ProductDetail = () => {
 
       try {
         const res = await axios
-          .post(`${uri}/product/upload`, formData, config)
+          .post(`${uri}/upload/product/image`, formData, config)
         alert("File has been uploaded successfully.");
         setPath(res.data);
       } catch (err) {

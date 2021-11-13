@@ -131,7 +131,7 @@ const AddProducts = () => {
         },
       };
       try {
-        const res = await axios.post(`${uri}/product/upload`, formData, config)
+        const res = await axios.post(`${uri}/upload/product/image`, formData, config)
         alert("File has been uploaded successfully.");
         setButtonCheck(true);
         setPath(res.data);
