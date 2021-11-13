@@ -64,11 +64,15 @@ const Products = () => {
       },
     },
     {
-      name: "thumbnail",
+      name: "image",
       label: "Picture",
       options: {
         filter: false,
         sort: false,
+        customBodyRender: (p) => (
+          <img alt="" width="75px" src={`/uploads/${p}`} >
+          </img>
+        )
       },
     },
     {
@@ -142,6 +146,7 @@ const Products = () => {
         stock: product.stock,
         collection: product.collectionId.name,
         brand: product.brandId.name,
+        image: product.image
       };
       cleanedProducts.push(prod);
     });
