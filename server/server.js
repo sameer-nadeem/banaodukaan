@@ -9,7 +9,7 @@ const connectDb = require('./db/connectDb')
 
 app.use(express.json())
 app.use("/uploads", express.static(path.join(__dirname, 'uploads')))
-
+app.use(express.static(path.join(__dirname, '../store-portal/build')))
 app.use(cors())
 
 connectDb()
