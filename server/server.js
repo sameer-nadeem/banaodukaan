@@ -15,5 +15,10 @@ app.use(cors())
 connectDb()
 initRoutes(app)
 
+app.use('*', (req, res) => {
+  return res.sendFile(path.join(__dirname, '../store-portal', 'build', 'index.html'))
+})
+
+
 app.listen(PORT, () => console.log(`Server started @PORT: ${PORT}`))
 
