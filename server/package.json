@@ -4,7 +4,8 @@
   "description": "\"Node REST API - banaodukaan\"",
   "main": "server.js",
   "scripts": {
-    "server": "nodemon server"
+    "server": "nodemon server",
+    "start":"node server"
   },
   "author": "devmechs",
   "license": "ISC",
