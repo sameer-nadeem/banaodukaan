@@ -20,7 +20,7 @@ const seedProducts = async () => {
     const inventoryId = null
     const collectionId = collections[parseInt(Math.random() * collections.length)]._id
     const status = 'Active'
-    const image = '/uploads/IMAGE-1636822803539.jpg'
+    const image = 'https://media.istockphoto.com/photos/white-generic-box-studio-shot-picture-id1137310634'
 
     const product = new Product({
       title,
