@@ -7,6 +7,8 @@ const cors = require('cors')
 const morgan = require('morgan')
 const vhost = require('vhost')
 var rfs = require('rotating-file-stream') // version 2.x
+//importing all mongodb models
+
 //custom module imports
 const initRoutes = require('./routes/init.routes')
 const connectDb = require('./db/connectDb')
