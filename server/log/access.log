@@ -1,3 +1,0 @@
-GET /api/product 200 26946 - 205.709 ms
-GET /uploads/IMAGE-1636822803539.jpg 200 144987 - 16.828 ms
-GET /api/collection 200 515 - 14.915 ms
