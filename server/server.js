@@ -8,6 +8,20 @@ const morgan = require('morgan')
 const vhost = require('vhost')
 var rfs = require('rotating-file-stream') // version 2.x
 //importing all mongodb models
+require('./models/brand.model')
+require('./models/admin.model')
+require('./models/collection.model')
+require('./models/complaint.model')
+require('./models/customer.model')
+require('./models/inventory.model')
+require('./models/merchant.model')
+require('./models/orderTracking.model')
+require('./models/payment.model')
+require('./models/product.model')
+require('./models/setting.model')
+require('./models/store.model')
+require('./models/tax.model')
+require('./models/user.model')
 
 //custom module imports
 const initRoutes = require('./routes/init.routes')
