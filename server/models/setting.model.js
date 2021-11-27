@@ -2,25 +2,25 @@ const mongoose = require("mongoose")
 const Schema = mongoose.Schema
 
 const settingSchema = new Schema({
-    settingId:{
+    settingId: {
         type: mongoose.Schema.Types.ObjectId
     },
-    shippingDomesticRate:{
-        type: Float32Array
+    shippingDomesticRate: {
+        type: Number
     },
     shippingWorldwideRate: {
-        type: Float32Array
+        type: Number
     },
-    localPickupAddress:{
+    localPickupAddress: {
         type: String
     },
-    paymentProviders:[{
+    paymentProviders: [{
         type: String
     }],
-    taxes:{
+    taxes: {
         type: mongoose.Schema.Types.ObjectId,
-        ref:'Tax'
+        ref: 'Tax'
     },
 })
 
-module.exports = mongoose.model('Setting', settingSchema );
+module.exports = mongoose.model('Setting', settingSchema);

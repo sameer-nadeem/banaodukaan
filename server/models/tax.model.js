@@ -2,15 +2,15 @@ const mongoose = require("mongoose")
 const Schema = mongoose.Schema
 
 const taxSchema = new Schema({
-    taxId:{
+    taxId: {
         type: mongoose.Schema.Types.ObjectId
     },
-    taxRate:{
-        type: Float32Array
+    taxRate: {
+        type: Number
     },
-    amount:{
-        type: Float32Array
+    amount: {
+        type: Number
     },
 })
 
-module.exports = mongoose.model('Tax', taxSchema );
+module.exports = mongoose.model('Tax', taxSchema);
