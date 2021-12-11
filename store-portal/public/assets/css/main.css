@@ -135,7 +135,7 @@ a {
   font-size: 1.25rem;
 }
 
-.show {
+.show-sidebar {
   left: 0;
 }
 
@@ -191,7 +191,7 @@ a {
   .header_toggle {
     display: none;
   }
-  .show {
+  .show-sidebar {
     width: calc(var(--nav-width) + 156px);
   }
 

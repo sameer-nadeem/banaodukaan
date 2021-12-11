@@ -18,16 +18,16 @@ function App() {
       <Navbar />
       <Sidebar />
       <Switch>
-        <Route exact path="/products" component={Products} />
-        <Route exact path="/products/new" component={AddProducts} />
-        <Route exact path="/collections" component={Collections} />
-        <Route exact path="/collections/new" component={AddCollections} />
-        <Route exact path="/product/:id" component={ProductDetail} />
-        <Route exact path="/collection/:id" component={CollectionDetail} />
-        <Route exact path="/brands/new" component={AddBrands} />
-        <Route exact path="/brands" component={Brands} />
-        <Route exact path="/brand/:id" component={BrandDetail} />
-        <Route exact path="/" component={LandingPage} />
+        <Route exact path="/admin/products" component={Products} />
+        <Route exact path="/admin/products/new" component={AddProducts} />
+        <Route exact path="/admin/collections" component={Collections} />
+        <Route exact path="/admin/collections/new" component={AddCollections} />
+        <Route exact path="/admin/product/:id" component={ProductDetail} />
+        <Route exact path="/admin/collection/:id" component={CollectionDetail} />
+        <Route exact path="/admin/brands/new" component={AddBrands} />
+        <Route exact path="/admin/brands" component={Brands} />
+        <Route exact path="/admin/brand/:id" component={BrandDetail} />
+        <Route exact path="/admin/" component={LandingPage} />
       </Switch>
     </Router >
   );

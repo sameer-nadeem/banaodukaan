@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
       bodypd = document.getElementById(bodyId),
       headerpd = document.getElementById(headerId)
     // show navbar
-    nav.classList.toggle('show')
+    nav.classList.toggle('show-sidebar')
     // change icon
     // toggle.classList.toggle('bx-x')
     // add padding to body
@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
     const mediaQuery = window.matchMedia('(max-width: 768px)')
     toggle.addEventListener('click', () => {
       // show navbar
-      nav.classList.toggle('show')
+      nav.classList.toggle('show-sidebar')
       // change icon
       toggle.classList.toggle('bx-x')
       // add padding to body
@@ -27,12 +27,12 @@ document.addEventListener("DOMContentLoaded", function (event) {
     function handleTabletChange(e) {
       // Check if the media query is true
       if (e.matches) {
-        nav.classList.remove('show')
+        nav.classList.remove('show-sidebar')
         bodypd.classList.remove('body-pd')
         headerpd.classList.remove('body-pd')
       }
       else {
-        nav.classList.add('show')
+        nav.classList.add('show-sidebar')
         bodypd.classList.add('body-pd')
         headerpd.classList.add('body-pd')
       }
@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
     // if (toggle && nav && bodypd && headerpd) {
     //   toggle.addEventListener('click', () => {
     //     // show navbar
-    //     nav.classList.toggle('show')
+    //     nav.classList.toggle('show-sidebar')
     //     // change icon
     //     toggle.classList.toggle('bx-x')
     //     // add padding to body

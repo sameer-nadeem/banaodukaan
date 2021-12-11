@@ -30,25 +30,43 @@ const connectDb = require('./db/connectDb')
 const PORT = process.env.PORT || 5000
 
 app.use(express.json())
+
+
 //logger setup
 var accessLogStream = rfs.createStream('access.log', {
   interval: '1d', // rotate daily
   path: path.join(__dirname, 'log')
 })
-app.use(morgan(':method :url :status :res[content-length] - :response-time ms',
-  { stream: accessLogStream }))
+app.use(
+  morgan(
+    ':method :url :status :res[content-length] - :response-time ms',
+    {
+      stream: accessLogStream
+    }
+  )
+)
+
 //logger setup end
-app.use(vhost('*.*.com', (req, res, next) => {
-  console.log(req.vhost[0])
-  console.log(req.vhost[1])
+
+//extract vhost and place it in req.vhost
+app.use(vhost('*.bdstaging.com', (req, res, next) => {
+  console.log(req.url)
   next()
 }))
+
 app.use("/uploads", express.static(path.join(__dirname, 'uploads')))
 
 app.use(cors())
 
 connectDb()
 initRoutes(app)
+
+if (process.env.NODE_ENV === 'production') {
+  app.use('/admin/', express.static(path.join(__dirname, "../store-portal", 'build')))
+  app.get('/admin/*', function (req, res) {
+    res.sendFile(path.join(__dirname, "../store-portal", 'build', 'index.html'));
+  });
+}
 
 app.listen(PORT, () => console.log(`Server started @PORT: ${PORT}`))
 

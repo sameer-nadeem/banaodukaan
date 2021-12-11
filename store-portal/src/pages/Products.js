@@ -125,7 +125,7 @@ const Products = () => {
     },
     onRowClick: (rowData) => {
       console.log(rowData)
-      history.push(`/product/${rowData[0]}`);
+      history.push(`/admin/product/${rowData[0]}`);
     },
   };
 
@@ -162,7 +162,7 @@ const Products = () => {
             <h1 style={{ fontSize: 24 }}>Products</h1>
           </div>
           <div style={{ justifyContent: "flex-end", padding: 20 }}>
-            <Link to="/products/new">
+            <Link to="/admin/products/new">
               <Button
                 variant="outlined"
                 style={{ backgroundColor: "#12824C", color: "#FFFFFF" }}

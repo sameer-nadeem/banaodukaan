@@ -11,7 +11,7 @@ const AddProducts = () => {
   const [show, setShow] = useState(false);
   const handleClose = () => {
     setShow(false)
-    history.push('/products')
+    history.push('/admin/products')
   }
   const handleShow = () => setShow(true);
   //success modal states end

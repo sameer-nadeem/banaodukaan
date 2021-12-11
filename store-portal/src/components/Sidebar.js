@@ -17,8 +17,8 @@ const Sidebar = () => {
     })
   const location = useLocation()
   useEffect(() => {
-    const path = location.pathname.split('/')[1]
-    const subpath = location.pathname.split('/')[2]
+    const path = location.pathname.split('/')[2]
+    const subpath = location.pathname.split('/')[3]
     switch (path) {
       case "products":
       case "collections":
@@ -46,29 +46,29 @@ const Sidebar = () => {
             <span className="nav_logo-name">Banaodukaan</span>
           </Link>
           <div className="nav_list">
-            <Link to="/products" onClick={() => setActive(0)} className={`nav_link ${active === PRODUCT && `highlight`}`}>
+            <Link to="/admin/products" onClick={() => setActive(0)} className={`nav_link ${active === PRODUCT && `highlight`}`}>
               <i className='bx bx-grid-alt nav_icon'></i>
               <span className="nav_name">Products</span>
             </Link>
             <div id="product-dropdown" style={active === PRODUCT ? { display: "block" } : { display: "none" }}>
-              <Link to="/products" className={`nav_link ${productNavigation.allProducts && `active`} `}>
+              <Link to="/admin/products" className={`nav_link ${productNavigation.allProducts && `active`} `}>
                 {/* <i className='bx bxs-right-arrow '></i> */}
                 <i className='bx bx-chevron-right nav_icon'></i>
                 <span className="nav_name">All Products</span>
               </Link>
-              <Link to="/" className="nav_link">
+              <Link to="/admin/" className="nav_link">
                 <i className='bx bx-chevron-right nav_icon'></i>
                 <span className="nav_name">Inventory</span>
               </Link>
-              <Link to="/" className="nav_link">
+              <Link to="/admin/" className="nav_link">
                 <i className='bx bx-chevron-right nav_icon'></i>
                 <span className="nav_name">Transfers</span>
               </Link>
-              <Link to="/collections" className={`nav_link ${productNavigation.collections && `active`} `}>
+              <Link to="/admin/collections" className={`nav_link ${productNavigation.collections && `active`} `}>
                 <i className='bx bx-chevron-right nav_icon'></i>
                 <span className="nav_name">Collections</span>
               </Link>
-              <Link to="/brands" className={`nav_link ${productNavigation.brands && `active`} `}>
+              <Link to="/admin/brands" className={`nav_link ${productNavigation.brands && `active`} `}>
                 <i className='bx bx-chevron-right nav_icon'></i>
                 <span className="nav_name">Brands</span>
               </Link>

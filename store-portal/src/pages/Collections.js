@@ -60,7 +60,7 @@ const Collections = () => {
       }, 200);
     },
     onRowClick: (rowData) => {
-      history.push(`/collection/${rowData[0]}`);
+      history.push(`/admin/collection/${rowData[0]}`);
     },
   };
 
@@ -89,7 +89,7 @@ const Collections = () => {
             <h1 style={{ fontSize: 24 }}>Collections</h1>
           </div>
           <div style={{ justifyContent: "flex-end", padding: 20 }}>
-            <Link to="/collections/new">
+            <Link to="/admin/collections/new">
               <Button
                 variant="outlined"
                 style={{ backgroundColor: "#12824C", color: "#FFFFFF" }}

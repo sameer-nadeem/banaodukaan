@@ -60,7 +60,7 @@ const Brands = () => {
       }, 200);
     },
     onRowClick: (rowData) => {
-      history.push(`/brand/${rowData[0]}`);
+      history.push(`/admin/brand/${rowData[0]}`);
     },
   };
 
@@ -89,7 +89,7 @@ const Brands = () => {
             <h1 style={{ fontSize: 24 }}>Brands</h1>
           </div>
           <div style={{ justifyContent: "flex-end", padding: 20 }}>
-            <Link to="/brands/new">
+            <Link to="/admin/brands/new">
               <Button
                 variant="outlined"
                 style={{ backgroundColor: "#12824C", color: "#FFFFFF" }}

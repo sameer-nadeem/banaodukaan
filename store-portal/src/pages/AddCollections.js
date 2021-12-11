@@ -48,7 +48,7 @@ const AddCollections = () => {
   const [show, setShow] = useState(false);
   const handleClose = () => {
     setShow(false)
-    history.push('/collections')
+    history.push('/admin/collections')
   }
   const handleShow = () => setShow(true);
 

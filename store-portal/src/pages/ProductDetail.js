@@ -13,7 +13,7 @@ const ProductDetail = () => {
   const [show, setShow] = useState(false);
   const handleClose = () => {
     setShow(false)
-    history.push('/products')
+    history.push('/admin/products')
   }
   const handleShow = () => setShow(true);
   //success modal states end
@@ -172,14 +172,16 @@ const ProductDetail = () => {
 
   return (
     <div>
-      <Alert
-        title="Product Updated"
-        message="The product was succesfuly updated."
-        show={show}
-        variant="success"
-        handleClose={handleClose}
-        handleShow={handleShow}
-      />
+      <div>
+        <Alert
+          title="Product Updated"
+          message="The product was succesfuly updated."
+          show={show}
+          variant="success"
+          handleClose={handleClose}
+          handleShow={handleShow}
+        />
+      </div>
       <form style={{ paddingTop: 25 }}>
         <div style={{ display: "flex", justifyContent: "center", padding: 20 }}>
           <div
