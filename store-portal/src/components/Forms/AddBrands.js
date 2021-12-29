@@ -1,16 +1,26 @@
 import * as React from "react";
 import { useState } from "react";
-import JoditEditor from "jodit-react";
 import axios from "axios";
-import { uri } from "../api.json";
+import { uri } from "../../api.json";
 import { useHistory } from "react-router-dom";
-import Alert from "../components/Alerts/Alert";
-const AddCollections = () => {
+import Alert from "../Alerts/Alert";
+import JoditEditor from "jodit-react";
+
+const AddBrands = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   let history = useHistory();
 
-  const handleSubmit = (e) => {
+  //success modal
+  const [show, setShow] = useState(false);
+  const handleClose = () => {
+    setShow(false);
+    history.push("/admin/brands");
+  };
+  const handleShow = () => setShow(true);
+  //success modal states end
+
+  const addBrand = (e) => {
     if (title === "" && description === "") {
       return;
       //we will add toastify here
@@ -23,7 +33,7 @@ const AddCollections = () => {
     //post request here
 
     axios
-      .post(`${uri}/collection`, body, {
+      .post(`${uri}/brand`, body, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -43,19 +53,11 @@ const AddCollections = () => {
   const onChangeDescription = (value) => {
     setDescription(value);
   };
-
-  const [show, setShow] = useState(false);
-  const handleClose = () => {
-    setShow(false);
-    history.push("/admin/collections");
-  };
-  const handleShow = () => setShow(true);
-
   return (
     <div>
       <Alert
-        title="Collection Added"
-        message="The collection was succesfuly added to the store"
+        title="Brand Added"
+        message="The brand was succesfuly added to the store"
         show={show}
         variant="success"
         handleClose={handleClose}
@@ -63,7 +65,7 @@ const AddCollections = () => {
       />
       <div style={{ display: "flex", justifyContent: "center", padding: 20 }}>
         <div
-          className="card"
+          class="card"
           style={{
             padding: 40,
             paddingTop: 25,
@@ -72,21 +74,21 @@ const AddCollections = () => {
           }}
         >
           <div style={{ display: "flex" }}>
-            <h1 style={{ fontSize: 22, color: "black" }}>Create Collection</h1>
+            <h1 style={{ fontSize: 22, color: "black" }}>Create Brand</h1>
           </div>
-          <form style={{ paddingTop: 25 }} onSubmit={handleSubmit}>
-            <div className="mb-3">
-              <label className="form-label" style={{ color: "black" }}>
+          <form style={{ paddingTop: 25 }} onSubmit={(e) => addBrand(e)}>
+            <div class="mb-3">
+              <label class="form-label" style={{ color: "black" }}>
                 Title
               </label>
               <input
-                className="form-control"
+                class="form-control"
                 style={{ backgroundColor: "white", color: "black" }}
                 onChange={onChangeTitle}
               />
             </div>
-            <div className="mb-3">
-              <label className="form-label" style={{ color: "black" }}>
+            <div class="mb-3">
+              <label class="form-label" style={{ color: "black" }}>
                 Description
               </label>
               <JoditEditor
@@ -97,7 +99,7 @@ const AddCollections = () => {
             </div>
             <button
               type="submit"
-              className="btn btn-success"
+              class="btn btn-success"
               style={{ width: "12%" }}
             >
               Save
@@ -109,4 +111,4 @@ const AddCollections = () => {
   );
 };
 
-export default AddCollections;
+export default AddBrands;
