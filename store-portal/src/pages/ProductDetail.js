@@ -2,19 +2,18 @@ import * as React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { uri } from "../api.json";
-import { Editor } from "react-draft-wysiwyg";
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { useParams } from "react-router";
 import { useHistory } from "react-router-dom";
 import Alert from "../components/Alerts/Alert";
+import JoditEditor from "jodit-react";
 
 const ProductDetail = () => {
   //success modal
   const [show, setShow] = useState(false);
   const handleClose = () => {
-    setShow(false)
-    history.push('/admin/products')
-  }
+    setShow(false);
+    history.push("/admin/products");
+  };
   const handleShow = () => setShow(true);
   //success modal states end
 
@@ -31,15 +30,15 @@ const ProductDetail = () => {
   const [path, setPath] = useState("");
   const [product, setProduct] = useState([]);
 
-  const { id: productId } = useParams()
+  const { id: productId } = useParams();
 
   const history = useHistory();
 
   const onChangeTitle = (event) => {
     setTitle(event.target.value);
   };
-  const onChangeDescription = (editorState) => {
-    setDescription(editorState.blocks[0].text);
+  const onChangeDescription = (value) => {
+    setDescription(value);
   };
   const onChangeImage = (event) => {
     setImage(event.target.files[0]);
@@ -69,8 +68,8 @@ const ProductDetail = () => {
         console.log(err);
       }
     };
-    getCollections()
-  }, [])
+    getCollections();
+  }, []);
 
   useEffect(() => {
     const getBrands = async () => {
@@ -81,8 +80,8 @@ const ProductDetail = () => {
         console.log(err);
       }
     };
-    getBrands()
-  }, [])
+    getBrands();
+  }, []);
 
   useEffect(() => {
     const getProductById = async (id) => {
@@ -132,13 +131,12 @@ const ProductDetail = () => {
       };
 
       try {
-        await axios
-          .put(`${uri}/product/${product._id}`, data, {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          })
-        handleShow()
+        await axios.put(`${uri}/product/${product._id}`, data, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        handleShow();
       } catch (err) {
         console.log(err);
       }
@@ -160,8 +158,11 @@ const ProductDetail = () => {
       };
 
       try {
-        const res = await axios
-          .post(`${uri}/upload/product/image`, formData, config)
+        const res = await axios.post(
+          `${uri}/upload/product/image`,
+          formData,
+          config
+        );
         alert("File has been uploaded successfully.");
         setPath(res.data);
       } catch (err) {
@@ -212,31 +213,16 @@ const ProductDetail = () => {
               />
             </div>
             <div class="mb-3">
-              <label class="form-label" style={{ color: "black" }}>
-                Current Description
-              </label>
-              <div>
-                <textarea
-                  class="form-control"
-                  style={{ backgroundColor: "white", color: "black" }}
-                  value={product.description}
-                  disabled="disabled"
-                  id="exampleFormControlTextarea1"
-                  rows="3"
-                />
-              </div>
               <div>
                 <label
                   class="form-label"
                   style={{ color: "black", paddingTop: 25 }}
                 >
-                  New Description
+                  Description
                 </label>
-
-                <Editor
-                  toolbarClassName="toolbarClassName"
-                  wrapperClassName="wrapperClassName"
-                  editorClassName="editorClassName"
+                <JoditEditor
+                  value={description}
+                  tabIndex={1} // tabIndex of textarea
                   onChange={onChangeDescription}
                 />
               </div>

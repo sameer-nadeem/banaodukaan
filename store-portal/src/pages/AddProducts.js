@@ -1,18 +1,17 @@
 import { useState, useEffect } from "react";
-import { Editor } from "react-draft-wysiwyg";
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import axios from "axios";
 import { uri } from "../api.json";
 import { useHistory } from "react-router-dom";
-import Alert from '../components/Alerts/Alert'
-import { ProgressBar } from "react-bootstrap"
+import Alert from "../components/Alerts/Alert";
+import { ProgressBar } from "react-bootstrap";
+import JoditEditor from "jodit-react";
 const AddProducts = () => {
   //success modal
   const [show, setShow] = useState(false);
   const handleClose = () => {
-    setShow(false)
-    history.push('/admin/products')
-  }
+    setShow(false);
+    history.push("/admin/products");
+  };
   const handleShow = () => setShow(true);
   //success modal states end
 
@@ -28,14 +27,14 @@ const AddProducts = () => {
   const [status, setStatus] = useState("");
   const [path, setPath] = useState("");
   const [buttonCheck, setButtonCheck] = useState(false);
-  const [uploadPercentage, setUploadPercentage] = useState(0)
+  const [uploadPercentage, setUploadPercentage] = useState(0);
 
   const history = useHistory();
   const onChangeTitle = (event) => {
     setTitle(event.target.value);
   };
-  const onChangeDescription = (editorState) => {
-    setDescription(editorState.blocks[0].text);
+  const onChangeDescription = (value) => {
+    setDescription(value);
   };
   const onChangeImage = (event) => {
     setImage(event.target.files[0]);
@@ -111,10 +110,9 @@ const AddProducts = () => {
           headers: {
             "Content-Type": "application/json",
           },
-        })
-        handleShow()
-      }
-      catch (err) {
+        });
+        handleShow();
+      } catch (err) {
         console.log(err);
       }
     }
@@ -133,20 +131,26 @@ const AddProducts = () => {
           "content-type": "multipart/form-data",
         },
         onUploadProgress: (progressEvent) => {
-          const percentage = ((progressEvent.loaded * 100) / progressEvent.total)
-          if (percentage < 100)
-            setUploadPercentage(Math.floor(percentage))
-          console.log(percentage)
-        }
+          const percentage = (progressEvent.loaded * 100) / progressEvent.total;
+          if (percentage < 100) setUploadPercentage(Math.floor(percentage));
+          console.log(percentage);
+        },
       };
       try {
-        const res = await axios.post(`${uri}/upload/product/image`, formData, config)
+        const res = await axios.post(
+          `${uri}/upload/product/image`,
+          formData,
+          config
+        );
         // alert("File has been uploaded successfully.");
         setButtonCheck(true);
         setPath(res.data);
-        setUploadPercentage(100, setTimeout(() => {
-          setUploadPercentage(0)
-        }, 1000))
+        setUploadPercentage(
+          100,
+          setTimeout(() => {
+            setUploadPercentage(0);
+          }, 1000)
+        );
       } catch (err) {
         console.log(err);
       }
@@ -193,10 +197,15 @@ const AddProducts = () => {
               <label class="form-label" style={{ color: "black" }}>
                 Description
               </label>
-              <Editor
+              {/* <Editor
                 toolbarClassName="toolbarClassName"
                 wrapperClassName="wrapperClassName"
                 editorClassName="editorClassName"
+                onChange={onChangeDescription}
+              /> */}
+              <JoditEditor
+                value={description}
+                tabIndex={1} // tabIndex of textarea
                 onChange={onChangeDescription}
               />
             </div>
@@ -215,7 +224,13 @@ const AddProducts = () => {
                       onChange={onChangeImage}
                       required
                     />
-                    {uploadPercentage > 0 && <ProgressBar striped now={uploadPercentage} label={`${uploadPercentage}%`} />}
+                    {uploadPercentage > 0 && (
+                      <ProgressBar
+                        striped
+                        now={uploadPercentage}
+                        label={`${uploadPercentage}%`}
+                      />
+                    )}
                     <div style={{ marginTop: 5 }}>
                       <button
                         class="btn btn-success"
@@ -282,12 +297,13 @@ const AddProducts = () => {
                     required
                   >
                     <option value="">Pick a Brand</option>
-                    {fetchBrands.map((b) => (
-                      b.deleteFlag === false ?
-                        (<option value={b._id} key={b._id}>
+                    {fetchBrands.map((b) =>
+                      b.deleteFlag === false ? (
+                        <option value={b._id} key={b._id}>
                           {b.name}
-                        </option>) : null
-                    ))}
+                        </option>
+                      ) : null
+                    )}
                   </select>
                 </div>
               </div>

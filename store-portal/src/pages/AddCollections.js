@@ -1,11 +1,10 @@
 import * as React from "react";
 import { useState } from "react";
-import { Editor } from "react-draft-wysiwyg";
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import JoditEditor from "jodit-react";
 import axios from "axios";
 import { uri } from "../api.json";
 import { useHistory } from "react-router-dom";
-import Alert from "../components/Alerts/Alert"
+import Alert from "../components/Alerts/Alert";
 const AddCollections = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -30,7 +29,7 @@ const AddCollections = () => {
         },
       })
       .then((res) => {
-        handleShow()
+        handleShow();
       })
       .catch((err) => {
         console.log(err);
@@ -41,15 +40,15 @@ const AddCollections = () => {
     setTitle(event.target.value);
   };
 
-  const onChangeDescription = (editorState) => {
-    setDescription(editorState.blocks[0].text);
+  const onChangeDescription = (value) => {
+    setDescription(value);
   };
 
   const [show, setShow] = useState(false);
   const handleClose = () => {
-    setShow(false)
-    history.push('/admin/collections')
-  }
+    setShow(false);
+    history.push("/admin/collections");
+  };
   const handleShow = () => setShow(true);
 
   return (
@@ -90,10 +89,9 @@ const AddCollections = () => {
               <label className="form-label" style={{ color: "black" }}>
                 Description
               </label>
-              <Editor
-                toolbarClassName="toolbarClassName"
-                wrapperClassName="wrapperClassName"
-                editorClassName="editorClassName"
+              <JoditEditor
+                value={description}
+                tabIndex={1} // tabIndex of textarea
                 onChange={onChangeDescription}
               />
             </div>
