@@ -1,14 +1,14 @@
 import Sidebar from './components/Sidebar';
 import Navbar from './components/Navbar';
 import Products from './pages/Products';
-import AddProducts from './pages/AddProducts'
+import AddProducts from './components/Forms/AddProducts'
 import Collections from './pages/Collections';
-import AddCollections from './pages/AddCollections';
+import AddCollections from './components/Forms/AddCollections';
 import ProductDetail from './pages/ProductDetail';
 import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
 import CollectionDetail from './pages/CollectionDetail';
 import LandingPage from './pages/LandingPage';
-import AddBrands from './pages/AddBrands';
+import AddBrands from './components/Forms/AddBrands';
 import Brands from './pages/Brands';
 import BrandDetail from './pages/BrandDetail'
 

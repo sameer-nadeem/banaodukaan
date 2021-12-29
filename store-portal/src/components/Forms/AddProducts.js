@@ -1,13 +1,11 @@
-import * as React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { uri } from "../api.json";
-import { useParams } from "react-router";
+import { uri } from "../../api.json";
 import { useHistory } from "react-router-dom";
-import Alert from "../components/Alerts/Alert";
+import Alert from "../Alerts/Alert";
+import { ProgressBar } from "react-bootstrap";
 import JoditEditor from "jodit-react";
-
-const ProductDetail = () => {
+const AddProducts = () => {
   //success modal
   const [show, setShow] = useState(false);
   const handleClose = () => {
@@ -28,12 +26,10 @@ const ProductDetail = () => {
   const [fetchCollections, setFetchedCollections] = useState([]);
   const [status, setStatus] = useState("");
   const [path, setPath] = useState("");
-  const [product, setProduct] = useState([]);
-
-  const { id: productId } = useParams();
+  const [buttonCheck, setButtonCheck] = useState(false);
+  const [uploadPercentage, setUploadPercentage] = useState(0);
 
   const history = useHistory();
-
   const onChangeTitle = (event) => {
     setTitle(event.target.value);
   };
@@ -59,54 +55,32 @@ const ProductDetail = () => {
     setStatus(event.target.value);
   };
 
-  useEffect(() => {
-    const getCollections = async () => {
-      try {
-        const res = await axios.get(`${uri}/collection`);
-        setFetchedCollections(res.data.collections);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getCollections();
-  }, []);
+  const getCollections = async () => {
+    try {
+      const res = await axios.get(`${uri}/collection`);
+      setFetchedCollections(res.data.collections);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const getBrands = async () => {
+    try {
+      const res = await axios.get(`${uri}/brand`);
+      setFetchedBrands(res.data.brands);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   useEffect(() => {
-    const getBrands = async () => {
-      try {
-        const res = await axios.get(`${uri}/brand`);
-        setFetchedBrands(res.data.brands);
-      } catch (err) {
-        console.log(err);
-      }
-    };
+    getCollections();
     getBrands();
   }, []);
 
-  useEffect(() => {
-    const getProductById = async (id) => {
-      try {
-        const res = await axios.get(`${uri}/product/${productId}`);
-        console.log(res);
-        setProduct(res.data.product);
-        setTitle(res.data.product.title);
-        setDescription(res.data.product.description);
-        setPrice(res.data.product.price);
-        setQuantity(res.data.product.stock);
-        setBrand(res.data.product.brandId);
-        setCollection(res.data.product.collectionId);
-        setStatus(res.data.product.status);
-        setPath(res.data.product.image);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
-    getProductById();
-  }, [productId]);
-
-  const updateProducts = async (event) => {
+  const addProducts = async (event) => {
     if (
+      image.length === 0 ||
       title === "" ||
       description === "" ||
       brand === "" ||
@@ -116,6 +90,9 @@ const ProductDetail = () => {
       event.preventDefault();
       alert("Please Check Fields");
       return;
+    } else if (!buttonCheck) {
+      event.preventDefault();
+      alert("Upload Image First");
     } else {
       event.preventDefault();
       const data = {
@@ -125,13 +102,11 @@ const ProductDetail = () => {
         description: description,
         brandId: brand,
         collectionId: collection,
-        deleteFlag: false,
         status: status,
         image: path,
       };
-
       try {
-        await axios.put(`${uri}/product/${product._id}`, data, {
+        await axios.post(`${uri}/product`, data, {
           headers: {
             "Content-Type": "application/json",
           },
@@ -155,16 +130,27 @@ const ProductDetail = () => {
         headers: {
           "content-type": "multipart/form-data",
         },
+        onUploadProgress: (progressEvent) => {
+          const percentage = (progressEvent.loaded * 100) / progressEvent.total;
+          if (percentage < 100) setUploadPercentage(Math.floor(percentage));
+          console.log(percentage);
+        },
       };
-
       try {
         const res = await axios.post(
           `${uri}/upload/product/image`,
           formData,
           config
         );
-        alert("File has been uploaded successfully.");
+        // alert("File has been uploaded successfully.");
+        setButtonCheck(true);
         setPath(res.data);
+        setUploadPercentage(
+          100,
+          setTimeout(() => {
+            setUploadPercentage(0);
+          }, 1000)
+        );
       } catch (err) {
         console.log(err);
       }
@@ -173,16 +159,14 @@ const ProductDetail = () => {
 
   return (
     <div>
-      <div>
-        <Alert
-          title="Product Updated"
-          message="The product was succesfuly updated."
-          show={show}
-          variant="success"
-          handleClose={handleClose}
-          handleShow={handleShow}
-        />
-      </div>
+      <Alert
+        title="Product Added"
+        message="The product was succesfuly added to the store"
+        show={show}
+        variant="success"
+        handleClose={handleClose}
+        handleShow={handleShow}
+      />
       <form style={{ paddingTop: 25 }}>
         <div style={{ display: "flex", justifyContent: "center", padding: 20 }}>
           <div
@@ -195,9 +179,7 @@ const ProductDetail = () => {
             }}
           >
             <div>
-              <h1 style={{ fontSize: 24, color: "black" }}>
-                {product === undefined ? "" : product.title}
-              </h1>
+              <h1 style={{ fontSize: 24, color: "black" }}>Add Products</h1>
             </div>
 
             <div class="mb-3" style={{ paddingTop: 25 }}>
@@ -206,28 +188,61 @@ const ProductDetail = () => {
               </label>
               <input
                 class="form-control"
-                value={title}
                 style={{ backgroundColor: "white", color: "black" }}
                 onChange={onChangeTitle}
                 required
               />
             </div>
             <div class="mb-3">
-              <div>
-                <label
-                  class="form-label"
-                  style={{ color: "black", paddingTop: 25 }}
-                >
-                  Description
-                </label>
-                <JoditEditor
-                  value={description}
-                  tabIndex={1} // tabIndex of textarea
-                  onChange={onChangeDescription}
-                />
-              </div>
+              <label class="form-label" style={{ color: "black" }}>
+                Description
+              </label>
+              {/* <Editor
+                toolbarClassName="toolbarClassName"
+                wrapperClassName="wrapperClassName"
+                editorClassName="editorClassName"
+                onChange={onChangeDescription}
+              /> */}
+              <JoditEditor
+                value={description}
+                tabIndex={1} // tabIndex of textarea
+                onChange={onChangeDescription}
+              />
             </div>
             <div class="row">
+              <div class="col">
+                <div class="mb-3">
+                  <form>
+                    <label class="form-label" style={{ color: "black" }}>
+                      Image
+                    </label>
+                    <input
+                      class="form-control"
+                      type="file"
+                      name="myImage"
+                      style={{ backgroundColor: "white", color: "black" }}
+                      onChange={onChangeImage}
+                      required
+                    />
+                    {uploadPercentage > 0 && (
+                      <ProgressBar
+                        striped
+                        now={uploadPercentage}
+                        label={`${uploadPercentage}%`}
+                      />
+                    )}
+                    <div style={{ marginTop: 5 }}>
+                      <button
+                        class="btn btn-success"
+                        style={{ width: "30%" }}
+                        onClick={(e) => uploadImages(e)}
+                      >
+                        Upload
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
               <div class="col">
                 <div class="mb-3">
                   <label class="form-label" style={{ color: "black" }}>
@@ -235,7 +250,6 @@ const ProductDetail = () => {
                   </label>
                   <input
                     class="form-control"
-                    value={price}
                     type="number"
                     style={{ backgroundColor: "white", color: "black" }}
                     onChange={onChangePrice}
@@ -250,63 +264,12 @@ const ProductDetail = () => {
                   </label>
                   <input
                     class="form-control"
-                    value={quantity}
                     type="number"
                     style={{ backgroundColor: "white", color: "black" }}
                     onChange={onChangeQuantity}
                     required
                   />
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div style={{ display: "flex", justifyContent: "center", padding: 20 }}>
-          <div
-            class="card"
-            style={{
-              padding: 40,
-              paddingTop: 25,
-              width: "85%",
-              backgroundColor: "white",
-            }}
-          >
-            <div class="col">
-              <h1 style={{ fontSize: 20, color: "black" }}>Media</h1>
-              <div style={{ display: "flex", justifyContent: "center" }}>
-                <img
-                  src={`${path === "" ? product.image : path}`}
-                  width="400"
-                  height="400"
-                  alt=""
-                />
-              </div>
-              <div class="mb-3">
-                <form>
-                  <label
-                    class="form-label"
-                    style={{ color: "black", padding: 5 }}
-                  >
-                    Image
-                  </label>
-                  <input
-                    class="form-control"
-                    type="file"
-                    name="myImage"
-                    style={{ backgroundColor: "white", color: "black" }}
-                    onChange={onChangeImage}
-                    required
-                  />
-                  <div style={{ marginTop: 5 }}>
-                    <button
-                      class="btn btn-success"
-                      style={{ width: "10%" }}
-                      onClick={(e) => uploadImages(e)}
-                    >
-                      Upload
-                    </button>
-                  </div>
-                </form>
               </div>
             </div>
           </div>
@@ -333,17 +296,14 @@ const ProductDetail = () => {
                     onChange={onChangeBrand}
                     required
                   >
-                    <option
-                      selected
-                      value={brand === undefined ? "" : brand._id}
-                    >
-                      {brand === undefined ? "Pick a Brand" : brand.name}
-                    </option>
-                    {fetchBrands.map((b) => (
-                      <option value={b._id} key={b._id}>
-                        {b.name}
-                      </option>
-                    ))}
+                    <option value="">Pick a Brand</option>
+                    {fetchBrands.map((b) =>
+                      b.deleteFlag === false ? (
+                        <option value={b._id} key={b._id}>
+                          {b.name}
+                        </option>
+                      ) : null
+                    )}
                   </select>
                 </div>
               </div>
@@ -358,19 +318,14 @@ const ProductDetail = () => {
                     onChange={onChangeCollection}
                     required
                   >
-                    <option
-                      selected
-                      value={collection === undefined ? "" : collection._id}
-                    >
-                      {collection === undefined
-                        ? "Pick a Collection"
-                        : collection.name}
-                    </option>
-                    {fetchCollections.map((c) => (
-                      <option value={c._id} key={c._id}>
-                        {c.name}
-                      </option>
-                    ))}
+                    <option value="">Pick a Collection</option>
+                    {fetchCollections.map((c) =>
+                      c.deleteFlag === false ? (
+                        <option value={c._id} key={c._id}>
+                          {c.name}
+                        </option>
+                      ) : null
+                    )}
                   </select>
                 </div>
               </div>
@@ -387,9 +342,7 @@ const ProductDetail = () => {
                     onChange={onChangeStatus}
                     required
                   >
-                    <option selected value={status}>
-                      {status}
-                    </option>
+                    <option value="">Select Status</option>
                     <option value="Active">Active</option>
                     <option value="Draft">Draft</option>
                   </select>
@@ -399,9 +352,9 @@ const ProductDetail = () => {
             <button
               class="btn btn-success"
               style={{ width: "25%" }}
-              onClick={(e) => updateProducts(e)}
+              onClick={(e) => addProducts(e)}
             >
-              Update Product
+              Add Product
             </button>
           </div>
         </div>
@@ -410,4 +363,4 @@ const ProductDetail = () => {
   );
 };
 
-export default ProductDetail;
+export default AddProducts;

@@ -1,6 +1,6 @@
 {
   "proxy": "http://localhost:5000",
-  "homepage":"http://localhost:5000/admin",
+  "homepage": "http://localhost:5000/admin",
   "name": "store-portal",
   "version": "0.1.0",
   "private": true,
@@ -23,6 +23,7 @@
     "bootstrap": "^5.0.1",
     "cdbreact": "^1.2.1",
     "draft-js": "^0.11.7",
+    "jodit-react": "^1.1.15",
     "mui-datatables": "^4.0.0",
     "react": "^17.0.2",
     "react-bootstrap": "^2.0.2",

@@ -6,40 +6,43 @@ import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { uri } from "../../api.json";
 
-const BrandsTable = () => {
+const CollectionsTable = () => {
   let theme = createTheme();
   theme = responsiveFontSizes(theme);
   const history = useHistory();
 
   const columns = ["Id", "Title"];
 
-  const [brands, setBrands] = useState([]);
+  const [collections, setCollections] = useState([]);
   const [newRows, setRows] = useState([]);
 
-  const getBrands = async () => {
-    try {
-      const res = await axios.get(`${uri}/brand`, {
+  const getCollections = async () => {
+    axios
+      .get(`${uri}/collection`, {
         headers: {
           "Content-Type": "application/json",
         },
+      })
+      .then((res) => {
+        console.log("collections here", res.data.collections);
+        let list = res.data.collections;
+        setCollections(list);
+      })
+      .catch((err) => {
+        console.log(err);
       });
-      console.log("collections here", res.data.brands);
-      setBrands(res.data.brands);
-    } catch (err) {
-      console.log(err);
-    }
   };
 
-  const deleteBrand = async (id) => {
-    try {
-      await axios.delete(`${uri}/brand/${id}`, {
+  const deleteCollection = async (id) => {
+    axios
+      .delete(`${uri}/collection/${id}`, {
         headers: {
           "Content-Type": "application/json",
         },
+      })
+      .catch((err) => {
+        console.log(err);
       });
-    } catch (err) {
-      console.log(err);
-    }
   };
 
   const options = {
@@ -49,33 +52,33 @@ const BrandsTable = () => {
       for (let i = 0; i < rowData.data.length; i++) {
         let idx = rowData.data[i].dataIndex;
         let id = newRows[idx][0];
-        deleteBrand(id);
+        deleteCollection(id);
       }
       setTimeout(function () {
-        getBrands();
+        getCollections();
       }, 200);
     },
     onRowClick: (rowData) => {
-      history.push(`/admin/brand/${rowData[0]}`);
+      history.push(`/admin/collection/${rowData[0]}`);
     },
   };
 
   useEffect(() => {
     //Runs only on the first render
-    getBrands();
+    getCollections();
   }, []);
 
   useEffect(() => {
-    console.log(brands);
-    const cleanedBrands = [];
+    console.log(collections);
+    const cleanedCollections = [];
 
-    brands.forEach(function (brand) {
-      const coll = [brand._id, brand.name];
-      cleanedBrands.push(coll);
+    collections.forEach(function (collection) {
+      const coll = [collection._id, collection.name];
+      cleanedCollections.push(coll);
     });
 
-    setRows(cleanedBrands);
-  }, [brands]);
+    setRows(cleanedCollections);
+  }, [collections]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -84,4 +87,4 @@ const BrandsTable = () => {
   );
 };
 
-export default BrandsTable;
+export default CollectionsTable;
