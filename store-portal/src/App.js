@@ -12,12 +12,14 @@ import AddBrands from './components/Forms/AddBrands';
 import Brands from './pages/Brands';
 import BrandDetail from './pages/BrandDetail'
 
+
 function App() {
   return (
     <Router>
       <Navbar />
       <Sidebar />
       <Switch>
+       
         <Route exact path="/admin/products" component={Products} />
         <Route exact path="/admin/products/new" component={AddProducts} />
         <Route exact path="/admin/collections" component={Collections} />
