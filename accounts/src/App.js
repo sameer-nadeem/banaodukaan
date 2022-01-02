@@ -1,23 +1,51 @@
-import logo from './logo.svg';
-import './App.css';
-
+import { Button, TextField } from "@mui/material"
+import { useState } from "react";
 function App() {
+
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+
+  const onChangePassword = (e) => {
+    setPassword(state => {
+      console.log(e.target.value)
+      return e.target.value
+    })
+  }
+
+  const onChangeEmail = (e) => {
+    setEmail(state => {
+      console.log(e.target.value)
+      return e.target.value
+    })
+  }
+
+  const loginHandler = () => {
+    console.log(email, password)
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container" style={{
+      height: "100vh"
+    }}>
+      <div style={{
+        height: "100vh"
+      }} className="row d-flex align-items-center justify-content-around">
+        <div className="col-5">
+          <TextField onChange={onChangeEmail}
+            value={email}
+            className="m-2"
+            type={'email'}
+            fullWidth label="Email"
+            variant="outlined" />
+          <TextField onChange={onChangePassword}
+            value={password}
+            className="m-2"
+            fullWidth label="Password"
+            type={'password'}
+            variant="outlined" />
+          <Button onClick={loginHandler} className="m-2" variant="outlined">Log In</Button>
+        </div>
+      </div>
     </div>
   );
 }
