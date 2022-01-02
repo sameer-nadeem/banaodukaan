@@ -49,10 +49,9 @@ app.use(
 //logger setup end
 
 //extract vhost and place it in req.vhost
-app.use(vhost('*.bdstaging.com', (req, res, next) => {
-  console.log(req.url)
-  next()
-}))
+
+app.use(vhost("accounts.bdstaging.com", require('./accounts')))
+
 
 app.use("/uploads", express.static(path.join(__dirname, 'uploads')))
 
