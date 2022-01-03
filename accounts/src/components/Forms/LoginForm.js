@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import GoogleLogin from 'react-google-login';
 import axios from 'axios'
+import GoogleButton from 'react-google-button'
 
 
 const LoginForm = () => {
@@ -73,7 +74,7 @@ const LoginForm = () => {
                     type="submit"
                     fullWidth
                     variant="contained"
-                    style={{backgroundColor: "#345DA7", color:'white', height: 60, fontWeight: '500'}}
+                    style={{backgroundColor: "#345DA7", color:'white', height: 55, fontWeight: '500'}}
                     >
                         Log In
                     </Button>
@@ -84,7 +85,9 @@ const LoginForm = () => {
                         onSuccess={responseSuccessGoogle}
                         onFailure={responseErrorGoogle}
                         cookiePolicy={'single_host_origin'}
-                        
+                        render={renderProps => (
+                            <GoogleButton onClick={renderProps.onClick} disabled={renderProps.disabled} style={{width: '100%', borderRadius: 4}}>Log in with Google</GoogleButton>
+                          )}
                         />
                     </div>
                     
