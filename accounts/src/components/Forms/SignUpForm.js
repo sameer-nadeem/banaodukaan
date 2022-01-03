@@ -120,7 +120,7 @@ const SignUpForm = () => {
                     <Grid container>
                         <Grid item>
                             <h3 style = {{fontSize: "0.92rem", fontWeight: 400, margin: 0, lineHeight: "1.5rem", color: '#454f5b'}}>{'Already have an account? '}
-                                <Link to="#" variant="body2" style = {{color: '#3B8AC4'}}>
+                                <Link to="/" variant="body2" style = {{color: '#3B8AC4'}}>
                                     Login
                                 </Link>
                             </h3>
