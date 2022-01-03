@@ -49,13 +49,14 @@ app.use(
 //logger setup end
 
 //extract vhost and place it in req.vhost
+app.use(cors())
 
 app.use(vhost("accounts.bdstaging.com", require('./accounts')))
 
 
 app.use("/uploads", express.static(path.join(__dirname, 'uploads')))
 
-app.use(cors())
+
 
 connectDb()
 initRoutes(app)
