@@ -1,5 +1,4 @@
 import { Card } from "@material-ui/core";
-import logo from "../Logo/banaodukaan_logo_text.png";
 import LoginForm from "../components/Forms/LoginForm.js";
 
 const Login = () => {
