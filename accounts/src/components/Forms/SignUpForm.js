@@ -10,6 +10,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
+import Alert from "../Alerts/Alert";
+
 
 const SignUpForm = () => {
   const [email, setEmail] = useState(""); //to store and keep track of the email entered
@@ -67,6 +69,10 @@ const SignUpForm = () => {
     event.preventDefault();
     if (password !== confirmPassword) {
       //add alert here
+      setAlertTitle("Error")
+      setAlertMessage("Passwords dont match!")
+      setAlertVariant("failure")
+      handleShow();
       console.log("passwords dont match");
       return;
     }
@@ -88,11 +94,35 @@ const SignUpForm = () => {
       Cookies.set(response.data.id, response.data.token);
       history(`/${response.data.id}/my-stores`);
     } catch {
+      setAlertTitle("Error")
+      setAlertMessage("Please try again later")
+      setAlertVariant("failure")
+      handleShow();
       console.log("error-whoops");
     }
   };
+
+  const [show, setShow] = useState(false);
+  const [alertTitle, setAlertTitle] = useState("");
+  const [alertMessage, setAlertMessage] = useState("")
+  const [alertVariant, setAlertVariant] = useState("")
+
+  const handleClose = () => {
+    setShow(false);
+  };
+  const handleShow = () => setShow(true);
+
   return (
     <div>
+      {/* Alert added here */}
+      <Alert
+        title={alertTitle}
+        message={alertMessage}
+        show={show}
+        variant={alertVariant}
+        handleClose={handleClose}
+        handleShow={handleShow}
+      />
       {/* form starts here */}
       <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
         <div>

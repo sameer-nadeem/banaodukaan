@@ -10,8 +10,9 @@ import { useState } from "react";
 import GoogleLogin from "react-google-login";
 import axios from "axios";
 import GoogleButton from "react-google-button";
-import Cookies from 'js-cookie'
+import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
+import Alert from "../Alerts/Alert";
 
 const LoginForm = () => {
   const [email, setEmail] = useState(""); //to store and keep track of the email entered
@@ -61,48 +62,74 @@ const LoginForm = () => {
         }
       );
       console.log("success: ", response);
-      Cookies.set(response.data.id, response.data.token)
-      history(`/${response.data.id}/my-stores`)
+      Cookies.set(response.data.id, response.data.token);
+      history(`/${response.data.id}/my-stores`);
     } catch (err) {
+      setAlertTitle("Error")
+      setAlertMessage("Please try again later")
+      setAlertVariant("failure")
+      handleShow();
       console.log("error", err);
     }
   };
 
   // for error after clicking on google button
   const responseErrorGoogle = (res) => {
+    setAlertTitle("Error")
+    setAlertMessage("Please try again later")
+    setAlertVariant("failure")
+    handleShow();
     console.log(res);
   };
 
   // handle submit function
-  const handleSubmit = async(event) => {
+  const handleSubmit = async (event) => {
     // we can simple get the values from the variables
     console.log(email);
     console.log(password);
     event.preventDefault();
-    try{
-    const body = {
-      email,
-      password
-    }
-    const response = await axios.post(
-      `/api/auth/login-merchant`,
-      body,
-      {
+    try {
+      const body = {
+        email,
+        password,
+      };
+      const response = await axios.post(`/api/auth/login-merchant`, body, {
         headers: {
           "Content-Type": "application/json",
         },
-      }
-    );
-    console.log("success: ", response);
-    Cookies.set(response.data.id, response.data.token)
-    history(`/${response.data.id}/my-stores`)
-  } catch (err) {
-    console.log("error", err);
-  }
-  
+      });
+      console.log("success: ", response);
+      Cookies.set(response.data.id, response.data.token);
+      history(`/${response.data.id}/my-stores`);
+    } catch (err) {
+      setAlertTitle("Error")
+      setAlertMessage("Please try again later")
+      setAlertVariant("failure")
+      handleShow();
+      console.log("error", err);
+    }
   };
+
+  const [show, setShow] = useState(false);
+  const [alertTitle, setAlertTitle] = useState("");
+  const [alertMessage, setAlertMessage] = useState("")
+  const [alertVariant, setAlertVariant] = useState("")
+
+  const handleClose = () => {
+    setShow(false);
+  };
+  const handleShow = () => setShow(true);
+
   return (
     <div>
+      <Alert
+        title={alertTitle}
+        message={alertMessage}
+        show={show}
+        variant={alertVariant}
+        handleClose={handleClose}
+        handleShow={handleShow}
+      />
       {/* form starts here */}
       <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
         <TextField
