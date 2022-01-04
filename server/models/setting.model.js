@@ -21,6 +21,22 @@ const settingSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Tax'
     },
+    country:{
+        type:String
+    },
+    city:{
+        type:String
+    },
+    postalCode:{
+        type:String
+    },
+    website:{
+        type:String
+    },
+    phone:{
+        type:String
+    },
+
 })
 
 module.exports = mongoose.model('Setting', settingSchema);
