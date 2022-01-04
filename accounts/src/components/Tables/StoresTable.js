@@ -4,8 +4,11 @@ import MUIDataTable from "mui-datatables";
 import { createTheme, responsiveFontSizes } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 
 const StoresTable = () => {
+  const { id: user_ID } = useParams();
+
   let theme = createTheme();
   theme = responsiveFontSizes(theme);
   const history = useNavigate();
@@ -14,12 +17,12 @@ const StoresTable = () => {
 
   const getStores = async () => {
     try {
-      const res = await axios.get(`api/store`, {
+      const res = await axios.get(`/api/merchant/${user_ID}`, {
         headers: {
           "Content-Type": "application/json",
         },
       });
-      console.log(res);
+      console.log("stores list: ", res);
       let list = res.data.stores;
       setStores(list);
     } catch (err) {
@@ -29,7 +32,7 @@ const StoresTable = () => {
 
   const deleteStore = async (id) => {
     try {
-      await axios.delete(`api/store/${id}`, {
+      await axios.delete(`/api/store/${id}`, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -109,7 +112,7 @@ const StoresTable = () => {
 
   useEffect(() => {
     console.log(stores);
-   // const cleanedStores = [];
+   const cleanedStores = [];
 
     stores.forEach(function (store) {
       const stor = {
@@ -119,10 +122,10 @@ const StoresTable = () => {
         orders: store.orders,
         complaints: store.complaints,
       };
-      //cleanedProducts.push(stor);
+      cleanedStores.push(stor);
     });
 
-    //setRows(cleanedStores);
+    setRows(cleanedStores);
   }, [stores]);
 
   return (
