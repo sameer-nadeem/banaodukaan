@@ -11,7 +11,7 @@ const Stores = () => {
             <h1 style={{ fontSize: 24 }}>My Stores</h1>
           </div>
           <div style={{ justifyContent: "flex-end", padding: 20 }}>
-            <Link to="/admin/products/new">
+            <Link to="/my-stores/new">
               <Button
                 variant="outlined"
                 style={{ backgroundColor: "#12824C", color: "#FFFFFF" }}

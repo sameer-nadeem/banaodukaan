@@ -1,10 +1,7 @@
 import { useState, useEffect,useMemo  } from "react";
 import axios from "axios";
-import { uri } from "../../api.json";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Alert from "../Alerts/Alert";
-import { ProgressBar } from "react-bootstrap";
-import JoditEditor from "jodit-react";
 import countryList from 'react-select-country-list'
 import Select from 'react-select'
 
@@ -33,7 +30,7 @@ const AddStores = () => {
   const [buttonCheck, setButtonCheck] = useState(false);
   const [uploadPercentage, setUploadPercentage] = useState(0);
 
-  const history = useHistory();
+  const history = useNavigate();
   
   const onChangeTitle = (event) => {
     setTitle(event.target.value);
@@ -82,7 +79,7 @@ const AddStores = () => {
 
       console.log(data)
       try {
-        await axios.post(`${uri}/store`, data, {
+        await axios.post(`api/store`, data, {
           headers: {
             "Content-Type": "application/json",
           },
