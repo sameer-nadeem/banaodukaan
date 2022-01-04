@@ -10,13 +10,15 @@ import { useState } from "react";
 import GoogleLogin from "react-google-login";
 import axios from "axios";
 import GoogleButton from "react-google-button";
+import Cookies from 'js-cookie'
+import { useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
   const [email, setEmail] = useState(""); //to store and keep track of the email entered
   const [password, setPassword] = useState(""); //to store and keep track of the password entered
   // show password implemented using the below variable and functions
   const [showPassword, setShowPassword] = useState(false);
-
+  const history = useNavigate();
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
   };
@@ -59,6 +61,8 @@ const LoginForm = () => {
         }
       );
       console.log("success: ", response);
+      Cookies.set(response.data.id, response.data.token)
+      history(`/${response.data.id}/my-stores`)
     } catch (err) {
       console.log("error", err);
     }
@@ -70,18 +74,32 @@ const LoginForm = () => {
   };
 
   // handle submit function
-  const handleSubmit = (event) => {
+  const handleSubmit = async(event) => {
     // we can simple get the values from the variables
     console.log(email);
     console.log(password);
     event.preventDefault();
-    // or we can use this
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
-    // use whatever suits you best and add the
+    try{
+    const body = {
+      email,
+      password
+    }
+    const response = await axios.post(
+      `/api/auth/login-merchant`,
+      body,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    console.log("success: ", response);
+    Cookies.set(response.data.id, response.data.token)
+    history(`/${response.data.id}/my-stores`)
+  } catch (err) {
+    console.log("error", err);
+  }
+  
   };
   return (
     <div>

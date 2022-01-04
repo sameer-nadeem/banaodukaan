@@ -1,3 +1,5 @@
+
+
 const express = require('express')
 const Merchant = require('../../models/merchant.model')
 const User = require('../../models/user.model')
@@ -51,10 +53,10 @@ const registerMerchant = async (req, res) => {
         }
 
 
-        const token = await jwt.sign(payload, config.get('token-secret'), { expiresIn: 360000 })
-
+        const token = jwt.sign(payload, config.get('token-secret'), { expiresIn: 360000 })
         return res.status(200).json({
-            token
+            token: token,
+            id: user._id
         })
     }
     catch (err) {
@@ -100,14 +102,14 @@ const loginMerchant =  async (req, res) => {
         const passMatch = await bcrypt.compare(password, user.password)
         const type = 'Merchant'
         if (passMatch) {
-            const token = await jwt.sign({
+            const token = jwt.sign({
                 type, id: user._id
             }, config.get('token-secret'), {
                 expiresIn: 360000
             })
-
             return res.status(200).json({
-                token
+                token: token,
+                id: user._id
             })
         }
         else {
@@ -169,9 +171,9 @@ const googleLogin = async (req,res) => {
                 }
         
                 const token = jwt.sign(payload, config.get('token-secret'), { expiresIn: 360000 })
-        
                 return res.status(200).json({
-                    token
+                    token: token,
+                    id: user._id
                 })
             }
             else{
@@ -204,9 +206,9 @@ const googleLogin = async (req,res) => {
                 }
         
                 const token = jwt.sign(payload, config.get('token-secret'), { expiresIn: 360000 })
-        
                 return res.status(200).json({
-                    token
+                    token: token,
+                    id: user._id
                 })
             }
         }
