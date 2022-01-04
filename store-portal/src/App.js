@@ -11,7 +11,8 @@ import LandingPage from './pages/LandingPage';
 import AddBrands from './components/Forms/AddBrands';
 import Brands from './pages/Brands';
 import BrandDetail from './pages/BrandDetail'
-
+import Stores from './pages/Stores';
+import AddStores from './components/Forms/AddStores';
 
 function App() {
   return (
@@ -19,7 +20,8 @@ function App() {
       <Navbar />
       <Sidebar />
       <Switch>
-       
+        <Route exact path="/admin/stores/new" component={AddStores} />
+        <Route exact path="/admin/stores" component={Stores} />
         <Route exact path="/admin/products" component={Products} />
         <Route exact path="/admin/products/new" component={AddProducts} />
         <Route exact path="/admin/collections" component={Collections} />
