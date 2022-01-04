@@ -2,20 +2,19 @@ import React, { useEffect, useState } from "react";
 import { ThemeProvider } from "@mui/styles";
 import MUIDataTable from "mui-datatables";
 import { createTheme, responsiveFontSizes } from "@mui/material/styles";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { uri } from "../../api.json";
 
 const StoresTable = () => {
   let theme = createTheme();
   theme = responsiveFontSizes(theme);
-  const history = useHistory();
+  const history = useNavigate();
   const [stores, setStores] = useState([]);
   const [newRows, setRows] = useState([]);
 
   const getStores = async () => {
     try {
-      const res = await axios.get(`${uri}/store`, {
+      const res = await axios.get(`api/store`, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -30,7 +29,7 @@ const StoresTable = () => {
 
   const deleteStore = async (id) => {
     try {
-      await axios.delete(`${uri}/store/${id}`, {
+      await axios.delete(`api/store/${id}`, {
         headers: {
           "Content-Type": "application/json",
         },
