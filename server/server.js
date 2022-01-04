@@ -50,9 +50,12 @@ app.use(
 
 //extract vhost and place it in req.vhost
 app.use(cors())
+app.use((req, res, next) => {
+  console.log(req.hostname)
+  next()
+})
 
-app.use(vhost("accounts.bdstaging.com", require('./accounts')))
-
+app.use(vhost("accounts.*.com", require('./accounts')))
 
 app.use("/uploads", express.static(path.join(__dirname, 'uploads')))
 
