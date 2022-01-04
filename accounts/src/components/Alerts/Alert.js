@@ -14,6 +14,15 @@ const Alert = ({ handleShow, handleClose, show, variant, title, message }) => {
         </i>
       )
     }
+    else if(variant === 'failure'){
+      return (
+        <i style={{
+          color: "#cc1414"
+        }}
+          className="fas fa-3x fa-check">
+        </i>
+      )
+    }
   }
 
 
