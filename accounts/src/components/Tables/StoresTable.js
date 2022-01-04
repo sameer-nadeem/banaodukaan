@@ -98,7 +98,7 @@ const StoresTable = () => {
     },
     onRowClick: (rowData) => {
       console.log(rowData);
-      history.push(`/admin/store/${rowData[0]}`);
+      history(`/admin/store/${rowData[0]}`);
     },
   };
 
