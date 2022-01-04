@@ -10,9 +10,10 @@ const getMyStores  = async (req,res)=>{
     const id = req.params.id
 
     try {
-        const merchant = await Merchant.findById(id)
+        const merchant = await Merchant.findOne({userId: id}).populate('myStores')
         console.log(merchant)
         stores = merchant.myStores
+
         return res.status(200).json({
             stores
         })
