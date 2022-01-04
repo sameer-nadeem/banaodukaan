@@ -1,6 +1,6 @@
 import { useState, useEffect,useMemo  } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation  } from "react-router-dom";
 import Alert from "../Alerts/Alert";
 import countryList from 'react-select-country-list'
 import Select from 'react-select'
@@ -31,6 +31,8 @@ const AddStores = () => {
   const [uploadPercentage, setUploadPercentage] = useState(0);
 
   const history = useNavigate();
+  const location = useLocation();
+  const { userID } = location.state;
   
   const onChangeTitle = (event) => {
     setTitle(event.target.value);
@@ -61,33 +63,34 @@ const AddStores = () => {
     setWebsite(event.target.value);
   };
 
-  
 
   const addStores = async (event) => {
   
     event.preventDefault()
-      const data = {
-        title: title,
-        adress: adress,
-        city: city,
-        postalCode: postalCode,
-        phone: phone,
-       website: website,
-       country : value.label
-        
-      };
 
-      console.log(data)
-      try {
-        await axios.post(`api/store`, data, {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        handleShow();
-      } catch (err) {
-        console.log(err);
-      }
+    const data = {
+      title: title,
+      adress: adress,
+      city: city,
+      postalCode: postalCode,
+      phone: phone,
+      website: website,
+      country : value.label
+    };
+    
+
+    console.log(data)
+    
+    try {
+      await axios.post(`/api/merchant/${userID}`, data, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      handleShow();
+    } catch (err) {
+      console.log(err);
+    }
     
   };
 
