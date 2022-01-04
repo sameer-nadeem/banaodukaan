@@ -7,6 +7,9 @@ const router = express.Router()
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const config = require('config')
+const {OAuth2Client} = require('google-auth-library');
+
+const client = new OAuth2Client(config.get('google-auth-client-id'));
 
 
 const registerMerchant = async (req, res) => {
@@ -127,15 +130,11 @@ const loginMerchant =  async (req, res) => {
 
 }
 
-const {OAuth2Client} = require('google-auth-library');
-const client = new OAuth2Client("1008574452559-43bj1lusj5shgu89fb0hpgkqlkglk91j.apps.googleusercontent.com");
-
 const googleLogin = async (req,res) => {
     const {tokenId} = req.body // token id received from frontend
-    console.log(req.body) 
 
     try {
-        const response = await client.verifyIdToken({idToken: tokenId, audience: "1008574452559-43bj1lusj5shgu89fb0hpgkqlkglk91j.apps.googleusercontent.com"})
+        const response = await client.verifyIdToken({idToken: tokenId, audience: config.get('google-auth-client-id')})
         const { email_verified, name, email, given_name, family_name } = response.payload
 
         if(email_verified){
@@ -226,11 +225,6 @@ const googleLogin = async (req,res) => {
         })
     }
 }
-
-
-
-
-
 
 module.exports = {
     registerMerchant,
