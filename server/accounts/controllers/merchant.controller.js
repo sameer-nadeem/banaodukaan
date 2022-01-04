@@ -28,9 +28,9 @@ const getMyStores  = async (req,res)=>{
 const addStore = async  (req,res) =>{
     
     const id = req.params.id
+    console.log("id: ", id)
     try{
-        const merchant = await Merchant.findById(id)
-
+        const merchant = await Merchant.findOne({userId: id})
         var {
             title,
             country,
@@ -60,7 +60,8 @@ const addStore = async  (req,res) =>{
             settings : settings._id
         })
         await store.save()
-
+        console.log("merchant: ", merchant)
+        console.log("my stores: ", merchant.myStores)
         merchant.myStores.push(store._id)
         await merchant.save()
 
