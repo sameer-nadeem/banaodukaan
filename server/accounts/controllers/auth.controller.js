@@ -225,8 +225,14 @@ const googleLogin = async (req,res) => {
     }
 }
 
+
+
+
+
+
 module.exports = {
     registerMerchant,
     loginMerchant,
     googleLogin,
+  
 }
