@@ -4,10 +4,8 @@ import MUIDataTable from "mui-datatables";
 import { createTheme, responsiveFontSizes } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useParams } from "react-router-dom";
 
 const StoresTable = () => {
-  const { id: user_ID } = useParams();
 
   let theme = createTheme();
   theme = responsiveFontSizes(theme);
@@ -17,7 +15,7 @@ const StoresTable = () => {
 
   const getStores = async () => {
     try {
-      const res = await axios.get(`/api/merchant/${user_ID}`, {
+      const res = await axios.get(`/api/merchant/store`, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -112,7 +110,7 @@ const StoresTable = () => {
 
   useEffect(() => {
     console.log(stores);
-   const cleanedStores = [];
+    const cleanedStores = [];
 
     stores.forEach(function (store) {
       const stor = {

@@ -5,12 +5,12 @@ const Store = require('../../models/store.model')
 const Settings = require('../../models/setting.model')
 
 
-const getMyStores  = async (req,res)=>{
-    
-    const id = req.params.id
+const getMyStores = async (req, res) => {
+
+    const id = req.user.id
 
     try {
-        const merchant = await Merchant.findOne({userId: id}).populate('myStores')
+        const merchant = await Merchant.findOne({ userId: id }).populate('myStores')
         console.log(merchant)
         stores = merchant.myStores
 
@@ -26,12 +26,12 @@ const getMyStores  = async (req,res)=>{
 
 }
 
-const addStore = async  (req,res) =>{
-    
-    const id = req.params.id
+const addStore = async (req, res) => {
+
+    const id = req.user.id
     console.log("id: ", id)
-    try{
-        const merchant = await Merchant.findOne({userId: id})
+    try {
+        const merchant = await Merchant.findOne({ userId: id })
         var {
             title,
             country,
@@ -54,11 +54,11 @@ const addStore = async  (req,res) =>{
 
         const store = new Store({
             title,
-            products:[],
-            orders:[],
-            discountCodes:[],
-            complaints:[],
-            settings : settings._id
+            products: [],
+            orders: [],
+            discountCodes: [],
+            complaints: [],
+            settings: settings._id
         })
         await store.save()
         console.log("merchant: ", merchant)
@@ -66,19 +66,19 @@ const addStore = async  (req,res) =>{
         merchant.myStores.push(store._id)
         await merchant.save()
 
-        console.log("merhcant stores",merchant.myStores)
+        console.log("merhcant stores", merchant.myStores)
         return res.status(200).json({
             store
         })
 
     }
-    catch(err) {
+    catch (err) {
         console.log(err)
         return res.status(500).json({
             error: "Server Error"
         })
     }
-    
+
 }
 
 

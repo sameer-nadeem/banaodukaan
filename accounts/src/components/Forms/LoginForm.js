@@ -10,9 +10,9 @@ import { useState } from "react";
 import GoogleLogin from "react-google-login";
 import axios from "axios";
 import GoogleButton from "react-google-button";
-import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import Alert from "../Alerts/Alert";
+import setAuthToken from "../../utils/setAuthToken";
 
 const LoginForm = () => {
   const [email, setEmail] = useState(""); //to store and keep track of the email entered
@@ -62,8 +62,9 @@ const LoginForm = () => {
         }
       );
       console.log("success: ", response);
-      Cookies.set(response.data.id, response.data.token);
-      history(`/${response.data.id}/my-stores`);
+      localStorage.setItem('token', response.data.token)
+      setAuthToken()
+      history(`/my-stores`);
     } catch (err) {
       setAlertTitle("Error")
       setAlertMessage("Please try again later")
@@ -99,8 +100,9 @@ const LoginForm = () => {
         },
       });
       console.log("success: ", response);
-      Cookies.set(response.data.id, response.data.token);
-      history(`/${response.data.id}/my-stores`);
+      localStorage.setItem('token', response.data.token);
+      setAuthToken();
+      history(`/my-stores`);
     } catch (err) {
       setAlertTitle("Error")
       setAlertMessage("Please try again later")

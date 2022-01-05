@@ -7,7 +7,7 @@ const router = express.Router()
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const config = require('config')
-const {OAuth2Client} = require('google-auth-library');
+const { OAuth2Client } = require('google-auth-library');
 
 const client = new OAuth2Client(config.get('google-auth-client-id'));
 
@@ -54,7 +54,7 @@ const registerMerchant = async (req, res) => {
             type: 'Merchant',
             id: user._id
         }
-
+        console.log('hererer')
 
         const token = jwt.sign(payload, config.get('token-secret'), { expiresIn: 360000 })
         return res.status(200).json({
@@ -71,7 +71,7 @@ const registerMerchant = async (req, res) => {
 
 }
 
-const loginMerchant =  async (req, res) => {
+const loginMerchant = async (req, res) => {
     try {
         const {
             email,
@@ -101,7 +101,7 @@ const loginMerchant =  async (req, res) => {
                 error: 'USER_IS_NOT_MERCHANT'
             })
         }
-        
+
         const passMatch = await bcrypt.compare(password, user.password)
         const type = 'Merchant'
         if (passMatch) {
@@ -130,56 +130,56 @@ const loginMerchant =  async (req, res) => {
 
 }
 
-const googleLogin = async (req,res) => {
-    const {tokenId} = req.body // token id received from frontend
+const googleLogin = async (req, res) => {
+    const { tokenId } = req.body // token id received from frontend
 
     try {
-        const response = await client.verifyIdToken({idToken: tokenId, audience: config.get('google-auth-client-id')})
+        const response = await client.verifyIdToken({ idToken: tokenId, audience: config.get('google-auth-client-id') })
         const { email_verified, name, email, given_name, family_name } = response.payload
 
-        if(email_verified){
+        if (email_verified) {
             // email is verified -> good to go
             const exists = await User.findOne({ // find if the user exists or not
                 email
             })
-            
-            // if it doesnt exist -> then we need to create one otherwise if it exists then we need to check if its present in 
+
+            // if it doesnt exist -> then we need to create one otherwise if it exists then we need to check if its present in
             // merchant table or not
             // if its not present in the merchant table then we need to send an error message
 
-            if(exists){ //login 
-                //if it exists -> check if merchant 
+            if (exists) { //login
+                //if it exists -> check if merchant
                 const user = await User.findOne({
                     email
                 })
-        
+
                 const isPresent = await Merchant.exists({
                     userId: user._id
                 })
-        
+
                 if (!isPresent) { //if not present in merchant then send an error message
                     return res.status(400).json({
                         error: 'USER_IS_NOT_MERCHANT'
                     })
                 }
 
-                //exists and is a merchant-> then we need to  
+                //exists and is a merchant-> then we need to
                 const payload = {
                     type: 'Merchant',
                     id: user._id,
                 }
-        
+
                 const token = jwt.sign(payload, config.get('token-secret'), { expiresIn: 360000 })
                 return res.status(200).json({
                     token: token,
                     id: user._id
                 })
             }
-            else{
+            else {
                 //if user doesnt exist then we need to create it
                 // let password = email + config.get('secret-token') //password in this case
 
-                const user = new User({ 
+                const user = new User({
                     email,
                     password: "",
                     firstName: given_name,
@@ -187,23 +187,23 @@ const googleLogin = async (req,res) => {
                 })
 
                 console.log(user)
-        
+
                 await user.save() // save user
-        
+
                 const merchant = new Merchant({
                     userId: user._id,
                     myStores: []
                 })
 
                 console.log(merchant)
-        
+
                 await merchant.save() //save merchant
 
                 const payload = {
                     type: 'Merchant',
                     id: user._id,
                 }
-        
+
                 const token = jwt.sign(payload, config.get('token-secret'), { expiresIn: 360000 })
                 return res.status(200).json({
                     token: token,
@@ -211,8 +211,8 @@ const googleLogin = async (req,res) => {
                 })
             }
         }
-        else{
-            //email not verified -> 
+        else {
+            //email not verified ->
             return res.status(400).json({
                 error: "COULD_NOT_VERIFY_EMAIL"
             })
@@ -230,5 +230,5 @@ module.exports = {
     registerMerchant,
     loginMerchant,
     googleLogin,
-  
+
 }
