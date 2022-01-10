@@ -4,13 +4,18 @@ import SignUp from "./pages/SignUp"
 import Stores from "./components/Stores";
 import AddStores from "./components/Forms/AddStores";
 import setAuthToken from './utils/setAuthToken';
-
+import { useSelector } from 'react-redux'
+import { useEffect } from 'react';
 
 if (localStorage.token) {
-  setAuthToken(localStorage.token);
+  setAuthToken();
 }
 
 function App() {
+  const token = useSelector(state => state.auth.token)
+  useEffect(() => {
+    setAuthToken()
+  }, [token])
 
   return (
     <Router>

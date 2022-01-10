@@ -8,11 +8,11 @@ import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import { useState } from "react";
 import GoogleLogin from "react-google-login";
-import axios from "axios";
 import GoogleButton from "react-google-button";
 import { useNavigate } from "react-router-dom";
 import Alert from "../Alerts/Alert";
-import setAuthToken from "../../utils/setAuthToken";
+import { useDispatch } from 'react-redux'
+import { login, loginGoogle } from '../../actions/auth'
 
 const LoginForm = () => {
   const [email, setEmail] = useState(""); //to store and keep track of the email entered
@@ -20,6 +20,14 @@ const LoginForm = () => {
   // show password implemented using the below variable and functions
   const [showPassword, setShowPassword] = useState(false);
   const history = useNavigate();
+  const dispatch = useDispatch()
+
+  const [show, setShow] = useState(false);
+  const [alertTitle, setAlertTitle] = useState("");
+  const [alertMessage, setAlertMessage] = useState("")
+  const [alertVariant, setAlertVariant] = useState("")
+
+
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
   };
@@ -47,31 +55,17 @@ const LoginForm = () => {
   //for successful google login button click
   const responseSuccessGoogle = async (res) => {
     let tokenId = res.tokenId;
-    console.log(tokenId);
-    try {
-      const body = {
-        tokenId: tokenId,
-      };
-      const response = await axios.post(
-        `/api/auth/google-login-merchant`,
-        body,
+    dispatch(
+      loginGoogle(
+        tokenId,
+        history,
         {
-          headers: {
-            "Content-Type": "application/json",
-          },
+          setAlertTitle,
+          setAlertVariant,
+          setAlertMessage
         }
-      );
-      console.log("success: ", response);
-      localStorage.setItem('token', response.data.token)
-      setAuthToken()
-      history(`/my-stores`);
-    } catch (err) {
-      setAlertTitle("Error")
-      setAlertMessage("Please try again later")
-      setAlertVariant("failure")
-      handleShow();
-      console.log("error", err);
-    }
+      )
+    )
   };
 
   // for error after clicking on google button
@@ -86,36 +80,21 @@ const LoginForm = () => {
   // handle submit function
   const handleSubmit = async (event) => {
     // we can simple get the values from the variables
-    console.log(email);
-    console.log(password);
     event.preventDefault();
-    try {
-      const body = {
+    dispatch(
+      login(
         email,
         password,
-      };
-      const response = await axios.post(`/api/auth/login-merchant`, body, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      console.log("success: ", response);
-      localStorage.setItem('token', response.data.token);
-      setAuthToken();
-      history(`/my-stores`);
-    } catch (err) {
-      setAlertTitle("Error")
-      setAlertMessage("Please try again later")
-      setAlertVariant("failure")
-      handleShow();
-      console.log("error", err);
-    }
+        history,
+        {
+          setAlertMessage,
+          setAlertTitle,
+          setAlertVariant,
+          handleShow
+        }
+      )
+    )
   };
-
-  const [show, setShow] = useState(false);
-  const [alertTitle, setAlertTitle] = useState("");
-  const [alertMessage, setAlertMessage] = useState("")
-  const [alertVariant, setAlertVariant] = useState("")
 
   const handleClose = () => {
     setShow(false);

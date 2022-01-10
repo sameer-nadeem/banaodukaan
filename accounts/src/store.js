@@ -8,7 +8,17 @@ const rootReducer = combineReducers({
   auth: authReducer
 })
 
-const store = createStore(rootReducer, {}, composeWithDevTools(applyMiddleware(thunk)))
+
+const token = localStorage.getItem('token')
+const initialState = {
+  auth: {
+    token: token,
+    isAuthenticated: token !== null,
+    loading: false
+  }
+}
+
+const store = createStore(rootReducer, initialState, composeWithDevTools(applyMiddleware(thunk)))
 
 
 export default store
