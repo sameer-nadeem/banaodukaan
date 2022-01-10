@@ -2,14 +2,11 @@ import React, { useEffect, useState } from "react";
 import { ThemeProvider } from "@mui/styles";
 import MUIDataTable from "mui-datatables";
 import { createTheme, responsiveFontSizes } from "@mui/material/styles";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
-
 const StoresTable = () => {
 
   let theme = createTheme();
   theme = responsiveFontSizes(theme);
-  const history = useNavigate();
   const [stores, setStores] = useState([]);
   const [newRows, setRows] = useState([]);
 
@@ -57,30 +54,7 @@ const StoresTable = () => {
         sort: false,
       },
     },
-    {
-      name: "products",
-      label: "Products",
-      options: {
-        filter: true,
-        sort: false,
-      },
-    },
-    {
-      name: "orders",
-      label: "Orders",
-      options: {
-        filter: true,
-        sort: false,
-      },
-    },
-    {
-      name: "complaints",
-      label: "Complaints",
-      options: {
-        filter: true,
-        sort: false,
-      },
-    },
+
   ];
 
   const options = {
@@ -99,7 +73,8 @@ const StoresTable = () => {
     },
     onRowClick: (rowData) => {
       console.log(rowData);
-      history(`/admin/store/${rowData[0]}`);
+      window.location.href = `http://${rowData[1]}.bdstaging.com:3000/admin`
+      // history(`${rowData[1]}.bdstaging.com:5000/admin`);
     },
   };
 
