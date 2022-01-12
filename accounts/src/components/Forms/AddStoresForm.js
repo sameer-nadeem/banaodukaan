@@ -1,11 +1,11 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useMemo } from "react";
 import axios from "axios";
-import { useParams, useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Alert from "../Alerts/Alert";
 import countryList from 'react-select-country-list'
 import Select from 'react-select'
 
-const AddStores = () => {
+const AddStoresForm = () => {
   //success modal
   const [show, setShow] = useState(false);
   const history = useNavigate();
@@ -20,19 +20,14 @@ const AddStores = () => {
   const [title, setTitle] = useState("");
   const [value, setValue] = useState('')
   const [adress, setAdress] = useState("");
-  const [firsName, setFirstName] = useState("");
-  const [lastName, setLastname] = useState("");
+
   const [city, setCity] = useState("");
   const [postalCode, setPostalCode] = useState(0);
   const [phone, setPhone] = useState(0);
   const [website, setWebsite] = useState("");
   const [apartment, setApartment] = useState("")
-  const [path, setPath] = useState("");
-  const [buttonCheck, setButtonCheck] = useState(false);
-  const [uploadPercentage, setUploadPercentage] = useState(0);
 
-  const location = useLocation();
-  const { userID } = location.state;
+
 
   const onChangeTitle = (event) => {
     setTitle(event.target.value);
@@ -45,9 +40,6 @@ const AddStores = () => {
   };
   const onChangeCountry = (value) => {
     setValue(value)
-  };
-  const onChangeLastName = (event) => {
-    setLastname(event.target.value);
   };
 
   const onChangePostalCode = (event) => {
@@ -108,7 +100,7 @@ const AddStores = () => {
       <form style={{ paddingTop: 25 }}>
         <div style={{ display: "flex", justifyContent: "center", padding: 20 }}>
           <div
-            class="card"
+            className="card"
             style={{
               padding: 40,
               paddingTop: 25,
@@ -120,33 +112,33 @@ const AddStores = () => {
               <h1 style={{ fontSize: 24, color: "black" }}>Create Store</h1>
             </div>
 
-            <div class="mb-3" style={{ paddingTop: 25 }}>
-              <label class="form-label" style={{ color: "black" }}>
+            <div className="mb-3" style={{ paddingTop: 25 }}>
+              <label className="form-label" style={{ color: "black" }}>
                 Title
               </label>
               <input
-                class="form-control"
+                className="form-control"
                 style={{ backgroundColor: "white", color: "black" }}
                 onChange={onChangeTitle}
                 required
               />
             </div>
 
-            <div class="mb-3" style={{ paddingTop: 25 }}>
-              <label class="form-label" style={{ color: "black" }}>
+            <div className="mb-3" style={{ paddingTop: 25 }}>
+              <label className="form-label" style={{ color: "black" }}>
                 Country/region
               </label>
               <Select options={options} value={value} onChange={onChangeCountry} />
             </div>
 
-            <div class="row">
-              <div class="col">
-                <div class="mb-3">
-                  <label class="form-label" style={{ color: "black" }}>
+            <div className="row">
+              <div className="col">
+                <div className="mb-3">
+                  <label className="form-label" style={{ color: "black" }}>
                     First name
                   </label>
                   <input
-                    class="form-control"
+                    className="form-control"
 
                     style={{ backgroundColor: "white", color: "black" }}
 
@@ -154,13 +146,13 @@ const AddStores = () => {
                   />
                 </div>
               </div>
-              <div class="col">
-                <div class="mb-3">
-                  <label class="form-label" style={{ color: "black" }}>
+              <div className="col">
+                <div className="mb-3">
+                  <label className="form-label" style={{ color: "black" }}>
                     Last name
                   </label>
                   <input
-                    class="form-control"
+                    className="form-control"
 
                     style={{ backgroundColor: "white", color: "black" }}
 
@@ -170,38 +162,39 @@ const AddStores = () => {
               </div>
             </div>
 
-            <div class="mb-3" style={{ paddingTop: 25 }}>
-              <label class="form-label" style={{ color: "black" }}>
+            <div className="mb-3" style={{ paddingTop: 25 }}>
+              <label className="form-label" style={{ color: "black" }}>
                 Address
               </label>
               <input
-                class="form-control"
+                className="form-control"
                 style={{ backgroundColor: "white", color: "black" }}
                 onChange={onChangeAdress}
                 required
               />
             </div>
 
-            <div class="mb-3" style={{ paddingTop: 25 }}>
-              <label class="form-label" style={{ color: "black" }}>
+            <div className="mb-3" style={{ paddingTop: 25 }}>
+              <label className="form-label" style={{ color: "black" }}>
                 Apartment,suite,etc.
               </label>
               <input
-                class="form-control"
+                className="form-control"
                 style={{ backgroundColor: "white", color: "black" }}
                 onChange={onChangeApartment}
+                value={apartment}
                 required
               />
             </div>
 
-            <div class="row">
-              <div class="col">
-                <div class="mb-3">
-                  <label class="form-label" style={{ color: "black" }}>
+            <div className="row">
+              <div className="col">
+                <div className="mb-3">
+                  <label className="form-label" style={{ color: "black" }}>
                     City
                   </label>
                   <input
-                    class="form-control"
+                    className="form-control"
 
                     style={{ backgroundColor: "white", color: "black" }}
                     onChange={onChangeCity}
@@ -209,37 +202,37 @@ const AddStores = () => {
                   />
                 </div>
               </div>
-              <div class="col">
-                <div class="mb-3">
-                  <label class="form-label" style={{ color: "black" }}>
+              <div className="col">
+                <div className="mb-3">
+                  <label className="form-label" style={{ color: "black" }}>
                     Postal code
                   </label>
                   <input
-                    class="form-control"
+                    className="form-control"
                     style={{ backgroundColor: "white", color: "black" }}
                     onChange={onChangePostalCode}
                     required
                   />
                 </div>
               </div>
-              <div class="mb-3" style={{ paddingTop: 25 }}>
-                <label class="form-label" style={{ color: "black" }}>
+              <div className="mb-3" style={{ paddingTop: 25 }}>
+                <label className="form-label" style={{ color: "black" }}>
                   Phone
                 </label>
                 <input
-                  class="form-control"
+                  className="form-control"
                   style={{ backgroundColor: "white", color: "black" }}
                   onChange={onChangePhone}
                   required
                 />
               </div>
 
-              <div class="mb-3" style={{ paddingTop: 25 }}>
-                <label class="form-label" style={{ color: "black" }}>
+              <div className="mb-3" style={{ paddingTop: 25 }}>
+                <label className="form-label" style={{ color: "black" }}>
                   Business or personal website(optional)
                 </label>
                 <input
-                  class="form-control"
+                  className="form-control"
                   style={{ backgroundColor: "white", color: "black" }}
                   onChange={onChangeWebsite}
                   required
@@ -250,7 +243,7 @@ const AddStores = () => {
         </div>
         <div style={{ display: "flex", justifyContent: "center", padding: 20 }}>
           <div
-            class="card"
+            className="card"
             style={{
               padding: 40,
               paddingTop: 25,
@@ -260,7 +253,7 @@ const AddStores = () => {
           >
 
             <button
-              class="btn btn-success"
+              className="btn btn-success"
               style={{ width: "25%" }}
               onClick={(e) => addStores(e)}
             >
@@ -273,4 +266,4 @@ const AddStores = () => {
   );
 };
 
-export default AddStores;
+export default AddStoresForm;

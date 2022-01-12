@@ -1,8 +1,8 @@
 import { Route, Routes, BrowserRouter as Router } from 'react-router-dom';
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp"
-import Stores from "./components/Stores";
-import AddStores from "./components/Forms/AddStores";
+import Stores from "./pages/Stores";
+import AddStores from "./pages/AddStores";
 import setAuthToken from './utils/setAuthToken';
 import { useSelector } from 'react-redux'
 import { useEffect } from 'react';
