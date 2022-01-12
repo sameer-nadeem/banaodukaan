@@ -1,12 +1,13 @@
 const express = require('express')
 const router = express.Router()
 const collectionController = require('../controllers/collection.controller')
+const storeIdentifier = require('../middlewares/storeIdentifier')
 
-router.route('/').post(collectionController.addCollection)
-router.route('/:id').delete(collectionController.deleteCollection)
-router.route('/:id').get(collectionController.getCollection)
-router.route('/').get(collectionController.getCollections)
-router.route('/:id').put(collectionController.updateCollection)
+router.route('/').post(storeIdentifier, collectionController.addCollection)
+router.route('/:id').delete(storeIdentifier, collectionController.deleteCollection)
+router.route('/:id').get(storeIdentifier, collectionController.getCollection)
+router.route('/').get(storeIdentifier, collectionController.getCollections)
+router.route('/:id').put(storeIdentifier, collectionController.updateCollection)
 
 
 module.exports = router

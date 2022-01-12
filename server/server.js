@@ -54,10 +54,12 @@ app.use((req, res, next) => {
   console.log(req.hostname, req.path)
   next()
 })
+app.use(vhost("*.bdstaging.com", (req, res, next) => {
+  next()
+}))
 
 
 app.use(vhost("accounts.bdstaging.com", require('./accounts')))
-// app.use(vhost())
 app.use("/uploads", express.static(path.join(__dirname, 'uploads')))
 
 
