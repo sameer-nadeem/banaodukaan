@@ -11,8 +11,11 @@ import LandingPage from './pages/LandingPage';
 import AddBrands from './components/Forms/AddBrands';
 import Brands from './pages/Brands';
 import BrandDetail from './pages/BrandDetail'
-
+import Cookies from 'universal-cookie'
 function App() {
+
+  const cookies = new Cookies()
+  console.log(cookies.get("token"))
   return (
     <Router>
       <Navbar />
