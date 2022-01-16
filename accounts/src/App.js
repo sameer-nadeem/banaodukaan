@@ -4,22 +4,31 @@ import SignUp from "./pages/SignUp"
 import Stores from "./pages/Stores";
 import AddStores from "./pages/AddStores";
 import setAuthToken from './utils/setAuthToken';
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react';
 import PrivateRoute from './components/Routing/PrivateRoute'
+import Navbar from "./components/Layout/Navbar"
+import { loadUser } from './actions/auth';
+
 if (localStorage.token) {
   setAuthToken();
 }
 
 function App() {
   const token = useSelector(state => state.auth.token)
+  const dispatch = useDispatch()
   console.log("token", token)
   useEffect(() => {
     setAuthToken()
   }, [token])
 
+  useEffect(() => {
+    dispatch(loadUser())
+  }, [dispatch])
+
   return (
     <Router>
+      <Navbar />
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />

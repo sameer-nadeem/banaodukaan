@@ -1,9 +1,5 @@
-
-
 const express = require('express')
 const Merchant = require('../../models/merchant.model')
-const User = require('../../models/user.model')
-const router = express.Router()
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const config = require('config')
@@ -21,7 +17,7 @@ const registerMerchant = async (req, res) => {
             password,
         } = req.body
 
-        const exists = await User.exists({
+        const exists = await Merchant.exists({
             email
         })
 
@@ -34,32 +30,27 @@ const registerMerchant = async (req, res) => {
         const salt = await bcrypt.genSalt(10)
         const hashedPassword = await bcrypt.hash(password, salt)
 
-        const user = new User({
+        const merchant = new Merchant({
             email,
             password: hashedPassword,
             firstName: firstName,
-            lastName: lastName
-        })
-
-        await user.save()
-
-        const merchant = new Merchant({
-            userId: user._id,
+            lastName: lastName,
             myStores: []
+
         })
 
         await merchant.save()
 
         const payload = {
             type: 'Merchant',
-            id: user._id
+            id: merchant._id
         }
         console.log('hererer')
 
         const token = jwt.sign(payload, config.get('token-secret'), { expiresIn: 360000 })
         return res.status(200).json({
             token: token,
-            id: user._id
+            id: merchant._id
         })
     }
     catch (err) {
@@ -78,7 +69,7 @@ const loginMerchant = async (req, res) => {
             password
         } = req.body
 
-        const exists = await User.exists({
+        const exists = await Merchant.exists({
             email
         })
 
@@ -88,31 +79,20 @@ const loginMerchant = async (req, res) => {
             })
         }
 
-        const user = await User.findOne({
+        const merchant = await Merchant.findOne({
             email
         })
-
-        const isPresent = await Merchant.exists({
-            userId: user._id
-        })
-
-        if (!isPresent) {
-            return res.status(400).json({
-                error: 'USER_IS_NOT_MERCHANT'
-            })
-        }
-
-        const passMatch = await bcrypt.compare(password, user.password)
+        const passMatch = await bcrypt.compare(password, merchant.password)
         const type = 'Merchant'
         if (passMatch) {
             const token = jwt.sign({
-                type, id: user._id
+                type, id: merchant._id
             }, config.get('token-secret'), {
                 expiresIn: 360000
             })
             return res.status(200).json({
                 token: token,
-                id: user._id
+                id: merchant._id
             })
         }
         else {
@@ -139,7 +119,7 @@ const googleLogin = async (req, res) => {
 
         if (email_verified) {
             // email is verified -> good to go
-            const exists = await User.findOne({ // find if the user exists or not
+            const exists = await Merchant.findOne({ // find if the user exists or not
                 email
             })
 
@@ -149,65 +129,48 @@ const googleLogin = async (req, res) => {
 
             if (exists) { //login
                 //if it exists -> check if merchant
-                const user = await User.findOne({
+                const merchant = await Merchant.findOne({
                     email
                 })
 
-                const isPresent = await Merchant.exists({
-                    userId: user._id
-                })
-
-                if (!isPresent) { //if not present in merchant then send an error message
-                    return res.status(400).json({
-                        error: 'USER_IS_NOT_MERCHANT'
-                    })
-                }
 
                 //exists and is a merchant-> then we need to
                 const payload = {
                     type: 'Merchant',
-                    id: user._id,
+                    id: merchant._id,
                 }
 
                 const token = jwt.sign(payload, config.get('token-secret'), { expiresIn: 360000 })
                 return res.status(200).json({
                     token: token,
-                    id: user._id
+                    id: merchant._id
                 })
             }
             else {
                 //if user doesnt exist then we need to create it
                 // let password = email + config.get('secret-token') //password in this case
 
-                const user = new User({
+                const merchant = new Merchant({
                     email,
                     password: "",
                     firstName: given_name,
-                    lastName: family_name
-                })
-
-                console.log(user)
-
-                await user.save() // save user
-
-                const merchant = new Merchant({
-                    userId: user._id,
+                    lastName: family_name,
                     myStores: []
                 })
 
-                console.log(merchant)
 
-                await merchant.save() //save merchant
+                await merchant.save() // save user
+
 
                 const payload = {
                     type: 'Merchant',
-                    id: user._id,
+                    id: merchant._id,
                 }
 
                 const token = jwt.sign(payload, config.get('token-secret'), { expiresIn: 360000 })
                 return res.status(200).json({
                     token: token,
-                    id: user._id
+                    id: merchant._id
                 })
             }
         }
@@ -226,9 +189,21 @@ const googleLogin = async (req, res) => {
     }
 }
 
+const getUser = async (req, res) => {
+    try {
+        const merchant = await Merchant.findById(req.user.id)
+        console.log(merchant)
+        return res.status(200).json({
+            merchant
+        })
+    } catch (error) {
+        return res.status(500).json({ error: "SERVER_ERROR" })
+    }
+}
+
 module.exports = {
     registerMerchant,
     loginMerchant,
     googleLogin,
-
+    getUser
 }

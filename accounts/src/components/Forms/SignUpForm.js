@@ -92,7 +92,7 @@ const SignUpForm = () => {
       });
       console.log("success: ", response);
       Cookies.set(response.data.id, response.data.token);
-      history(`/${response.data.id}/my-stores`);
+      history(`/my-stores`);
     } catch {
       setAlertTitle("Error")
       setAlertMessage("Please try again later")

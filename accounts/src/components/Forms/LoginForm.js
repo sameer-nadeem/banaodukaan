@@ -70,10 +70,10 @@ const LoginForm = () => {
 
   // for error after clicking on google button
   const responseErrorGoogle = (res) => {
-    setAlertTitle("Error")
-    setAlertMessage("Please try again later")
-    setAlertVariant("failure")
-    handleShow();
+    // setAlertTitle("Error")
+    // setAlertMessage("Please try again later")
+    // setAlertVariant("failure")
+    // handleShow();
     console.log(res);
   };
 

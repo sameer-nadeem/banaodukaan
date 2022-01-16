@@ -15,7 +15,8 @@ const initialState = {
   auth: {
     token: token,
     isAuthenticated: token !== null,
-    loading: false
+    loading: false,
+    user: null
   }
 }
 console.log(initialState)
