@@ -19,6 +19,7 @@ const StoresTable = () => {
       });
       console.log("stores list: ", res);
       let list = res.data.stores;
+      console.log(list)
       setStores(list);
     } catch (err) {
       console.log(err);

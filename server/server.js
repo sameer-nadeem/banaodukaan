@@ -55,7 +55,9 @@ app.use((req, res, next) => {
   next()
 })
 app.use(vhost("*.bdstaging.com", async (req, res, next) => {
+
   const storeName = req.vhost[0]
+  if (storeName === "accounts") return next()
   const store = await Store.findOne({
     title: storeName
   }).select("_id")
