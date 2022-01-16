@@ -1,13 +1,15 @@
 import { Card } from "@material-ui/core";
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import SignUpForm from '../components/Forms/SignUpForm';
 
 const SignUp = () => {
     const isAuthenticated = useSelector(state => state.auth.isAuthenticated)
-    if (isAuthenticated) {
-        return <Navigate to="/my-stores" />
-    }
+    const navigate = useNavigate()
+    useEffect(() => {
+        if (isAuthenticated) navigate('/my-stores')
+    }, [isAuthenticated, navigate])
     return (
         <div style={{
             width: "100%",
