@@ -19,7 +19,7 @@ require('./models/orderTracking.model')
 require('./models/payment.model')
 require('./models/product.model')
 require('./models/setting.model')
-require('./models/store.model')
+const Store = require('./models/store.model')
 require('./models/tax.model')
 require('./models/user.model')
 
@@ -54,7 +54,16 @@ app.use((req, res, next) => {
   console.log(req.hostname, req.path)
   next()
 })
-app.use(vhost("*.bdstaging.com", (req, res, next) => {
+app.use(vhost("*.bdstaging.com", async (req, res, next) => {
+  const storeName = req.vhost[0]
+  const store = await Store.findOne({
+    title: storeName
+  }).select("_id")
+
+  if (!store)
+    return res.sendFile(path.join(__dirname, 'static/404.html'))
+
+  req.storeId = store._id
   next()
 }))
 
