@@ -2,20 +2,17 @@ const mongoose = require("mongoose")
 const Schema = mongoose.Schema
 
 const InventorySchema = new Schema({
-    inventoryId:{
-        type: mongoose.Schema.Types.ObjectId
-    },
-    stock:{
+    stock: {
         type: Number
     },
-    address:{
+    address: {
         type: String
     },
-    transferOrders:[{
+    transferOrders: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref:'Order'
+        ref: 'Order'
     }]
 })
 
 
-module.exports = mongoose.model('Inventory', InventorySchema );
+module.exports = mongoose.model('Inventory', InventorySchema);

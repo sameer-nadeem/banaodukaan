@@ -2,20 +2,17 @@ const mongoose = require("mongoose")
 const Schema = mongoose.Schema
 
 const complaintSchema = new Schema({
-    complaintId:{
-        type: mongoose.Schema.Types.ObjectId
-    },
-    userId:{
+    customer: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'Customer'
     },
-    merchantId:{
+    merchant: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Merchant'
     },
-    complaint:{
+    complaint: {
         type: String
     }
 })
 
-module.exports = mongoose.model('Complaint', complaintSchema );
+module.exports = mongoose.model('Complaint', complaintSchema);

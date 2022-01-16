@@ -2,17 +2,13 @@ const mongoose = require("mongoose")
 const Schema = mongoose.Schema
 
 const paymentSchema = new Schema({
-
-    paymentId:{
-        type: mongoose.Schema.Types.ObjectId
-    },
-    typeOfPayment:{
+    typeOfPayment: {
         type: String
     },
-    orderId:{
+    order: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Order'
     },
 })
 
-module.exports = mongoose.model('Payment', paymentSchema );
+module.exports = mongoose.model('Payment', paymentSchema);

@@ -2,16 +2,13 @@ const mongoose = require("mongoose")
 const Schema = mongoose.Schema
 
 const orderTrackingSchema = new Schema({
-    orderTrackingId:{
-        type: mongoose.Schema.Types.ObjectId
-    },
-    orderId:{
+    order: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Order'
     },
-    status:{
+    status: {
         type: String
     },
 })
 
-module.exports = mongoose.model('OrderTracking', orderTrackingSchema );
+module.exports = mongoose.model('OrderTracking', orderTrackingSchema);

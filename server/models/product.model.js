@@ -2,9 +2,6 @@ const mongoose = require("mongoose")
 const Schema = mongoose.Schema
 
 const ProductSchema = new Schema({
-    productId: {
-        type: mongoose.Schema.Types.ObjectId
-    },
     storeId: {
         type: Schema.Types.ObjectId,
     },
@@ -13,7 +10,6 @@ const ProductSchema = new Schema({
     },
     price: {
         type: Number
-
     },
     stock: {
         type: Number
@@ -21,15 +17,15 @@ const ProductSchema = new Schema({
     description: {
         type: String
     },
-    brandId: {
+    brand: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Brand'
     },
-    collectionId: {
+    collection: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Collection'
     },
-    inventoryId: {
+    inventory: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Inventory'
     },

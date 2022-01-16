@@ -4,7 +4,6 @@ const Schema = mongoose.Schema
 const BrandSchema = new Schema({
     name: {
         type: String
-
     },
     description: {
         type: String
@@ -12,7 +11,6 @@ const BrandSchema = new Schema({
     deleteFlag: {
         type: Boolean,
         default: false
-
     },
     storeId: {
         type: Schema.Types.ObjectId

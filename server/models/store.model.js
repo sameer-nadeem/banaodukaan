@@ -2,32 +2,28 @@ const mongoose = require("mongoose")
 const Schema = mongoose.Schema
 
 const storeSchema = new Schema({
-
-    storeId:{
-        type: mongoose.Schema.Types.ObjectId
-    },
-    title:{
+    title: {
         type: String
     },
-    products:[{
+    products: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Product'
     }],
-    orders:[{
+    orders: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Order'
     }],
-    settings:{
+    settings: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Setting'
     },
-    discountCodes:[{
+    discountCodes: [{
         type: String
     }],
-    complaints:[{
+    complaints: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref:'Complaint'
+        ref: 'Complaint'
     }]
 })
 
-module.exports = mongoose.model('Store', storeSchema );
+module.exports = mongoose.model('Store', storeSchema);
