@@ -15,7 +15,8 @@ const addCollection = async (req, res) => {
 
         const collection = new Collection({
             name,
-            description
+            description,
+            storeId: req.storeId
         })
 
         await collection.save()
@@ -38,7 +39,10 @@ const getCollection = async (req, res) => {
 
         const id = req.params.id
 
-        const collection = await Collection.findById(id)
+        const collection = await Collection.findOne({
+            _id: id,
+            storeId: req.storeId
+        })
 
         return res.status(200).json({
             collection
@@ -59,7 +63,7 @@ const getCollections = async (req, res) => {
 
 
 
-        const collections = await Collection.find({ deleteFlag: false })
+        const collections = await Collection.find({ deleteFlag: false, storeId: req.storeId })
 
         return res.status(200).json({
             collections
@@ -80,7 +84,8 @@ const deleteCollection = async (req, res) => {
 
         const id = req.params.id
         const collection = await Collection.findOne({
-            _id: id
+            _id: id,
+            storeId: req.storeId
         })
 
         collection.deleteFlag = true
@@ -107,7 +112,8 @@ const updateCollection = async (req, res) => {
 
         const id = req.params.id
         const collection = await Collection.findOne({
-            _id: id
+            _id: id,
+            storeId: req.storeId
         })
 
         collection.name = name

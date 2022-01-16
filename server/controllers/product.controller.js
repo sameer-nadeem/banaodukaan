@@ -28,7 +28,8 @@ const addProduct = async (req, res) => {
             collectionId,
             deleteFlag,
             status,
-            image
+            image,
+            storeId: req.storeId
         })
 
         await product.save()
@@ -54,8 +55,10 @@ const getProducts = async (req, res) => {
 
     try {
         const products = await Product.find({
-            deleteFlag: false
+            deleteFlag: false,
+            storeId: req.storeId
         }).populate(['collectionId', 'brandId'])
+
         return res.status(200).json({
             products
         })
@@ -75,7 +78,12 @@ const getProduct = async (req, res) => {
 
         const id = req.params.id
 
-        const product = await Product.findById(id).populate(['collectionId', 'brandId'])
+        const product = await Product
+            .findOne({
+                _id: id,
+                storeId: req.storeId
+            })
+            .populate(['collectionId', 'brandId'])
 
         return res.status(200).json({
             product
@@ -95,7 +103,8 @@ const deleteProduct = async (req, res) => {
 
         const id = req.params.id
         const product = await Product.findOne({
-            _id: id
+            _id: id,
+            storeId: req.storeId
         })
 
         product.deleteFlag = true
@@ -129,7 +138,8 @@ const updateProduct = async (req, res) => {
 
         const id = req.params.id
         const product = await Product.findOne({
-            _id: id
+            _id: id,
+            storeId: req.storeId
         })
 
         product.title = title

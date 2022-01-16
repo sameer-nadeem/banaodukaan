@@ -2,51 +2,51 @@ const mongoose = require("mongoose")
 const Schema = mongoose.Schema
 
 const ProductSchema = new Schema({
-
-    productId:{
+    productId: {
         type: mongoose.Schema.Types.ObjectId
     },
-    title:{
-        type: String
-
+    storeId: {
+        type: Schema.Types.ObjectId,
     },
-    price:{
+    title: {
+        type: String
+    },
+    price: {
         type: Number
 
     },
-    stock:{
+    stock: {
         type: Number
-
     },
-    description:{
+    description: {
         type: String
     },
-    brandId:{
+    brandId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Brand'
-      },
-    collectionId:{
-          type: mongoose.Schema.Types.ObjectId,
-          ref:'Collection'
-  },
-    inventoryId:{
+    },
+    collectionId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref:'Inventory'
- },
-  deleteFlag:{
-      type: Boolean,
-      default: false
-      
-  },
-  status:{
-      type: String,
-      enum :["Active","Draft"],
-      default: "Active"
-  },
-  image:{
-      type:String
-  }
+        ref: 'Collection'
+    },
+    inventoryId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Inventory'
+    },
+    deleteFlag: {
+        type: Boolean,
+        default: false
+
+    },
+    status: {
+        type: String,
+        enum: ["Active", "Draft"],
+        default: "Active"
+    },
+    image: {
+        type: String
+    }
 })
 
 
-module.exports = mongoose.model('Product', ProductSchema );
+module.exports = mongoose.model('Product', ProductSchema);

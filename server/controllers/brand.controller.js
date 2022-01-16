@@ -11,7 +11,8 @@ const addBrand = async (req, res) => {
 
         const brand = new Brand({
             name,
-            description
+            description,
+            storeId: req.storeId
         })
 
         await brand.save()
@@ -34,7 +35,10 @@ const getBrand = async (req, res) => {
 
         const id = req.params.id
 
-        const brand = await Brand.findById(id)
+        const brand = await Brand.findOne({
+            _id: id,
+            storeId: req.storeId
+        })
 
         return res.status(200).json({
             brand
@@ -55,7 +59,7 @@ const getBrands = async (req, res) => {
 
 
 
-        const brands = await Brand.find({ deleteFlag: false })
+        const brands = await Brand.find({ deleteFlag: false, storeId: req.storeId })
 
         return res.status(200).json({
             brands
@@ -76,7 +80,8 @@ const deleteBrand = async (req, res) => {
 
         const id = req.params.id
         const brand = await Brand.findOne({
-            _id: id
+            _id: id,
+            storeId: req.storeId
         })
 
         brand.deleteFlag = true
@@ -103,7 +108,8 @@ const updateBrand = async (req, res) => {
 
         const id = req.params.id
         const brand = await Brand.findOne({
-            _id: id
+            _id: id,
+            storeId: req.storeId
         })
 
         brand.name = name
