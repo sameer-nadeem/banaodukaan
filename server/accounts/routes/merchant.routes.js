@@ -5,4 +5,6 @@ const { merchantAuth } = require('../../middlewares/auth')
 
 router.route('/store').get(merchantAuth, merchantController.getMyStores)
 router.route('/store').post(merchantAuth, merchantController.addStore)
+router.route('/profile').get(merchantAuth, merchantController.viewMyProfile)
+router.route('/profile').push(merchantAuth, merchantController.updateMyProfile)
 module.exports = router
