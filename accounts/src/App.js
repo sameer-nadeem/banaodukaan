@@ -6,13 +6,14 @@ import AddStores from "./pages/AddStores";
 import setAuthToken from './utils/setAuthToken';
 import { useSelector } from 'react-redux'
 import { useEffect } from 'react';
-
+import PrivateRoute from './components/Routing/PrivateRoute'
 if (localStorage.token) {
   setAuthToken();
 }
 
 function App() {
   const token = useSelector(state => state.auth.token)
+  console.log("token", token)
   useEffect(() => {
     setAuthToken()
   }, [token])
@@ -22,8 +23,16 @@ function App() {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/my-stores" element={<Stores />} />
-        <Route path="/my-stores/new" element={<AddStores />} />
+        {/* <Route path="/my-stores" element={<Stores />} /> */}
+        <Route
+          path="/my-stores"
+          element={<PrivateRoute component={Stores} />}
+        />
+        <Route
+          path="/my-stores/new"
+          element={<PrivateRoute component={AddStores} />}
+        />
+        {/* <Route path="/my-stores/new" element={<AddStores />} /> */}
       </Routes>
     </Router>
   );

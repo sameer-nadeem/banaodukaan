@@ -19,7 +19,7 @@ export const authReducer = (state = initialAuthState, action) => {
       cookies.remove("token")
       return { token: null, isAuthenticated: false, loading: false }
     default:
-      return state;
+      return { ...state };
   }
 }
 
