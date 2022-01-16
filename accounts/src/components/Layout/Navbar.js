@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import MenuItem from '@mui/material/MenuItem';
 import { Menu } from '@material-ui/core';
 import { logout } from '../../actions/auth'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 const useStyles = makeStyles(theme => ({
   menuButton: {
     marginRight: theme.spacing(2),
@@ -19,6 +19,7 @@ const useStyles = makeStyles(theme => ({
 const Navbar = () => {
   const classes = useStyles();
   const dispatch = useDispatch()
+  const isAuthenticated = useSelector(state => state.auth.isAuthenticated)
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -33,18 +34,20 @@ const Navbar = () => {
         <Typography variant="h6" className={classes.title}>
           Banaodukaan
         </Typography>
-        <i
-          id="basic-button"
-          aria-controls={open ? 'basic-menu' : undefined}
-          aria-haspopup="true"
-          aria-expanded={open ? 'true' : undefined}
-          onClick={handleClick}
-          style={{
-            color: "white",
-            borderRadius: "50%",
-            cursor: "pointer"
-          }}
-          className="fa-2x far fa-user"></i>
+        {
+          isAuthenticated && (<i
+            id="basic-button"
+            aria-controls={open ? 'basic-menu' : undefined}
+            aria-haspopup="true"
+            aria-expanded={open ? 'true' : undefined}
+            onClick={handleClick}
+            style={{
+              color: "white",
+              borderRadius: "50%",
+              cursor: "pointer"
+            }}
+            className="fa-2x far fa-user"></i>)
+        }
         <Menu
           id="basic-menu"
           anchorEl={anchorEl}
