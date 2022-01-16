@@ -135,8 +135,8 @@ const ProductsTable = () => {
         title: product.title,
         status: product.status,
         stock: product.stock,
-        collection: product.collectionId.name,
-        brand: product.brandId.name,
+        collection: product?.collectionId?.name,
+        brand: product?.brandId?.name,
         image: product.image,
       };
       cleanedProducts.push(prod);

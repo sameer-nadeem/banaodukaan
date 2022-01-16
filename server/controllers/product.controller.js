@@ -58,7 +58,7 @@ const getProducts = async (req, res) => {
             deleteFlag: false,
             storeId: req.storeId
         }).populate(['collectionId', 'brandId'])
-
+        console.log(products)
         return res.status(200).json({
             products
         })
@@ -128,9 +128,9 @@ const updateProduct = async (req, res) => {
             price,
             stock,
             description,
-            brandID,
-            inventoryID,
-            collectionID,
+            brandId,
+            inventoryId,
+            collectionId,
             deleteFlag,
             status,
             image
@@ -146,9 +146,9 @@ const updateProduct = async (req, res) => {
         product.price = price
         product.stock = stock
         product.description = description
-        product.brandID = brandID
-        product.inventoryID = inventoryID
-        product.collectionID = collectionID
+        product.brandId = brandId
+        product.inventoryId = inventoryId
+        product.collectionId = collectionId
         product.deleteFlag = deleteFlag
         product.status = status
         product.image = image

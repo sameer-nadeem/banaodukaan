@@ -53,6 +53,7 @@ const ProductDetail = () => {
     setBrand(event.target.value);
   };
   const onChangeCollection = (event) => {
+    console.log(event.target.value)
     setCollection(event.target.value);
   };
   const onChangeStatus = (event) => {
