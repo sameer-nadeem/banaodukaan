@@ -10,13 +10,16 @@ const rootReducer = combineReducers({
 
 
 const token = localStorage.getItem('token')
+console.log(token)
 const initialState = {
   auth: {
     token: token,
     isAuthenticated: token !== null,
-    loading: false
+    loading: false,
+    user: null
   }
 }
+console.log(initialState)
 
 const store = createStore(rootReducer, initialState, composeWithDevTools(applyMiddleware(thunk)))
 

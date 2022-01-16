@@ -2,7 +2,8 @@ import Cookies from "universal-cookie";
 const initialAuthState = {
   token: null,
   loading: false,
-  isAuthenticated: false
+  isAuthenticated: false,
+  user: null
 }
 
 export const authReducer = (state = initialAuthState, action) => {
@@ -13,13 +14,17 @@ export const authReducer = (state = initialAuthState, action) => {
     case 'LOGIN_SUCCESS':
       localStorage.setItem('token', action.payload)
       cookies.set("token", action.payload, { domain: "bdstaging.com" })
-      return { token: action.payload, isAuthenticated: true, loading: false }
+      return { ...state, token: action.payload, isAuthenticated: true, loading: false }
+    case "LOGOUT":
+    case "AUTH_ERROR":
     case 'LOGIN_FAIL':
       localStorage.removeItem('token')
       cookies.remove("token")
-      return { token: null, isAuthenticated: false, loading: false }
+      return { token: null, isAuthenticated: false, loading: false, user: null }
+    case "USER_LOADED":
+      return { ...state, user: action.payload }
     default:
-      return state;
+      return { ...state };
   }
 }
 

@@ -10,7 +10,7 @@ const getMyStores = async (req, res) => {
     const id = req.user.id
 
     try {
-        const merchant = await Merchant.findOne({ userId: id }).populate('myStores')
+        const merchant = await Merchant.findOne({ _id: id }).populate('myStores')
         stores = merchant.myStores
 
         return res.status(200).json({
@@ -29,7 +29,7 @@ const addStore = async (req, res) => {
 
     const id = req.user.id
     try {
-        const merchant = await Merchant.findOne({ userId: id })
+        const merchant = await Merchant.findOne({ _id: id })
         var {
             title,
             country,

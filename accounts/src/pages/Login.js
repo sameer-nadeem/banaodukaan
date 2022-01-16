@@ -1,7 +1,15 @@
 import { Card } from "@material-ui/core";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import LoginForm from "../components/Forms/LoginForm.js";
-
 const Login = () => {
+  const isAuthenticated = useSelector(state => state.auth.isAuthenticated)
+  const navigate = useNavigate()
+  useEffect(() => {
+    if (isAuthenticated) navigate('/my-stores')
+  }, [isAuthenticated, navigate])
+
   return (
     <div
       style={{
@@ -22,6 +30,7 @@ const Login = () => {
             }}
           >
             <img
+              alt=""
               width="200"
               height="50"
               src={process.env.PUBLIC_URL + "/banaodukaan_logo_text.png"}
