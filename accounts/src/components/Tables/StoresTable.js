@@ -3,6 +3,7 @@ import { ThemeProvider } from "@mui/styles";
 import MUIDataTable from "mui-datatables";
 import { createTheme, responsiveFontSizes } from "@mui/material/styles";
 import axios from "axios";
+import { store_url } from "../../urls"
 const StoresTable = () => {
 
   let theme = createTheme();
@@ -74,7 +75,7 @@ const StoresTable = () => {
     },
     onRowClick: (rowData) => {
       console.log(rowData);
-      window.location.href = `http://${rowData[1]}.bdstaging.com:3000/admin`
+      window.location.href = `http://${rowData[1]}.${store_url}`
       // history(`${rowData[1]}.bdstaging.com:5000/admin`);
     },
   };
