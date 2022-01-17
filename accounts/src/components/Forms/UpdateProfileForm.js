@@ -1,17 +1,16 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Alert from "../Alerts/Alert";
-import countryList from 'react-select-country-list'
-import Select from 'react-select'
-import { Grid, Box, Item } from '@mui/material';
+
+
 const UpdateProfileForm = () => {
   //success modal
   const [show, setShow] = useState(false);
   const history = useNavigate();
   const handleClose = () => {
     setShow(false);
-    // history("/my-stores");
+    history("/");
   };
   const handleShow = () => setShow(true);
   //success modal states end
@@ -21,6 +20,7 @@ const UpdateProfileForm = () => {
   const [address, setAddress] = useState("");
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
+  const [hashedPassword, setHashedPassword] = useState("");
 
   const onChangeFirstName = (event) => {
     setFirstName(event.target.value);
@@ -42,25 +42,34 @@ const UpdateProfileForm = () => {
     setNewPassword(event.target.value);
   };
 
+  const getProfile = async () => {
+    try {
+      const res = await axios.get(`/api/merchant/profile`, {
+      });
+      setFirstName(res.data.merchant.firstName)
+      setLastName(res.data.merchant.lastName)
+      setAddress(res.data.merchant.email)
+      setHashedPassword(res.data.merchant.password)
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   const updateProfile = async (event) => {
 
     event.preventDefault()
 
     const data = {
-      // title: title,
-      // address: address,
-      // city: city,
-      // postalCode: postalCode,
-      // phone: phone,
-      // website: website,
-      // country: value.label
+      firstName: firstName,
+      lastName: lastName,
+      email: address
     };
 
 
     console.log(data)
 
     try {
-      await axios.post(`/api/merchant/store`, data, {
+      await axios.put(`/api/merchant/profile`, data, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -76,6 +85,7 @@ const UpdateProfileForm = () => {
 
     event.preventDefault()
 
+
     const data = {
       // title: title,
       // address: address,
@@ -101,13 +111,17 @@ const UpdateProfileForm = () => {
     }
 
   };
+  useEffect(() => {
+    //Runs only on the first render
+    getProfile();
+  }, []);
 
   return (
     <div>
 
 <Alert
-        title="Store Added"
-        message="The Store was succesfuly created"
+        title="Profile Updated"
+        message="Profile Details Updated Successfully!"
         show={show}
         variant="success"
         handleClose={handleClose}
@@ -137,6 +151,7 @@ const UpdateProfileForm = () => {
                   </label>
                   <input
                     className="form-control"
+                    value={firstName}
                     onChange={onChangeFirstName}
                     style={{ backgroundColor: "white", color: "black" }}
                     required
@@ -150,6 +165,7 @@ const UpdateProfileForm = () => {
                   </label>
                   <input
                     className="form-control"
+                    value={lastName}
                     onChange={onChangeLastName}
                     style={{ backgroundColor: "white", color: "black" }}
                     required
@@ -165,6 +181,7 @@ const UpdateProfileForm = () => {
               <input
                 className="form-control"
                 style={{ backgroundColor: "white", color: "black" }}
+                value={address}
                 onChange={onChangeAddress}
                 required
               />
