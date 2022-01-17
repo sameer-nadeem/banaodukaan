@@ -9,8 +9,8 @@ import setAuthToken from './utils/setAuthToken';
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react';
 import PrivateRoute from './components/Routing/PrivateRoute'
-import Navbar from "./components/Layout/Navbar"
 import { loadUser } from './actions/auth';
+import EditStore from './pages/EditStore';
 
 if (localStorage.token) {
   setAuthToken();
@@ -30,7 +30,6 @@ function App() {
 
   return (
     <Router>
-      <Navbar />
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
@@ -51,6 +50,11 @@ function App() {
           path="/my-profile/update"
           element={<PrivateRoute component={UpdateProfileForm} />}
         />
+        <Route
+          path="/my-stores/:id"
+          element={<PrivateRoute component={EditStore} />}
+        />
+
         {/* <Route path="/my-stores/new" element={<AddStores />} /> */}
       </Routes>
     </Router>
