@@ -23,9 +23,9 @@ const addProduct = async (req, res) => {
             price,
             stock,
             description,
-            brandId,
-            inventoryId,
-            collectionId,
+            brand: brandId,
+            inventory: inventoryId,
+            _collection: collectionId,
             deleteFlag,
             status,
             image,
@@ -57,12 +57,13 @@ const getProducts = async (req, res) => {
         const products = await Product.find({
             deleteFlag: false,
             storeId: req.storeId
-        }).populate(['collectionId', 'brandId'])
+        }).populate(['_collection', 'brand'])
         console.log(products)
         return res.status(200).json({
             products
         })
     } catch (err) {
+        console.log(err)
         return res.status(500).json({
             error: "Server Error"
         })
@@ -83,7 +84,7 @@ const getProduct = async (req, res) => {
                 _id: id,
                 storeId: req.storeId
             })
-            .populate(['collectionId', 'brandId'])
+            .populate(['_collection', 'brand'])
 
         return res.status(200).json({
             product
@@ -146,9 +147,9 @@ const updateProduct = async (req, res) => {
         product.price = price
         product.stock = stock
         product.description = description
-        product.brandId = brandId
-        product.inventoryId = inventoryId
-        product.collectionId = collectionId
+        product.brand = brandId
+        product.inventory = inventoryId
+        product._collection = collectionId
         product.deleteFlag = deleteFlag
         product.status = status
         product.image = image
@@ -172,5 +173,4 @@ module.exports = {
     updateProduct,
     deleteProduct,
     getProducts
-
 }

@@ -21,7 +21,6 @@ require('./models/product.model')
 require('./models/setting.model')
 const Store = require('./models/store.model')
 require('./models/tax.model')
-require('./models/user.model')
 
 //custom module imports
 const initRoutes = require('./routes/init.routes')

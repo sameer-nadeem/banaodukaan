@@ -1,6 +1,5 @@
 const express = require('express')
 const Merchant = require('../../models/merchant.model')
-const User = require('../../models/user.model')
 const Store = require('../../models/store.model')
 const Settings = require('../../models/setting.model')
 

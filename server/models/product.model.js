@@ -18,15 +18,15 @@ const ProductSchema = new Schema({
         type: String
     },
     brand: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: 'Brand'
     },
-    collection: {
-        type: mongoose.Schema.Types.ObjectId,
+    _collection: {
+        type: Schema.Types.ObjectId,
         ref: 'Collection'
     },
     inventory: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: 'Inventory'
     },
     deleteFlag: {
