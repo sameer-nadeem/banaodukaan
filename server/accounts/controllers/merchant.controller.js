@@ -76,8 +76,61 @@ const addStore = async (req, res) => {
 
 }
 
+const viewMyProfile = async (req, res) => {
+
+    const id = req.user.id
+
+    try {
+        const merchant = await Merchant.findOne({ _id: id })
+        
+
+        return res.status(200).json({
+            merchant
+        })
+    } catch (err) {
+        return res.status(500).json({
+            error: "Server Error"
+        })
+    }
+
+
+}
+
+const updateMyProfile = async (req, res) => {
+
+    const id = req.user.id
+
+    try {
+
+        var {
+            firstName,
+            lastName,
+            email
+        } = req.body
+
+        const merchant = await Merchant.findOne({ _id: id })
+        merchant.firstName = firstName
+        merchant.lastName = lastName
+        merchant.email = email
+
+        await merchant.save()
+
+        return res.status(200).json({
+            merchant
+        })
+    } catch (err) {
+        return res.status(500).json({
+            error: "Server Error"
+        })
+    }
+
+
+}
+
 
 module.exports = {
     getMyStores,
-    addStore
+    addStore,
+    viewMyProfile,
+    updateMyProfile
 }
