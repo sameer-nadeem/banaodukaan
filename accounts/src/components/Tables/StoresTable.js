@@ -3,7 +3,13 @@ import { ThemeProvider } from "@mui/styles";
 import MUIDataTable from "mui-datatables";
 import { createTheme, responsiveFontSizes } from "@mui/material/styles";
 import axios from "axios";
-import { store_url } from "../../urls"
+import { Card } from "@material-ui/core";
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
+import StorefrontIcon from '@mui/icons-material/Storefront';
+import { CardActionArea } from '@mui/material';
+import { Link, useNavigate } from "react-router-dom";
+import Grid from "@mui/material/Grid";
+
 const StoresTable = () => {
 
   let theme = createTheme();
@@ -75,7 +81,7 @@ const StoresTable = () => {
     },
     onRowClick: (rowData) => {
       console.log(rowData);
-      window.location.href = `http://${rowData[1]}.${store_url}`
+      window.location.href = `http://${rowData[1]}.bdstaging.com:3000/admin`
       // history(`${rowData[1]}.bdstaging.com:5000/admin`);
     },
   };
@@ -103,10 +109,45 @@ const StoresTable = () => {
     setRows(cleanedStores);
   }, [stores]);
 
+  const history = useNavigate();
+
+  const handleClick = (storeName) =>{
+    window.location.href = `http://${storeName}.bdstaging.com:3000/admin`
+  }
+
   return (
-    <ThemeProvider theme={theme}>
-      <MUIDataTable data={newRows} columns={columns} options={options} />
-    </ThemeProvider>
+    <div style = {{margin:45}}>
+      {
+        stores.map((eachStore => (
+            <Card>
+              <CardActionArea key = {eachStore._id} onClick = {() => handleClick(eachStore.title)}>
+                <div style = {{padding: 20}}>
+                  <Grid container direction="row" alignItems="center">
+                    <Grid item xs = {1}>
+                      <StorefrontIcon/>
+                    </Grid>
+                    <Grid item xs = {10}>
+                      <h1 style={{
+                        fontSize: "1.0rem",
+                        fontWeight: "600",
+                        marginLeft: 20,
+                        marginTop: 5,
+                      
+                      }}>
+                        {eachStore.title}.banaodukaan.com/admin
+                      </h1>
+                    </Grid>
+                    <Grid item alignContent = 'flex-end'>
+                      <KeyboardArrowRightIcon />
+                    </Grid>
+                  </Grid>
+                </div>
+              </CardActionArea>
+            </Card>
+        )))
+      }
+
+    </div>
   );
 };
 
