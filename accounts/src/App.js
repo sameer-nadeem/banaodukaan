@@ -3,6 +3,8 @@ import Login from "./pages/Login";
 import SignUp from "./pages/SignUp"
 import Stores from "./pages/Stores";
 import AddStores from "./pages/AddStores";
+import ViewProfile from "./pages/ViewProfile";
+import UpdateProfileForm from './components/Forms/UpdateProfileForm';
 import setAuthToken from './utils/setAuthToken';
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react';
@@ -40,6 +42,14 @@ function App() {
         <Route
           path="/my-stores/new"
           element={<PrivateRoute component={AddStores} />}
+        />
+        <Route
+          path="/my-profile"
+          element={<PrivateRoute component={ViewProfile} />}
+        />
+        <Route
+          path="/my-profile/update"
+          element={<PrivateRoute component={UpdateProfileForm} />}
         />
         {/* <Route path="/my-stores/new" element={<AddStores />} /> */}
       </Routes>
