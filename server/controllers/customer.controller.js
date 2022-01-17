@@ -115,7 +115,7 @@ const getCustomer = async (req, res) => {
             .findOne({
                 userId: id,
                 
-            })
+            }).populate("userId")
         return res.status(200).json({
             customer
         })
@@ -137,7 +137,7 @@ const getCustomers = async (req, res) => {
         const customers = await Customer.find({
            deleteFlag: false,
     
-        })
+        }).populate("userId")
         return res.status(200).json({
             customers
         })
@@ -158,7 +158,7 @@ const deleteCustomer = async (req, res) => {
 
         const id = req.params.id
         const customer = await Customer.findOne({
-            userId: id,
+            _id: id,
         })
 
         customer.deleteFlag = true
