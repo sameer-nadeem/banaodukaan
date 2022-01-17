@@ -21,6 +21,8 @@ const UpdateProfileForm = () => {
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [hashedPassword, setHashedPassword] = useState("");
+  const [title, setTitle] = useState("");
+  const [msg, setMsg] = useState("");
 
   const onChangeFirstName = (event) => {
     setFirstName(event.target.value);
@@ -87,25 +89,21 @@ const UpdateProfileForm = () => {
 
 
     const data = {
-      // title: title,
-      // address: address,
-      // city: city,
-      // postalCode: postalCode,
-      // phone: phone,
-      // website: website,
-      // country: value.label
+      password: oldPassword,
+      newPassword: newPassword,
     };
 
 
     console.log(data)
 
     try {
-      await axios.post(`/api/merchant/store`, data, {
+      await axios.put(`/api/merchant/password`, data, {
         headers: {
           "Content-Type": "application/json",
         },
       });
       handleShow();
+      // history('/')
     } catch (err) {
       console.log(err);
     }
