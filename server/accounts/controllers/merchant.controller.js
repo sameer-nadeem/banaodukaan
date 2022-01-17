@@ -3,6 +3,7 @@ const Merchant = require('../../models/merchant.model')
 const User = require('../../models/user.model')
 const Store = require('../../models/store.model')
 const Settings = require('../../models/setting.model')
+const bcrypt = require('bcryptjs')
 
 
 const getMyStores = async (req, res) => {
@@ -114,6 +115,44 @@ const updateMyProfile = async (req, res) => {
         merchant.email = email
 
         await merchant.save()
+
+        return res.status(200).json({
+            merchant
+        })
+    } catch (err) {
+        return res.status(500).json({
+            error: "Server Error"
+        })
+    }
+
+
+}
+
+const updateMyPassword = async (req, res) => {
+
+    const id = req.user.id
+
+    try {
+
+        var {
+            password,
+            newPassword
+        } = req.body
+
+        const merchant = await Merchant.findOne({ _id: id })
+        const passMatch = await bcrypt.compare(password, merchant.password)
+        if (passMatch){
+            const salt = await bcrypt.genSalt(10)
+            const hashedPassword = await bcrypt.hash(newPassword, salt)
+            merchant.password = hashedPassword
+
+            merchant.save()
+        }
+        else {
+            return res.status(400).json({
+                error: "Invalid Password"
+            })
+        }
 
         return res.status(200).json({
             merchant
