@@ -7,6 +7,7 @@ import MenuItem from '@mui/material/MenuItem';
 import { Menu } from '@material-ui/core';
 import { logout } from '../../actions/auth'
 import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from "react-router-dom";
 const useStyles = makeStyles(theme => ({
   menuButton: {
     marginRight: theme.spacing(2),
@@ -19,6 +20,7 @@ const useStyles = makeStyles(theme => ({
 const Navbar = () => {
   const classes = useStyles();
   const dispatch = useDispatch()
+  const history = useNavigate();
   const isAuthenticated = useSelector(state => state.auth.isAuthenticated)
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -26,6 +28,7 @@ const Navbar = () => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
+    history('/my-profile')
     setAnchorEl(null);
   };
   return (
