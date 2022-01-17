@@ -73,7 +73,7 @@ const Sidebar = () => {
                 <span className="nav_name">Brands</span>
               </Link>
             </div>
-            <Link to="#" className="nav_link">
+            <Link to="/admin/customers" className="nav_link">
               <i className='bx bx-user nav_icon'></i>
               <span className="nav_name">Customers</span>
             </Link> <Link to="#" className="nav_link">
