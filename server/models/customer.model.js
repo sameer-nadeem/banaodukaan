@@ -12,7 +12,27 @@ const customerSchema = new Schema({
     }],
     address:{
         type: String
-    }
+    },
+    deleteFlag: {
+        type: Boolean,
+        default: false
+
+    },
+    phone:{
+        type: String
+    },
+    apartment:{
+        type: String
+    },
+    country:{
+        type: String
+    },
+    city:{
+        type: String
+    },
+    postalCode:{
+        type: String
+    },
 
 })
 
