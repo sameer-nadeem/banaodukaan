@@ -171,5 +171,6 @@ module.exports = {
     getMyStores,
     addStore,
     viewMyProfile,
-    updateMyProfile
+    updateMyProfile,
+    updateMyPassword
 }
