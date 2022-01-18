@@ -50,7 +50,7 @@ export const login = (email, password, history, alertHandler) => async dispatch 
       type: 'LOGIN_FAIL'
     })
     alertHandler.setAlertTitle("Error")
-    alertHandler.setAlertMessage("Please try again later")
+    alertHandler.setAlertMessage("Incorrect Password or Email ID Entered")
     alertHandler.setAlertVariant("failure")
     alertHandler.handleShow();
     console.log("error", err);

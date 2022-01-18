@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Alert from "../Alerts/Alert";
@@ -26,7 +26,8 @@ const AddStoresForm = () => {
   const [phone, setPhone] = useState(0);
   const [website, setWebsite] = useState("");
   const [apartment, setApartment] = useState("")
-
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState('')
 
 
   const onChangeTitle = (event) => {
@@ -54,6 +55,16 @@ const AddStoresForm = () => {
   const onChangeWebsite = (event) => {
     setWebsite(event.target.value);
   };
+  const getProfile = async () => {
+    try {
+      const res = await axios.get(`/api/merchant/profile`, {
+      });
+      setFirstName(res.data.merchant.firstName)
+      setLastName(res.data.merchant.lastName)
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
 
   const addStores = async (event) => {
@@ -85,6 +96,11 @@ const AddStoresForm = () => {
     }
 
   };
+
+  useEffect(() => {
+    //Runs only on the first render
+    getProfile();
+  }, []);
 
 
   return (
@@ -139,7 +155,7 @@ const AddStoresForm = () => {
                   </label>
                   <input
                     className="form-control"
-
+                    value={firstName}
                     style={{ backgroundColor: "white", color: "black" }}
 
                     required
@@ -153,7 +169,7 @@ const AddStoresForm = () => {
                   </label>
                   <input
                     className="form-control"
-
+                    value={lastName}
                     style={{ backgroundColor: "white", color: "black" }}
 
                     required

@@ -19,7 +19,7 @@ const Alert = ({ handleShow, handleClose, show, variant, title, message }) => {
         <i style={{
           color: "#cc1414"
         }}
-          className="fas fa-cross">
+          className="fas fa-times">
         </i>
       )
     }
