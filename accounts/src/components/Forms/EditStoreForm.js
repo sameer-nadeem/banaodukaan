@@ -1,12 +1,35 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Alert from "../Alerts/Alert";
 import countryList from 'react-select-country-list'
 import Select from 'react-select'
 
 const EditStoreForm = () => {
-  //success modal
+  const { id } = useParams()
+  const [storeInfo, setStoreInfo] = useState({ settings: {} })
+
+  useEffect(() => {
+    const fetchStore = async () => {
+      const { data } = await axios.get(`/api/merchant/store/${id}`)
+      setStoreInfo(data.storeInfo)
+    }
+    fetchStore()
+  }, [id])
+
+  useEffect(() => {
+    setTitle(storeInfo.title)
+    setValue(storeInfo.settings.country)
+    setCity(storeInfo.settings.city)
+    console.log("city is city", storeInfo.settings.country)
+    setPostalCode(storeInfo.settings.postalCode)
+    setPhone(storeInfo.settings.phone)
+    setWebsite(storeInfo.settings.website)
+    setApartment(storeInfo.settings.apartment)
+    setAdress(storeInfo.settings.localPickupAddress)
+
+  }, [storeInfo])
+
   const [show, setShow] = useState(false);
   const history = useNavigate();
   const handleClose = () => {
@@ -40,6 +63,7 @@ const EditStoreForm = () => {
   };
   const onChangeCountry = (value) => {
     setValue(value)
+    console.log(value)
   };
 
   const onChangePostalCode = (event) => {
@@ -56,7 +80,7 @@ const EditStoreForm = () => {
   };
 
 
-  const addStores = async (event) => {
+  const updateStore = async (event) => {
 
     event.preventDefault()
 
@@ -74,7 +98,7 @@ const EditStoreForm = () => {
     console.log(data)
 
     try {
-      await axios.post(`/api/merchant/store`, data, {
+      await axios.put(`/api/merchant/store/${id}`, data, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -83,15 +107,14 @@ const EditStoreForm = () => {
     } catch (err) {
       console.log(err);
     }
-
   };
 
 
   return (
     <div>
       <Alert
-        title="Store Added"
-        message="The Store was succesfuly created"
+        title="Store Updated"
+        message="The Store was succesfuly updated"
         show={show}
         variant="success"
         handleClose={handleClose}
@@ -109,7 +132,7 @@ const EditStoreForm = () => {
             }}
           >
             <div>
-              <h1 style={{ fontSize: 24, color: "black" }}>Create Store</h1>
+              <h1 style={{ fontSize: 24, color: "black" }}>Edit Store</h1>
             </div>
 
             <div className="mb-3" style={{ paddingTop: 25 }}>
@@ -118,8 +141,10 @@ const EditStoreForm = () => {
               </label>
               <input
                 className="form-control"
+                disabled
                 style={{ backgroundColor: "white", color: "black" }}
                 onChange={onChangeTitle}
+                value={title}
                 required
               />
             </div>
@@ -139,9 +164,7 @@ const EditStoreForm = () => {
                   </label>
                   <input
                     className="form-control"
-
                     style={{ backgroundColor: "white", color: "black" }}
-
                     required
                   />
                 </div>
@@ -153,9 +176,7 @@ const EditStoreForm = () => {
                   </label>
                   <input
                     className="form-control"
-
                     style={{ backgroundColor: "white", color: "black" }}
-
                     required
                   />
                 </div>
@@ -170,6 +191,7 @@ const EditStoreForm = () => {
                 className="form-control"
                 style={{ backgroundColor: "white", color: "black" }}
                 onChange={onChangeAdress}
+                value={adress}
                 required
               />
             </div>
@@ -195,7 +217,7 @@ const EditStoreForm = () => {
                   </label>
                   <input
                     className="form-control"
-
+                    value={city}
                     style={{ backgroundColor: "white", color: "black" }}
                     onChange={onChangeCity}
                     required
@@ -212,6 +234,7 @@ const EditStoreForm = () => {
                     style={{ backgroundColor: "white", color: "black" }}
                     onChange={onChangePostalCode}
                     required
+                    value={postalCode}
                   />
                 </div>
               </div>
@@ -224,6 +247,7 @@ const EditStoreForm = () => {
                   style={{ backgroundColor: "white", color: "black" }}
                   onChange={onChangePhone}
                   required
+                  value={phone}
                 />
               </div>
 
@@ -236,6 +260,7 @@ const EditStoreForm = () => {
                   style={{ backgroundColor: "white", color: "black" }}
                   onChange={onChangeWebsite}
                   required
+                  value={website}
                 />
               </div>
             </div>
@@ -255,7 +280,7 @@ const EditStoreForm = () => {
             <button
               className="btn btn-success"
               style={{ width: "25%" }}
-              onClick={(e) => addStores(e)}
+              onClick={(e) => updateStore(e)}
             >
               Update Store
             </button>
