@@ -2,7 +2,7 @@ const mongoose = require("mongoose")
 const Schema = mongoose.Schema
 
 const settingSchema = new Schema({
-    settingId: {
+    storeId: {
         type: mongoose.Schema.Types.ObjectId
     },
     shippingDomesticRate: {
@@ -21,20 +21,20 @@ const settingSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Tax'
     },
-    country:{
-        type:String
+    country: {
+        type: String
     },
-    city:{
-        type:String
+    city: {
+        type: String
     },
-    postalCode:{
-        type:String
+    postalCode: {
+        type: String
     },
-    website:{
-        type:String
+    website: {
+        type: String
     },
-    phone:{
-        type:String
+    phone: {
+        type: String
     },
 
 })
