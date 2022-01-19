@@ -114,7 +114,7 @@ const StoresTable = () => {
     <div style={{ margin: 45 }}>
       {
         stores.map((eachStore => (
-          <div className="row" key={eachStore._id}>
+          <div className="row mb-3" key={eachStore._id}>
             <div className="col-10">
               <Card >
                 <CardActionArea key={eachStore._id} onClick={() => handleClick(eachStore.title)}>

@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Alert from "../Alerts/Alert";
@@ -28,11 +28,11 @@ const UpdateProfileForm = () => {
   const onChangeFirstName = (event) => {
     setFirstName(event.target.value);
   };
-  
+
   const onChangeLastName = (event) => {
     setLastName(event.target.value);
   };
-  
+
   const onChangeAddress = (event) => {
     setAddress(event.target.value);
   };
@@ -128,7 +128,7 @@ const UpdateProfileForm = () => {
   return (
     <div>
 
-<Alert
+      <Alert
         title={title}
         message={msg}
         show={show}
@@ -147,6 +147,8 @@ const UpdateProfileForm = () => {
               backgroundColor: "white",
             }}
           >
+            <i style={{ cursor: "pointer" }} onClick={() => history('/my-stores')} class="fas mb-5 fa-2x fa-arrow-left"></i>
+
             <div>
               <h1 style={{ fontSize: 24, color: "black" }}>Profile</h1>
             </div>
@@ -207,16 +209,16 @@ const UpdateProfileForm = () => {
               backgroundColor: "white",
             }}
           >
-            <div style={{flexDirection: "row", justifyContent: 'space-between'}}>
-            <button
-              className="btn btn-success"
-              style={{ width: "25%"}}
-              onClick={(e) => updateProfile(e)}
-            >
-              Update Profile
-            </button>
+            <div style={{ flexDirection: "row", justifyContent: 'space-between' }}>
+              <button
+                className="btn btn-success"
+                style={{ width: "25%" }}
+                onClick={(e) => updateProfile(e)}
+              >
+                Update Profile
+              </button>
             </div>
-            
+
           </div>
         </div>
       </form>
@@ -276,16 +278,16 @@ const UpdateProfileForm = () => {
               backgroundColor: "white",
             }}
           >
-            <div style={{flexDirection: "row", justifyContent: 'space-between'}}>
-            <button
-              className="btn btn-success"
-              style={{ width: "25%"}}
-              onClick={(e) => changePassword(e)}
-            >
-              Change Password
-            </button>
+            <div style={{ flexDirection: "row", justifyContent: 'space-between' }}>
+              <button
+                className="btn btn-success"
+                style={{ width: "25%" }}
+                onClick={(e) => changePassword(e)}
+              >
+                Change Password
+              </button>
             </div>
-            
+
           </div>
         </div>
       </form>
