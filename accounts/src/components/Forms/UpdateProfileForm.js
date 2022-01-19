@@ -10,7 +10,7 @@ const UpdateProfileForm = () => {
   const history = useNavigate();
   const handleClose = () => {
     setShow(false);
-    history("/");
+    // history("/");
   };
   const handleShow = () => setShow(true);
   //success modal states end
@@ -21,6 +21,9 @@ const UpdateProfileForm = () => {
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [hashedPassword, setHashedPassword] = useState("");
+  const [title, setTitle] = useState("");
+  const [msg, setMsg] = useState("");
+  const [status, setStatus] = useState("")
 
   const onChangeFirstName = (event) => {
     setFirstName(event.target.value);
@@ -75,6 +78,9 @@ const UpdateProfileForm = () => {
         },
       });
       handleShow();
+      setTitle("Profile Updated")
+      setMsg("Profile Details Updated Successfully!")
+      setStatus("success")
     } catch (err) {
       console.log(err);
     }
@@ -87,27 +93,30 @@ const UpdateProfileForm = () => {
 
 
     const data = {
-      // title: title,
-      // address: address,
-      // city: city,
-      // postalCode: postalCode,
-      // phone: phone,
-      // website: website,
-      // country: value.label
+      password: oldPassword,
+      newPassword: newPassword,
     };
 
 
     console.log(data)
 
     try {
-      await axios.post(`/api/merchant/store`, data, {
+      await axios.put(`/api/merchant/password`, data, {
         headers: {
           "Content-Type": "application/json",
         },
       });
       handleShow();
+      setTitle("Password Changed")
+      setMsg("Password changed successfully!")
+      setStatus("success")
+      // history('/')
     } catch (err) {
       console.log(err);
+      handleShow();
+      setTitle("Error")
+      setMsg("Old Password does not match with the one stored in database")
+      setStatus("failure")
     }
 
   };
@@ -120,10 +129,10 @@ const UpdateProfileForm = () => {
     <div>
 
 <Alert
-        title="Profile Updated"
-        message="Profile Details Updated Successfully!"
+        title={title}
+        message={msg}
         show={show}
-        variant="success"
+        variant={status === "success" ? "success" : "failure"}
         handleClose={handleClose}
         handleShow={handleShow}
       />

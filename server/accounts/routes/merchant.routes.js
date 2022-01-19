@@ -9,4 +9,5 @@ router.route('/store/:id').get(merchantAuth, merchantController.getStore)
 router.route('/store/:id').put(merchantAuth, merchantController.updateStore)
 router.route('/profile').get(merchantAuth, merchantController.viewMyProfile)
 router.route('/profile').put(merchantAuth, merchantController.updateMyProfile)
+router.route('/password').put(merchantAuth, merchantController.updateMyPassword)
 module.exports = router

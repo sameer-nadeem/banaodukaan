@@ -235,5 +235,7 @@ module.exports = {
     viewMyProfile,
     updateMyProfile,
     getStore,
-    updateStore
+    updateStore,
+    updateMyPassword
+
 }
