@@ -12,6 +12,7 @@ import AddBrands from './components/Forms/AddBrands';
 import Brands from './pages/Brands';
 import BrandDetail from './pages/BrandDetail'
 import Customers from './pages/Customers'
+import AddCustomers from './components/Forms/AddCustomers';
 import Cookies from 'universal-cookie'
 function App() {
 
@@ -32,6 +33,7 @@ function App() {
         <Route exact path="/admin/brands" component={Brands} />
         <Route exact path="/admin/brand/:id" component={BrandDetail} />
         <Route exact path="/admin/customers" component={Customers} />
+        <Route exact path="/admin/customers/new" component={AddCustomers} />
         <Route exact path="/admin/" component={LandingPage} />
       </Switch>
     </Router >
