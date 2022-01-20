@@ -7,11 +7,10 @@ import { InputAdornment, IconButton } from "@material-ui/core";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import React, { useState } from "react";
-import axios from "axios";
-import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import Alert from "../Alerts/Alert";
-
+import { register } from "../../actions/auth";
+import { useDispatch } from 'react-redux'
 
 const SignUpForm = () => {
   const [email, setEmail] = useState(""); //to store and keep track of the email entered
@@ -20,7 +19,7 @@ const SignUpForm = () => {
   const [firstName, setFirstName] = useState(""); // to store and keep track of the firstname
   const [lastName, setLastName] = useState(""); // to store and keep track of the last name
   const history = useNavigate();
-
+  const dispatch = useDispatch()
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const handleMouseDownPassword = () => setShowPassword(!showPassword);
@@ -77,29 +76,32 @@ const SignUpForm = () => {
       return;
     }
 
-    try {
-      //both passwords match then send to backend
-      const body = {
-        email: email,
-        firstName: firstName,
-        lastName: lastName,
-        password: password,
-      };
-      const response = await axios.post(`/api/auth/register-merchant`, body, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      console.log("success: ", response);
-      Cookies.set(response.data.id, response.data.token);
-      history(`/my-stores`);
-    } catch {
-      setAlertTitle("Error")
-      setAlertMessage("Please try again later")
-      setAlertVariant("failure")
-      handleShow();
-      console.log("error-whoops");
-    }
+    // try {
+    //both passwords match then send to backend
+
+    const body = {
+      email: email,
+      firstName: firstName,
+      lastName: lastName,
+      password: password,
+    };
+    dispatch(register(body, { setAlertMessage, setAlertTitle, setAlertVariant, handleShow }, history))
+
+    // const response = await axios.post(`/api/auth/register-merchant`, body, {
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    // });
+    // console.log("success: ", response);
+    // Cookies.set(response.data.id, response.data.token);
+    // history(`/my-stores`);
+    // } catch {
+    //   setAlertTitle("Error")
+    //   setAlertMessage("Please try again later")
+    //   setAlertVariant("failure")
+    //   handleShow();
+    //   console.log("error-whoops");
+    // }
   };
 
   const [show, setShow] = useState(false);
