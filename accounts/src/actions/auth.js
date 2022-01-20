@@ -19,6 +19,44 @@ export const loadUser = () => async dispatch => {
   }
 }
 
+export const register = (
+  { email,
+    firstName,
+    lastName,
+    password
+  },
+  alertHandler,
+  history
+) => async dispatch => {
+  try {
+    dispatch({
+      type: "REGISTER_REQUEST"
+    })
+    const { data } = await axios.post(`/api/auth/register-merchant`,
+      { email, firstName, lastName, password }, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    dispatch({
+      type: "REGISTER_SUCCESS",
+      payload: data.token
+    })
+    dispatch(loadUser())
+    history(`/my-stores`);
+  } catch (err) {
+    dispatch({
+      type: 'REGISTER_FAIL'
+    })
+    alertHandler.setAlertTitle("Error")
+    alertHandler.setAlertMessage("something went wrong")
+    alertHandler.setAlertVariant("failure")
+    alertHandler.handleShow();
+    console.log("error", err);
+  }
+}
+
+
 export const logout = () => async dispatch => {
   dispatch({
     type: "LOGOUT"
