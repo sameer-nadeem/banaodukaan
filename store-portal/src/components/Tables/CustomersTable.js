@@ -12,7 +12,7 @@ const CustomersTable = () => {
     const history = useHistory();
     const [customers, setCustomers] = useState([]);
     const [newRows, setRows] = useState([]);
-    const columns = ["Id", "FirstName", "Phone Number"];
+    const columns = ["Id", "Name", "Phone Number"];
 
     const getCustomers = async () => {
         try {
@@ -72,7 +72,7 @@ const CustomersTable = () => {
         
         try {
             customers.forEach(function (customer) {
-                const coll = [customer._id, customer.userId.firstName, customer.phone];
+                const coll = [customer._id, customer.userId.firstName + ' ' + customer.userId.lastName, customer.phone];
                 cleanedProducts.push(coll);
             });
             setRows(cleanedProducts);

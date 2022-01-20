@@ -9,15 +9,31 @@ import countryList from 'react-select-country-list'
 const AddCustomers = () => {
     //success modal
     const [show, setShow] = useState(false);
+    const [alertTitle, setAlertTitle] = useState('')
+    const [alertType, setAlertType] = useState('')
+    const [alertMessage, setAlertMessage] = useState('')
+
     const handleClose = () => {
         setShow(false);
-        history.push("/admin/customers");
+        if (alertType === 'success'){
+            history.push('/admin/customers')
+        }
     };
-    const handleShow = () => setShow(true);
-    //success modal states end
 
-    const addCustomer = (event) => {
+    const handleShow = () => setShow(true);
+
+    const addCustomer = async (event) => {
         event.preventDefault()
+
+        if (email === '' || firstName === '' || lastName === '' || city === '' || address === '' || apartment === '' || postalCode === '' 
+        || phone === '' || country === undefined){
+            // add alert here
+            setAlertTitle("Error")
+            setAlertMessage("Please fill in all of the fields")
+            setAlertType("failure")
+            setShow(true);
+            return;
+        }
         const data = {
             email: email,
             firstName: firstName,
@@ -30,6 +46,24 @@ const AddCustomers = () => {
             country: country.label,
         };
         console.log(data)
+
+        try {
+            await axios.post(`${uri}/customer/`, data, {
+              headers: {
+                "Content-Type": "application/json",
+              },
+            });
+            setAlertTitle("Success")
+            setAlertMessage("Customer added successfully!")
+            setAlertType("success")
+            setShow(true);  
+        }
+        catch (err) {
+            setAlertTitle("Error")
+            setAlertMessage("Error occured, please try again later")
+            setAlertType("failure")
+            setShow(true);
+        }
     }
 
     const options = useMemo(() => countryList().getData(), [])
@@ -74,10 +108,10 @@ const AddCustomers = () => {
     return (
         <div>
         <Alert
-            title="Customer Added"
-            message="The Customer was succesfuly added to the store"
+            title={alertTitle}
+            message={alertMessage}
             show={show}
-            variant="success"
+            variant={alertType}
             handleClose={handleClose}
             handleShow={handleShow}
         />
