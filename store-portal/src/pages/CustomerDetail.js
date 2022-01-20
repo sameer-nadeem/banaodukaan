@@ -1,70 +1,13 @@
-import { useState, useEffect, useMemo} from "react";
+import { useState, useEffect, useMemo } from "react";
+import { useHistory, useParams } from "react-router-dom";
 import axios from "axios";
-import { uri } from "../../api.json";
-import { useHistory } from "react-router-dom";
-import Alert from "../Alerts/Alert";
+import { uri } from '../api.json'
 import Select from 'react-select'
 import countryList from 'react-select-country-list'
 
-const AddCustomers = () => {
-    //success modal
-    const [show, setShow] = useState(false);
-    const [alertTitle, setAlertTitle] = useState('')
-    const [alertType, setAlertType] = useState('')
-    const [alertMessage, setAlertMessage] = useState('')
+const CustomerDetail = () => {
 
-    const handleClose = () => {
-        setShow(false);
-        if (alertType === 'success'){
-            history.push('/admin/customers')
-        }
-    };
-
-    const handleShow = () => setShow(true);
-
-    const addCustomer = async (event) => {
-        event.preventDefault()
-
-        if (email === '' || firstName === '' || lastName === '' || city === '' || address === '' || apartment === '' || postalCode === '' 
-        || phone === '' || country === undefined){
-            // add alert here
-            setAlertTitle("Error")
-            setAlertMessage("Please fill in all of the fields")
-            setAlertType("failure")
-            setShow(true);
-            return;
-        }
-        const data = {
-            email: email,
-            firstName: firstName,
-            lastName: lastName,
-            city: city,
-            address: address,
-            apartment: apartment,
-            postalCode: postalCode,
-            phone: phone,
-            country: country.label,
-        };
-        console.log(data)
-
-        try {
-            await axios.post(`${uri}/customer/`, data, {
-              headers: {
-                "Content-Type": "application/json",
-              },
-            });
-            setAlertTitle("Success")
-            setAlertMessage("Customer added successfully!")
-            setAlertType("success")
-            setShow(true);  
-        }
-        catch (err) {
-            setAlertTitle("Error")
-            setAlertMessage("Error occured, please try again later")
-            setAlertType("failure")
-            setShow(true);
-        }
-    }
+    const { id: customerId } = useParams();
 
     const options = useMemo(() => countryList().getData(), [])
     const [country, setCountry] = useState("")
@@ -105,16 +48,31 @@ const AddCustomers = () => {
     const onChangeCity = (event) => {
         setCity(event.target.value);
     };
+
+    useEffect(() => {
+        const getBrandById = async (id) => {
+          try {
+            const res = await axios.get(`${uri}/customer/${id}`);
+            let data = res.data.customer
+            console.log("customer detail ", data)
+            setCity(data.city)
+            setAddress(data.address)
+            setApartment(data.apartment)
+            setPhone(data.phone)
+            setPostalCode(data.postalCode)
+            setCountry(data.country)
+            setEmail(data.userId.email)
+            setFirstName(data.userId.firstName)
+            setLastName(data.userId.lastName)
+          } catch (err) {
+            console.log(err);
+          }
+        };
+        getBrandById(customerId);
+      }, [customerId]);
+
     return (
         <div>
-        <Alert
-            title={alertTitle}
-            message={alertMessage}
-            show={show}
-            variant={alertType}
-            handleClose={handleClose}
-            handleShow={handleShow}
-        />
         <form style={{ paddingTop: 25 }}>
             <div style={{ display: "flex", justifyContent: "center", padding: 20 }}>
             <div
@@ -183,7 +141,7 @@ const AddCustomers = () => {
                     class="form-control"
                     type = "tel"
                     style={{ backgroundColor: "white", color: "black" }}
-                    value = {phone}
+                    value={phone}
                     onChange={onChangePhone}
                     required
                 />
@@ -204,7 +162,7 @@ const AddCustomers = () => {
                     <label className="form-label" style={{ color: "black" }}>
                         Country/region
                     </label>
-                    <Select options={options} value={country} onChange={onChangeCountry} />
+                    <Select options={options} value={country} onChange={onChangeCountry} placeholder = {country} />
                 </div>
 
                 <div className="mb-3">
@@ -242,6 +200,7 @@ const AddCustomers = () => {
                         </label>
                         <input
                             className="form-control"
+
                             style={{ backgroundColor: "white", color: "black" }}
                             value = {city}
                             onChange={onChangeCity}
@@ -268,15 +227,15 @@ const AddCustomers = () => {
                 <button
                 class="btn btn-success"
                 style={{ width: "25%",}}
-                onClick={(e) => addCustomer(e)}
+                // onClick={}
                 >
                     Add Customer
                 </button>
             </div>
             </div>
         </form>
-    </div>
-    );
+        </div>
+    )
 };
 
-export default AddCustomers;
+export default CustomerDetail;
