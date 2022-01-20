@@ -7,8 +7,6 @@ import { InputAdornment, IconButton } from "@material-ui/core";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import React, { useState } from "react";
-import axios from "axios";
-import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import Alert from "../Alerts/Alert";
 import { register } from "../../actions/auth";
