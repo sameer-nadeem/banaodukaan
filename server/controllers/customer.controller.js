@@ -113,7 +113,7 @@ const getCustomer = async (req, res) => {
 
         const customer = await Customer
             .findOne({
-                userId: id,
+                _id: id,
                 
             }).populate("userId")
         return res.status(200).json({

@@ -60,9 +60,9 @@ const CustomersTable = () => {
             getCustomers();
             }, 200);
         },
-        // onRowClick: (rowData) => {
-        //   history.push(`/admin/customer/${rowData[0]}`);
-        // },
+        onRowClick: (rowData) => {
+          history.push(`/admin/customers/${rowData[0]}`);
+        },
     };
 
 
