@@ -1,65 +1,81 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo} from "react";
 import axios from "axios";
 import { uri } from "../../api.json";
 import { useHistory } from "react-router-dom";
 import Alert from "../Alerts/Alert";
-import { ProgressBar } from "react-bootstrap";
-import JoditEditor from "jodit-react";
+import Select from 'react-select'
+import countryList from 'react-select-country-list'
 
 const AddCustomers = () => {
     //success modal
     const [show, setShow] = useState(false);
     const handleClose = () => {
-    setShow(false);
-    history.push("/admin/products");
+        setShow(false);
+        history.push("/admin/customers");
     };
     const handleShow = () => setShow(true);
     //success modal states end
 
-    const [title, setTitle] = useState("");
-    const [description, setDescription] = useState("");
-    const [image, setImage] = useState([]);
-    const [price, setPrice] = useState(0);
-    const [quantity, setQuantity] = useState(0);
-    const [brand, setBrand] = useState("");
-    const [fetchBrands, setFetchedBrands] = useState([]);
-    const [collection, setCollection] = useState("");
-    const [fetchCollections, setFetchedCollections] = useState([]);
-    const [status, setStatus] = useState("");
-    const [path, setPath] = useState("");
-    const [buttonCheck, setButtonCheck] = useState(false);
-    const [uploadPercentage, setUploadPercentage] = useState(0);
+    const addCustomer = (event) => {
+        event.preventDefault()
+        const data = {
+            email: email,
+            firstName: firstName,
+            lastName: lastName,
+            city: city,
+            address: address,
+            apartment: apartment,
+            postalCode: postalCode,
+            phone: phone,
+            country: country.label,
+        };
+        console.log(data)
+    }
+
+    const options = useMemo(() => countryList().getData(), [])
+    const [country, setCountry] = useState("")
+    const [email, setEmail] = useState("");
+    const [firstName, setFirstName] = useState("")
+    const [lastName, setLastName] = useState("")
+    const [phone, setPhone] = useState(0);
+    const [apartment, setApartment] = useState("")
+    const [address, setAddress] = useState("")
+    const [city, setCity] = useState("");
+    const [postalCode, setPostalCode] = useState(0);
 
     const history = useHistory();
-    const onChangeTitle = (event) => {
-    setTitle(event.target.value);
+    const onChangeEmail = (event) => {
+        setEmail(event.target.value);
     };
-    const onChangeDescription = (value) => {
-    setDescription(value);
+    const onChangeFirstName = (event) => {
+        setFirstName(event.target.value);
     };
-    const onChangeImage = (event) => {
-    setImage(event.target.files[0]);
+    const onChangeLastName = (event) => {
+        setLastName(event.target.value);
     };
-    const onChangePrice = (event) => {
-    setPrice(event.target.value);
+    const onChangePhone = (event) => {
+        setPhone(event.target.value);
     };
-    const onChangeQuantity = (event) => {
-    setQuantity(event.target.value);
+    const onChangeAddress = (event) => {
+        setAddress(event.target.value);
     };
-    const onChangeBrand = (event) => {
-    setBrand(event.target.value);
+    const onChangeCountry = (value) => {
+        setCountry(value);
     };
-    const onChangeCollection = (event) => {
-    setCollection(event.target.value);
+    const onChangePostalCode = (event) => {
+        setPostalCode(event.target.value);
     };
-    const onChangeStatus = (event) => {
-    setStatus(event.target.value);
+    const onChangeApartment = (event) => {
+        setApartment(event.target.value);
+    };
+    const onChangeCity = (event) => {
+        setCity(event.target.value);
     };
     return (
         <div>
         <Alert
-            title="Product Added"
-            message="The product was succesfuly added to the store"
+            title="Customer Added"
+            message="The Customer was succesfuly added to the store"
             show={show}
             variant="success"
             handleClose={handleClose}
@@ -82,40 +98,27 @@ const AddCustomers = () => {
 
                 <div class="mb-3" style={{ paddingTop: 25 }}>
                 <label class="form-label" style={{ color: "black" }}>
-                    Title
+                    Email
                 </label>
                 <input
                     class="form-control"
+                    type = "email"
                     style={{ backgroundColor: "white", color: "black" }}
-                    onChange={onChangeTitle}
+                    onChange={onChangeEmail}
                     required
-                />
-                </div>
-                <div class="mb-3">
-                <label class="form-label" style={{ color: "black" }}>
-                    Description
-                </label>
-                <JoditEditor
-                    value={description}
-                    tabIndex={1} // tabIndex of textarea
-                    onChange={onChangeDescription}
                 />
                 </div>
                 <div class="row">
                 <div class="col">
                     <div class="mb-3">
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="mb-3">
                     <label class="form-label" style={{ color: "black" }}>
-                        Price
+                        First Name
                     </label>
                     <input
                         class="form-control"
-                        type="number"
+                        type="text"
                         style={{ backgroundColor: "white", color: "black" }}
-                        onChange={onChangePrice}
+                        onChange={onChangeFirstName}
                         required
                     />
                     </div>
@@ -123,17 +126,29 @@ const AddCustomers = () => {
                 <div class="col">
                     <div class="mb-3">
                     <label class="form-label" style={{ color: "black" }}>
-                        Quantity
+                        Last Name
                     </label>
                     <input
                         class="form-control"
-                        type="number"
+                        type="text"
                         style={{ backgroundColor: "white", color: "black" }}
-                        onChange={onChangeQuantity}
+                        onChange={onChangeLastName}
                         required
                     />
                     </div>
                 </div>
+                </div>
+                <div class="mb-3">
+                <label class="form-label" style={{ color: "black" }}>
+                    Phone Number
+                </label>
+                <input
+                    class="form-control"
+                    type = "tel"
+                    style={{ backgroundColor: "white", color: "black" }}
+                    onChange={onChangePhone}
+                    required
+                />
                 </div>
             </div>
             </div>
@@ -147,77 +162,76 @@ const AddCustomers = () => {
                 backgroundColor: "white",
                 }}
             >
-                <div class="row">
-                <div class="col">
-                    <div class="mb-3">
-                    <label class="form-label" style={{ color: "black" }}>
-                        Brand
+                <div className="mb-3" style={{ paddingTop: 25 }}>
+                    <label className="form-label" style={{ color: "black" }}>
+                        Country/region
                     </label>
-                    <select
-                        class="form-select"
-                        style={{ backgroundColor: "white", color: "black" }}
-                        onChange={onChangeBrand}
-                        required
-                    >
-                        <option value="">Pick a Brand</option>
-                        {fetchBrands.map((b) =>
-                        b.deleteFlag === false ? (
-                            <option value={b._id} key={b._id}>
-                            {b.name}
-                            </option>
-                        ) : null
-                        )}
-                    </select>
+                    <Select options={options} value={country} onChange={onChangeCountry} />
+                </div>
+
+                <div className="mb-3">
+                <label className="form-label" style={{ color: "black" }}>
+                    Address
+                </label>
+                <input
+                    className="form-control"
+                    style={{ backgroundColor: "white", color: "black" }}
+                    onChange={onChangeAddress}
+                    value={address}
+                    required
+                />
+                </div>
+                
+                
+                <div className="mb-3">
+                <label className="form-label" style={{ color: "black" }}>
+                    Apartment,suite,etc.
+                </label>
+                <input
+                    className="form-control"
+                    style={{ backgroundColor: "white", color: "black" }}
+                    onChange={onChangeApartment}
+                    value={apartment}
+                    required
+                />
+                </div>
+
+                <div className="row">
+                    <div className="col">
+                        <div className="mb-3">
+                        <label className="form-label" style={{ color: "black" }}>
+                            City
+                        </label>
+                        <input
+                            className="form-control"
+
+                            style={{ backgroundColor: "white", color: "black" }}
+                            onChange={onChangeCity}
+                            required
+                        />
+                        </div>
+                    </div>
+                    <div className="col">
+                        <div className="mb-3">
+                        <label className="form-label" style={{ color: "black" }}>
+                            Postal code
+                        </label>
+                        <input
+                            className="form-control"
+                            style={{ backgroundColor: "white", color: "black" }}
+                            onChange={onChangePostalCode}
+                            required
+                        />
+                        </div>
                     </div>
                 </div>
-                <div class="col">
-                    <div class="mb-3">
-                    <label class="form-label" style={{ color: "black" }}>
-                        Collection
-                    </label>
-                    <select
-                        class="form-select"
-                        style={{ backgroundColor: "white", color: "black" }}
-                        onChange={onChangeCollection}
-                        required
-                    >
-                        <option value="">Pick a Collection</option>
-                        {fetchCollections.map((c) =>
-                        c.deleteFlag === false ? (
-                            <option value={c._id} key={c._id}>
-                            {c.name}
-                            </option>
-                        ) : null
-                        )}
-                    </select>
-                    </div>
-                </div>
-                </div>
-                <div class="row">
-                <div class="col">
-                    <div class="mb-3">
-                    <label class="form-label" style={{ color: "black" }}>
-                        Status
-                    </label>
-                    <select
-                        class="form-select"
-                        style={{ backgroundColor: "white", color: "black" }}
-                        onChange={onChangeStatus}
-                        required
-                    >
-                        <option value="">Select Status</option>
-                        <option value="Active">Active</option>
-                        <option value="Draft">Draft</option>
-                    </select>
-                    </div>
-                </div>
-                </div>
+
                 <button
                 class="btn btn-success"
-                style={{ width: "25%" }}
-                // onClick={}
+                style={{ width: "25%",}}
+                onClick={(e) => addCustomer(e)}
                 >
-                Add Product
+                    Add Customer
                 </button>
             </div>
             </div>
