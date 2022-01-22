@@ -130,10 +130,10 @@ const UpdateProfileForm = () => {
       setTitle("Error");
       setMsg("New passwords entered do not match");
       setStatus("failure");
-    } else if (newPassword.length < 8 || confirmNewPassword.length < 8) {
+    } else if (!newPassword.match(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/) || !confirmNewPassword.match(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/)) {
       handleShow();
-      setTitle("Error");
-      setMsg("Length of password should be more than or equal to 8 characters");
+      setTitle("Password Error");
+      setMsg("Minimum eight characters, at least one letter, one number and one special character");
       setStatus("failure");
     } else {
       const data = {

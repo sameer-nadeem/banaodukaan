@@ -75,10 +75,10 @@ const SignUpForm = () => {
       console.log("passwords dont match");
       return;
     }
-    else if (password.length < 8 || confirmPassword.length < 8) {
+    else if (!password.match(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/) || !confirmPassword.match(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/)) {
       //add alert here
-      setAlertTitle("Error")
-      setAlertMessage("Length of password should be more than or equal to 8 characters")
+      setAlertTitle("Password Error")
+      setAlertMessage("Minimum eight characters, at least one letter, one number and one special character")
       setAlertVariant("failure")
       handleShow();
       return;
