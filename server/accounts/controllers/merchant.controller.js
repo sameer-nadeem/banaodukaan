@@ -41,6 +41,11 @@ const addStore = async (req, res) => {
             website,
         } = req.body
 
+        const storeWithSameNameExists = await Store.exists({ title })
+        if (storeWithSameNameExists) {
+            return res.status(400).json({ error: "STORE_ALREADY_PRESENT" })
+        }
+
         const settings = new Settings({
             country,
             city,
