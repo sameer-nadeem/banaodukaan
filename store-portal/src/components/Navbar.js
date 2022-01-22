@@ -14,7 +14,7 @@ const Navbar = () => {
         <div className="header_toggle">
           <i className='bx bx-menu' id="header-toggle"></i>
         </div>
-        <Link onClick={() => window.location.href = accounts} className='ml-auto float-end'>My Account</Link>
+        <Link to="" onClick={() => window.location.href = accounts} className='ml-auto float-end'>My Account</Link>
       </div>
     </header >
   )

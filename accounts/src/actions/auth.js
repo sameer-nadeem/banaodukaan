@@ -63,7 +63,7 @@ export const logout = () => async dispatch => {
   })
 }
 
-export const login = (email, password, history, alertHandler) => async dispatch => {
+export const login = (email, password, history, alertHandler, ref = null) => async dispatch => {
   try {
     dispatch({
       type: 'LOGIN_REQUEST'
@@ -77,10 +77,17 @@ export const login = (email, password, history, alertHandler) => async dispatch 
         "Content-Type": "application/json",
       },
     });
+
     dispatch({
       type: 'LOGIN_SUCCESS',
       payload: response.data.token //replace this value with token fetched
     })
+    if (ref) {
+      window.location.href = ref
+      return
+    }
+    console.log(ref, "ref")
+
     dispatch(loadUser())
     history(`/my-stores`);
   } catch (err) {

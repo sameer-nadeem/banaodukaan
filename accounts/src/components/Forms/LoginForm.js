@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 import Alert from "../Alerts/Alert";
 import { useDispatch } from 'react-redux'
 import { login, loginGoogle } from '../../actions/auth'
+import useQuery from "../../utils/useQuery";
 
 const LoginForm = () => {
   const [email, setEmail] = useState(""); //to store and keep track of the email entered
@@ -21,6 +22,7 @@ const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const history = useNavigate();
   const dispatch = useDispatch()
+  const query = useQuery()
 
   const [show, setShow] = useState(false);
   const [alertTitle, setAlertTitle] = useState("");
@@ -91,7 +93,8 @@ const LoginForm = () => {
           setAlertTitle,
           setAlertVariant,
           handleShow
-        }
+        },
+        query.get('ref')
       )
     )
   };

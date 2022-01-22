@@ -5,7 +5,7 @@ import AddProducts from './components/Forms/AddProducts'
 import Collections from './pages/Collections';
 import AddCollections from './components/Forms/AddCollections';
 import ProductDetail from './pages/ProductDetail';
-import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
+import { Switch, BrowserRouter as Router, Route } from 'react-router-dom';
 import CollectionDetail from './pages/CollectionDetail';
 import LandingPage from './pages/LandingPage';
 import AddBrands from './components/Forms/AddBrands';
@@ -14,29 +14,45 @@ import BrandDetail from './pages/BrandDetail'
 import Customers from './pages/Customers'
 import AddCustomers from './components/Forms/AddCustomers';
 import CustomerDetail from './pages/CustomerDetail';
-import Cookies from 'universal-cookie'
-function App() {
+import setAuthToken from './utils/setAuthToken';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { loadUser } from './actions/auth';
+import PrivateRoute from './components/Routing/PrivateRoute';
+setAuthToken();
 
-  const cookies = new Cookies()
-  console.log(cookies.get("token"))
+
+
+function App() {
+  const token = useSelector(state => state.auth.token)
+  const dispatch = useDispatch()
+  useEffect(() => {
+    setAuthToken()
+  }, [token])
+
+  useEffect(() => {
+    dispatch(loadUser())
+  }, [dispatch])
+
+
   return (
     <Router>
       <Navbar />
       <Sidebar />
       <Switch>
-        <Route exact path="/admin/products" component={Products} />
-        <Route exact path="/admin/products/new" component={AddProducts} />
-        <Route exact path="/admin/collections" component={Collections} />
-        <Route exact path="/admin/collections/new" component={AddCollections} />
-        <Route exact path="/admin/product/:id" component={ProductDetail} />
-        <Route exact path="/admin/collection/:id" component={CollectionDetail} />
-        <Route exact path="/admin/brands/new" component={AddBrands} />
-        <Route exact path="/admin/brands" component={Brands} />
-        <Route exact path="/admin/brand/:id" component={BrandDetail} />
-        <Route exact path="/admin/customers" component={Customers} />
-        <Route exact path="/admin/customers/new" component={AddCustomers} />
-        <Route exact path="/admin/customers/:id" component={CustomerDetail} />
-        <Route exact path="/admin/" component={LandingPage} />
+        <PrivateRoute exact path="/admin/products" component={Products} />
+        <PrivateRoute exact path="/admin/products/new" component={AddProducts} />
+        <PrivateRoute exact path="/admin/collections" component={Collections} />
+        <PrivateRoute exact path="/admin/collections/new" component={AddCollections} />
+        <PrivateRoute exact path="/admin/product/:id" component={ProductDetail} />
+        <PrivateRoute exact path="/admin/collection/:id" component={CollectionDetail} />
+        <PrivateRoute exact path="/admin/brands/new" component={AddBrands} />
+        <PrivateRoute exact path="/admin/brands" component={Brands} />
+        <PrivateRoute exact path="/admin/brand/:id" component={BrandDetail} />
+        <PrivateRoute exact path="/admin/customers" component={Customers} />
+        <PrivateRoute exact path="/admin/customers/new" component={AddCustomers} />
+        <PrivateRoute exact path="/admin/customers/:id" component={CustomerDetail} />
+        <PrivateRoute exact path="/admin/" component={LandingPage} />
       </Switch>
     </Router >
   );

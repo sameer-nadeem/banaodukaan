@@ -22,7 +22,7 @@ export const authReducer = (state = initialAuthState, action) => {
     case "REGISTER_FAIL":
     case 'LOGIN_FAIL':
       localStorage.removeItem('token')
-      cookies.remove("token")
+      cookies.remove("token", { domain: "bdstaging.com" })
       return { token: null, isAuthenticated: false, loading: false, user: null }
     case "USER_LOADED":
       return { ...state, user: action.payload }

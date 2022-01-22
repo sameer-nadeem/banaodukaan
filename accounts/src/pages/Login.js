@@ -9,7 +9,6 @@ const Login = () => {
   useEffect(() => {
     if (isAuthenticated) navigate('/my-stores')
   }, [isAuthenticated, navigate])
-
   return (
     <div
       style={{
