@@ -102,7 +102,7 @@ const ProductsTable = () => {
 
   const options = {
     filterType: "checkbox",
-    pagination: true,
+    pagination: false,
     onRowsDelete: (rowData, newTable) => {
       // console.log(rowData.data)
       for (let i = 0; i < rowData.data.length; i++) {
