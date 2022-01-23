@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Alert from "../Alerts/Alert";
 import countryList from 'react-select-country-list'
 import Select from 'react-select'
+import { AlertTitle } from "@mui/material";
 
 const AddStoresForm = () => {
   //success modal
@@ -11,7 +12,7 @@ const AddStoresForm = () => {
   const history = useNavigate();
   const handleClose = () => {
     setShow(false);
-    history("/my-stores");
+    redirectCheck && history("/my-stores");
   };
   const handleShow = () => setShow(true);
   //success modal states end
@@ -28,6 +29,10 @@ const AddStoresForm = () => {
   const [apartment, setApartment] = useState("")
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState('')
+  const [titleAlert, setAlertTitle] = useState("");
+  const [msg, setMsg] = useState("");
+  const [status, setStatus] = useState("");
+  const [redirectCheck, setRedirectCheck] = useState(false)
 
 
   const onChangeTitle = (event) => {
@@ -70,7 +75,14 @@ const AddStoresForm = () => {
   const addStores = async (event) => {
 
     event.preventDefault()
-
+    if(title.match(/\s/)){
+      setRedirectCheck(false)
+      setAlertTitle("Error")
+      setMsg("Store name must not contain a space")
+      setStatus("failure")
+      handleShow();
+      return;
+    }
     const data = {
       title: title,
       adress: adress,
@@ -90,9 +102,18 @@ const AddStoresForm = () => {
           "Content-Type": "application/json",
         },
       });
+      setRedirectCheck(true)
+      setAlertTitle("Store Added")
+      setMsg("The Store was succesfuly created")
+      setStatus("success")
       handleShow();
     } catch (err) {
       console.log(err);
+      setRedirectCheck(false)
+      setAlertTitle("Error")
+      setMsg("Store with same name already exists")
+      setStatus("failure")
+      handleShow();
     }
 
   };
@@ -106,10 +127,10 @@ const AddStoresForm = () => {
   return (
     <div>
       <Alert
-        title="Store Added"
-        message="The Store was succesfuly created"
+        title={titleAlert}
+        message={msg}
         show={show}
-        variant="success"
+        variant={status}
         handleClose={handleClose}
         handleShow={handleShow}
       />
