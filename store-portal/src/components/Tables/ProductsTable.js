@@ -42,11 +42,12 @@ const ProductsTable = () => {
 
   const columns = [
     {
-      name: "id",
-      label: "ID",
+      name: "image",
+      label: "Picture",
       options: {
-        filter: true,
+        filter: false,
         sort: false,
+        customBodyRender: (p) => <img alt="" width="75px" src={p}></img>,
       },
     },
     {
@@ -57,15 +58,7 @@ const ProductsTable = () => {
         sort: false,
       },
     },
-    {
-      name: "image",
-      label: "Picture",
-      options: {
-        filter: false,
-        sort: false,
-        customBodyRender: (p) => <img alt="" width="75px" src={p}></img>,
-      },
-    },
+
     {
       name: "status",
       label: "Status",
@@ -79,7 +72,7 @@ const ProductsTable = () => {
       label: "Stock",
       options: {
         filter: true,
-        sort: true,
+        sort: false,
       },
     },
     {

@@ -178,6 +178,8 @@ const AddProducts = () => {
               backgroundColor: "white",
             }}
           >
+            <i style={{ cursor: "pointer" }} onClick={() => history.push('/admin/products')} class="fas mb-5 fa-2x fa-arrow-left"></i>
+
             <div>
               <h1 style={{ fontSize: 24, color: "black" }}>Add Products</h1>
             </div>

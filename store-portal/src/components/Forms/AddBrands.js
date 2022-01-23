@@ -73,6 +73,8 @@ const AddBrands = () => {
             backgroundColor: "white",
           }}
         >
+          <i style={{ cursor: "pointer" }} onClick={() => history.push('/admin/brands')} class="fas mb-5 fa-2x fa-arrow-left"></i>
+
           <div style={{ display: "flex" }}>
             <h1 style={{ fontSize: 22, color: "black" }}>Create Brand</h1>
           </div>

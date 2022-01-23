@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 
 const Sidebar = () => {
   const PRODUCT = 0
+  const CUSTOMER = 1
   const [active, setActive] = useState(null)
   const [
     productNavigation,
@@ -15,10 +16,22 @@ const Sidebar = () => {
       brands: false,
       collections: false
     })
+  const [customerNav, setCustomerNav] = useState({ allCustomers: false })
+  const resetNavState = () => {
+    setProductNavigation({
+      allProducts: false,
+      inventory: false,
+      transfers: false,
+      brands: false,
+      collections: false
+    })
+    setCustomerNav({ allCustomers: false })
+  }
   const location = useLocation()
   useEffect(() => {
     const path = location.pathname.split('/')[2]
     const subpath = location.pathname.split('/')[3]
+    resetNavState()
     switch (path) {
       case "products":
       case "collections":
@@ -31,6 +44,10 @@ const Sidebar = () => {
         if (path === 'brands')
           setProductNavigation(p => ({ brands: true }))
         break;
+      case "customers":
+        setActive(CUSTOMER)
+        setCustomerNav({ allCustomers: true })
+        break
       default:
         setActive(null)
         break;
@@ -73,7 +90,7 @@ const Sidebar = () => {
                 <span className="nav_name">Brands</span>
               </Link>
             </div>
-            <Link to="/admin/customers" className="nav_link">
+            <Link to="/admin/customers" className={`nav_link ${customerNav.allCustomers && `highlight`}`}>
               <i className='bx bx-user nav_icon'></i>
               <span className="nav_name">Customers</span>
             </Link> <Link to="#" className="nav_link">

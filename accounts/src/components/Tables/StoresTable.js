@@ -6,10 +6,11 @@ import StorefrontIcon from '@mui/icons-material/Storefront';
 import { CardActionArea } from '@mui/material';
 import { Link } from "react-router-dom";
 import Grid from "@mui/material/Grid";
-
+import StoreListLoader from "../Loaders/StoreListLoader";
 const StoresTable = () => {
 
   const [stores, setStores] = useState([]);
+  const [storeListLoading, setStoreListLoading] = useState(true)
   // const [newRows, setRows] = useState([]);
 
   const getStores = async () => {
@@ -23,8 +24,11 @@ const StoresTable = () => {
       let list = res.data.stores;
       console.log(list)
       setStores(list);
+      setStoreListLoading(false)
+
     } catch (err) {
       console.log(err);
+      setStoreListLoading(false)
     }
   };
 
@@ -112,7 +116,7 @@ const StoresTable = () => {
 
   return (
     <div style={{ margin: 45 }}>
-      {
+      {storeListLoading && (<StoreListLoader />)}      {
         stores.map((eachStore => (
           <div className="row mb-3" key={eachStore._id}>
             <div className="col-10">
