@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useLocation } from "react-router-dom";
+import StorefrontIcon from '@mui/icons-material/Storefront';
 
 const Sidebar = () => {
   const PRODUCT = 0
@@ -59,7 +60,7 @@ const Sidebar = () => {
         <div>
 
           <Link to="#" className="nav_logo">
-            <i className='bx bx-layer nav_logo-icon'></i>
+            <StorefrontIcon style={{color: 'white'}}/>
             <span className="nav_logo-name">Banaodukaan</span>
           </Link>
           <div className="nav_list">

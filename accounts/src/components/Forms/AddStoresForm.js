@@ -5,13 +5,16 @@ import Alert from "../Alerts/Alert";
 import countryList from "react-select-country-list";
 import Select from "react-select";
 let validationCancelToken;
+
+import { AlertTitle } from "@mui/material";
+
 const AddStoresForm = () => {
   //success modal
   const [show, setShow] = useState(false);
   const history = useNavigate();
   const handleClose = () => {
     setShow(false);
-    history("/my-stores");
+    redirectCheck && history("/my-stores");
   };
   const handleShow = () => setShow(true);
   //success modal states end
@@ -27,7 +30,13 @@ const AddStoresForm = () => {
   const [website, setWebsite] = useState("");
   const [apartment, setApartment] = useState("");
   const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+
+  const [lastName, setLastName] = useState('')
+  const [titleAlert, setAlertTitle] = useState("");
+  const [msg, setMsg] = useState("");
+  const [status, setStatus] = useState("");
+  const [redirectCheck, setRedirectCheck] = useState(false)
+
 
   const onChangeTitle = (event) => {
     setTitle(event.target.value);
@@ -67,6 +76,7 @@ const AddStoresForm = () => {
   const addStores = async (event) => {
     event.preventDefault();
 
+
     const data = {
       title: title,
       adress: adress,
@@ -85,9 +95,18 @@ const AddStoresForm = () => {
           "Content-Type": "application/json",
         },
       });
+      setRedirectCheck(true)
+      setAlertTitle("Store Added")
+      setMsg("The Store was succesfuly created")
+      setStatus("success")
       handleShow();
     } catch (err) {
       console.log(err);
+      setRedirectCheck(false)
+      setAlertTitle("Error")
+      setMsg("Store with same name already exists")
+      setStatus("failure")
+      handleShow();
     }
   };
 
@@ -135,10 +154,10 @@ const AddStoresForm = () => {
   return (
     <div>
       <Alert
-        title="Store Added"
-        message="The Store was succesfuly created"
+        title={titleAlert}
+        message={msg}
         show={show}
-        variant="success"
+        variant={status}
         handleClose={handleClose}
         handleShow={handleShow}
       />

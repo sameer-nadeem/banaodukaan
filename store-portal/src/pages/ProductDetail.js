@@ -17,6 +17,12 @@ const ProductDetail = () => {
   const handleShow = () => setShow(true);
   //success modal states end
 
+  const [alertTitle, setAlertTitle] = useState('')
+  const [alertType, setAlertType] = useState('')
+  const [alertMessage, setAlertMessage] = useState('')
+
+
+
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [image, setImage] = useState([]);
@@ -107,6 +113,7 @@ const ProductDetail = () => {
   }, [productId]);
 
   const updateProducts = async (event) => {
+    event.preventDefault();
     if (
       title === "" ||
       description === "" ||
@@ -114,8 +121,12 @@ const ProductDetail = () => {
       collection === "" ||
       status === ""
     ) {
-      event.preventDefault();
-      alert("Please Check Fields");
+      
+      //alert("Please Check Fields");
+      handleShow();
+      setAlertTitle("Error")
+      setAlertMessage("Please fill in all of the fields")
+      setAlertType("failure")
       return;
     } else {
       event.preventDefault();
@@ -138,6 +149,9 @@ const ProductDetail = () => {
           },
         });
         handleShow();
+        setAlertTitle("Success")
+        setAlertMessage("Product updated successfully!")
+        setAlertType("success")
       } catch (err) {
         console.log(err);
       }
@@ -146,7 +160,10 @@ const ProductDetail = () => {
 
   const uploadImages = async (event) => {
     if (image.length === 0) {
-      alert("Please Select Image First");
+      handleShow();
+      setAlertTitle("Error")
+      setAlertMessage("Please select the image first")
+      setAlertType("failure")
     } else {
       console.log(image);
       event.preventDefault();
@@ -164,7 +181,11 @@ const ProductDetail = () => {
           formData,
           config
         );
-        alert("File has been uploaded successfully.");
+        
+        handleShow();
+        setAlertTitle("Success")
+        setAlertMessage("File has been uploaded successfully")
+        setAlertType("success")
         setPath(res.data);
       } catch (err) {
         console.log(err);
@@ -176,10 +197,10 @@ const ProductDetail = () => {
     <div>
       <div>
         <Alert
-          title="Product Updated"
-          message="The product was succesfuly updated."
+          title= {alertTitle}
+          message= {alertMessage}
           show={show}
-          variant="success"
+          variant={alertType === "success" ? "success" : "failure"}
           handleClose={handleClose}
           handleShow={handleShow}
         />

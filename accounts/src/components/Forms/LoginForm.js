@@ -83,6 +83,13 @@ const LoginForm = () => {
   const handleSubmit = async (event) => {
     // we can simple get the values from the variables
     event.preventDefault();
+    if (!email.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)){
+      setAlertTitle("Invalid Email")
+      setAlertMessage("Incorrect format of email address")
+      setAlertVariant("failure")
+      handleShow();
+      return;
+    }
     dispatch(
       login(
         email,
