@@ -139,7 +139,7 @@ const BrandDetail = () => {
             </div>
             <button
               class="btn btn-success"
-              style={{ width: "25%" }}
+              style={{ width: "25%", backgroundColor: '#3B8AC4' }}
               onClick={(e) => updateBrand(e)}
             >
               Update Brand

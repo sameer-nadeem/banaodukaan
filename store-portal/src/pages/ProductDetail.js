@@ -322,7 +322,7 @@ const ProductDetail = () => {
                   <div style={{ marginTop: 5 }}>
                     <button
                       class="btn btn-success"
-                      style={{ width: "10%" }}
+                      style={{ width: "10%", backgroundColor: '#3B8AC4' }}
                       onClick={(e) => uploadImages(e)}
                     >
                       Upload
@@ -420,7 +420,7 @@ const ProductDetail = () => {
             </div>
             <button
               class="btn btn-success"
-              style={{ width: "25%" }}
+              style={{ width: "25%", backgroundColor: '#3B8AC4' }}
               onClick={(e) => updateProducts(e)}
             >
               Update Product
