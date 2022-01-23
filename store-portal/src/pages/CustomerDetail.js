@@ -14,7 +14,9 @@ const CustomerDetail = () => {
     const [show, setShow] = useState(false);
     const handleClose = () => {
     setShow(false);
+    if (alertType === 'success'){
     history.push("/admin/customers");
+    }
     };
 
      const handleShow = () => setShow(true);

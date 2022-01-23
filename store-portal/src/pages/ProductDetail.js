@@ -12,7 +12,9 @@ const ProductDetail = () => {
   const [show, setShow] = useState(false);
   const handleClose = () => {
     setShow(false);
-    history.push("/admin/products");
+    if (alertType === 'success'){
+      history.push("/admin/products");
+    }
   };
   const handleShow = () => setShow(true);
   //success modal states end
@@ -184,8 +186,8 @@ const ProductDetail = () => {
         
         handleShow();
         setAlertTitle("Success")
-        setAlertMessage("File has been uploaded successfully")
-        setAlertType("success")
+        setAlertMessage("Image has been uploaded successfully")
+        setAlertType("successs")
         setPath(res.data);
       } catch (err) {
         console.log(err);
@@ -245,7 +247,8 @@ const ProductDetail = () => {
                 <JoditEditor
                   value={description}
                   tabIndex={1} // tabIndex of textarea
-                  onChange={onChangeDescription}
+                  onBlur={newContent => setDescription(newContent)}
+                  onChange={newContent => {}}
                 />
               </div>
             </div>

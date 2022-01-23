@@ -19,7 +19,9 @@ const BrandDetail = () => {
   const [show, setShow] = useState(false);
   const handleClose = () => {
     setShow(false);
+    if (alertType === 'success'){
     history.push("/admin/brands");
+    }
   };
   const handleShow = () => setShow(true);
   //success modal states end
@@ -133,7 +135,9 @@ const BrandDetail = () => {
                 <JoditEditor
                   value={brand.description}
                   tabIndex={1} // tabIndex of textarea
-                  onChange={onChangeDescription}
+                  onBlur={newContent => setDescription(newContent)}
+                  onChange={newContent => {}}
+                  
                 />
               </div>
             </div>

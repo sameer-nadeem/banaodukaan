@@ -10,7 +10,9 @@ const AddProducts = () => {
   const [show, setShow] = useState(false);
   const handleClose = () => {
     setShow(false);
+    if (alertType === 'success'){
     history.push("/admin/products");
+    }
   };
   const handleShow = () => setShow(true);
   //success modal states end
@@ -143,7 +145,7 @@ const AddProducts = () => {
     if (image.length === 0) {
       handleShow();
       setAlertTitle("Error")
-      setAlertMessage("Upload Image First")
+      setAlertMessage("Please select the image first")
       setAlertType("failure")
     } else {
       console.log(image);
@@ -167,6 +169,10 @@ const AddProducts = () => {
           config
         );
         // alert("File has been uploaded successfully.");
+        handleShow();
+        setAlertTitle("Success")
+        setAlertMessage("File has been uploaded successfully")
+        setAlertType("successs")
         setButtonCheck(true);
         setPath(res.data);
         setUploadPercentage(
@@ -232,7 +238,8 @@ const AddProducts = () => {
               <JoditEditor
                 value={description}
                 tabIndex={1} // tabIndex of textarea
-                onChange={onChangeDescription}
+                onBlur={newContent => setDescription(newContent)}
+                onChange={newContent => {}}
               />
             </div>
             <div class="row">
