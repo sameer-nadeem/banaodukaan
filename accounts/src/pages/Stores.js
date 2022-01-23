@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../actions/auth";
+import MenuDropdown from "../components/Menu/MenuDropdown";
 import StoresTable from "../components/Tables/StoresTable";
 const Stores = () => {
   const dispatch = useDispatch()
@@ -31,7 +32,8 @@ const Stores = () => {
               />
             </div>
             <div style={{ justifyContent: 'flex-end', paddingTop: 80, paddingRight: 40 }}>
-              <i
+              <MenuDropdown />
+              {/* <i
                 id="basic-button"
                 aria-controls={open ? 'basic-menu' : undefined}
                 aria-haspopup="true"
@@ -55,7 +57,7 @@ const Stores = () => {
               >
                 <MenuItem onClick={handleClose}>My account</MenuItem>
                 <MenuItem onClick={() => dispatch(logout())}>Logout</MenuItem>
-              </Menu>
+              </Menu> */}
             </div>
           </div>
           <div style={{ display: 'flex', paddingTop: 40 }}>

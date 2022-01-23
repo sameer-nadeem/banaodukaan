@@ -11,6 +11,7 @@ import { useEffect } from 'react';
 import PrivateRoute from './components/Routing/PrivateRoute'
 import { loadUser } from './actions/auth';
 import EditStore from './pages/EditStore';
+import './App.css';
 
 if (localStorage.token) {
   setAuthToken();
@@ -29,6 +30,19 @@ function App() {
   }, [dispatch])
 
   return (
+    <div class="area" >
+      <ul class="circles">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
     <Router>
       <Routes>
         <Route path="/" element={<Login />} />
@@ -58,6 +72,7 @@ function App() {
         {/* <Route path="/my-stores/new" element={<AddStores />} /> */}
       </Routes>
     </Router>
+    </div>
   );
 }
 
