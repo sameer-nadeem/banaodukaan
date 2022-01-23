@@ -15,6 +15,11 @@ const AddProducts = () => {
   const handleShow = () => setShow(true);
   //success modal states end
 
+  const [alertTitle, setAlertTitle] = useState('')
+  const [alertType, setAlertType] = useState('')
+  const [alertMessage, setAlertMessage] = useState('')
+
+
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [image, setImage] = useState([]);
@@ -87,12 +92,20 @@ const AddProducts = () => {
       collection === "" ||
       status === ""
     ) {
-      event.preventDefault();
-      alert("Please Check Fields");
+      //event.preventDefault();
+      //alert("Please Check Fields");
+      handleShow();
+      setAlertTitle("Error")
+      setAlertMessage("Please fill in all of the fields")
+      setAlertType("failure")
       return;
     } else if (!buttonCheck) {
       event.preventDefault();
-      alert("Upload Image First");
+      //alert("Upload Image First");
+      handleShow();
+      setAlertTitle("Error")
+      setAlertMessage("Upload Image First")
+      setAlertType("failure")
     } else {
       event.preventDefault();
       const data = {
@@ -112,15 +125,26 @@ const AddProducts = () => {
           },
         });
         handleShow();
+        setAlertTitle("Success")
+        setAlertMessage("The product was succesfuly added to the store")
+        setAlertType("success")
       } catch (err) {
-        console.log(err);
+        setAlertTitle("Error")
+        setAlertMessage("Error occured, please try again later")
+        setAlertType("failure")
+        setShow(true);
       }
     }
   };
 
   const uploadImages = async (event) => {
+    event.preventDefault();
+
     if (image.length === 0) {
-      alert("Please Select Image First");
+      handleShow();
+      setAlertTitle("Error")
+      setAlertMessage("Upload Image First")
+      setAlertType("failure")
     } else {
       console.log(image);
       event.preventDefault();
@@ -160,10 +184,10 @@ const AddProducts = () => {
   return (
     <div>
       <Alert
-        title="Product Added"
-        message="The product was succesfuly added to the store"
+        title = {alertTitle}
+        message= {alertMessage}
         show={show}
-        variant="success"
+        variant={alertType === "success" ? "success" : "failure"}
         handleClose={handleClose}
         handleShow={handleShow}
       />
@@ -178,6 +202,8 @@ const AddProducts = () => {
               backgroundColor: "white",
             }}
           >
+            <i style={{ cursor: "pointer" }} onClick={() => history.push('/admin/products')} class="fas mb-5 fa-2x fa-arrow-left"></i>
+
             <div>
               <h1 style={{ fontSize: 24, color: "black" }}>Add Products</h1>
             </div>

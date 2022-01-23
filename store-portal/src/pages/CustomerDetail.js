@@ -4,10 +4,27 @@ import axios from "axios";
 import { uri } from '../api.json'
 import Select from 'react-select'
 import countryList from 'react-select-country-list'
+import Alert from "../components/Alerts/Alert";
+import JoditEditor from "jodit-react";
 
 const CustomerDetail = () => {
 
     const { id: customerId } = useParams();
+
+    const [show, setShow] = useState(false);
+    const handleClose = () => {
+    setShow(false);
+    history.push("/admin/customers");
+    };
+
+     const handleShow = () => setShow(true);
+    //Alerts
+   
+    const [alertTitle, setAlertTitle] = useState('')
+    const [alertType, setAlertType] = useState('')
+    const [alertMessage, setAlertMessage] = useState('')
+
+
 
     const options = useMemo(() => countryList().getData(), [])
     const [country, setCountry] = useState("")
@@ -19,6 +36,8 @@ const CustomerDetail = () => {
     const [address, setAddress] = useState("")
     const [city, setCity] = useState("");
     const [postalCode, setPostalCode] = useState(0);
+    const [customer, setCustomer] = useState([]);
+
 
     const history = useHistory();
     const onChangeEmail = (event) => {
@@ -71,8 +90,72 @@ const CustomerDetail = () => {
         getBrandById(customerId);
       }, [customerId]);
 
+
+
+      const updateCustomer = async (event) => {
+        event.preventDefault()
+
+        if (email === '' || firstName === '' || lastName === '' || city === '' || address === '' || apartment === '' || postalCode === '' 
+        || phone === '' || country === undefined){
+            // add alert here
+           // event.preventDefault();
+            
+            handleShow();
+            setAlertTitle("Error")
+            setAlertMessage("Please fill in all of the fields")
+            setAlertType("failure")
+            //setShow(true);
+            return;
+        }
+        const data = {
+            email: email,
+            firstName: firstName,
+            lastName: lastName,
+            city: city,
+            address: address,
+            apartment: apartment,
+            postalCode: postalCode,
+            phone: phone,
+            country: country.label,
+        };
+        console.log(data)
+
+        try {
+            await axios.put(`${uri}/customer/${customerId}`, data, {
+              headers: {
+                "Content-Type": "application/json",
+              },
+            });
+            handleShow();
+            setAlertTitle("Success")
+            setAlertMessage("Customer updated successfully!")
+            setAlertType("success")
+            //setShow(true);  
+        }
+        catch (err) {
+            setAlertTitle("Error")
+            setAlertMessage("Error occured, please try again later")
+            setAlertType("failure")
+            setShow(true);
+        }
+    }
+
+
+
+    
+
     return (
         <div>
+        <div>
+        <Alert
+          title= {alertTitle}
+          message= {alertMessage}
+          show={show}
+          variant={alertType === "success" ? "success" : "failure"}
+          handleClose={handleClose}
+          handleShow={handleShow}
+        />
+      </div>
         <form style={{ paddingTop: 25 }}>
             <div style={{ display: "flex", justifyContent: "center", padding: 20 }}>
             <div
@@ -85,7 +168,7 @@ const CustomerDetail = () => {
                 }}
             >
                 <div>
-                <h1 style={{ fontSize: 24, color: "black" }}>Add Customers</h1>
+                <h1 style={{ fontSize: 24, color: "black" }}>Customer Detail</h1>
                 </div>
 
                 <div class="mb-3" style={{ paddingTop: 25 }}>
@@ -227,9 +310,9 @@ const CustomerDetail = () => {
                 <button
                 class="btn btn-success"
                 style={{ width: "25%",}}
-                // onClick={}
+                onClick ={(e) => updateCustomer(e)}
                 >
-                    Add Customer
+                    Update Customer
                 </button>
             </div>
             </div>

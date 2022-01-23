@@ -20,7 +20,15 @@ const CollectionDetail = () => {
     history.push("/admin/collections");
   };
   const handleShow = () => setShow(true);
+
+
   //success modal states end
+
+  const [alertTitle, setAlertTitle] = useState('')
+  const [alertType, setAlertType] = useState('')
+  const [alertMessage, setAlertMessage] = useState('')
+
+
   const onChangeTitle = (event) => {
     setTitle(event.target.value);
   };
@@ -30,6 +38,17 @@ const CollectionDetail = () => {
 
   const updateCollection = async (event) => {
     event.preventDefault();
+    if (title === "" && description === "" || title === "" || description === "") {
+      handleShow();
+      setAlertTitle("Error")
+      setAlertMessage("Please fill in all of the fields")
+      setAlertType("failure")
+      return;
+      //we will add toastify here
+
+    
+    }
+
     const body = {
       name: title,
       description: description,
@@ -42,8 +61,13 @@ const CollectionDetail = () => {
         },
       });
       handleShow();
+      setAlertTitle("Success")
+      setAlertMessage("The collection was succesfuly updated")
+      setAlertType("success")
     } catch (err) {
-      console.log(err);
+      setAlertTitle("Error")
+      setAlertMessage("Error occured, please try again later")
+      setAlertType("failure")
     }
   };
 
@@ -64,10 +88,10 @@ const CollectionDetail = () => {
   return (
     <div>
       <Alert
-        title="Collection Updated"
-        message="The collection was succesfuly updated."
+        title= {alertTitle}
+        message= {alertMessage}
         show={show}
-        variant="success"
+        variant={alertType === "success" ? "success" : "failure"}
         handleClose={handleClose}
         handleShow={handleShow}
       />
