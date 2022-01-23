@@ -11,6 +11,11 @@ const AddBrands = () => {
   const [description, setDescription] = useState("");
   let history = useHistory();
 
+  const [alertTitle, setAlertTitle] = useState('')
+  const [alertType, setAlertType] = useState('')
+  const [alertMessage, setAlertMessage] = useState('')
+
+
   //success modal
   const [show, setShow] = useState(false);
   const handleClose = () => {
@@ -21,7 +26,12 @@ const AddBrands = () => {
   //success modal states end
 
   const addBrand = (e) => {
-    if (title === "" && description === "") {
+    e.preventDefault()
+    if (title === "" && description === "" || title === "" || description === "") {
+      handleShow();
+      setAlertTitle("Error")
+      setAlertMessage("Please fill in all of the fields")
+      setAlertType("failure")
       return;
       //we will add toastify here
     }
@@ -40,9 +50,16 @@ const AddBrands = () => {
       })
       .then((res) => {
         handleShow();
+        handleShow();
+        setAlertTitle("Success")
+        setAlertMessage("The brand was succesfuly added to the store")
+        setAlertType("success")
       })
       .catch((err) => {
-        console.log(err);
+        setAlertTitle("Error")
+        setAlertMessage("Error occured, please try again later")
+        setAlertType("failure")
+        setShow(true);
       });
   };
 
@@ -56,10 +73,10 @@ const AddBrands = () => {
   return (
     <div>
       <Alert
-        title="Brand Added"
-        message="The brand was succesfuly added to the store"
+        title= {alertTitle}
+        message= {alertMessage}
         show={show}
-        variant="success"
+        variant={alertType === "success" ? "success" : "failure"}
         handleClose={handleClose}
         handleShow={handleShow}
       />

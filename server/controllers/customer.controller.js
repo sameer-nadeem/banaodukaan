@@ -54,7 +54,6 @@ const addCustomer = async (req, res) => {
 }
 
 
-
 const updateCustomer = async (req, res) => {
     try {
         var {
@@ -69,21 +68,22 @@ const updateCustomer = async (req, res) => {
             postalCode
         } = req.body
 
-        const id = req.params.id
+        const id = req.params.id       
 
+        const customer = await Customer
+            .findOne({
+                _id: id,
+            })
+
+            console.log(customer)
         const user = await User.findOne({
-            _id: id,
-        })
-
+                _id: customer.userId,
+            })
+    
         user.firstName = firstName
         user.lastName = lastName
         user.email = email
         user.save()
-
-        const customer = await Customer
-            .findOne({
-                userId: id,
-            })
 
         customer.phone = phone
         customer.address = address

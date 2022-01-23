@@ -11,6 +11,11 @@ const BrandDetail = () => {
   const [description, setDescription] = useState("");
   const [brand, setBrand] = useState([]);
   //success modal
+
+  const [alertTitle, setAlertTitle] = useState('')
+  const [alertType, setAlertType] = useState('')
+  const [alertMessage, setAlertMessage] = useState('')
+
   const [show, setShow] = useState(false);
   const handleClose = () => {
     setShow(false);
@@ -29,6 +34,14 @@ const BrandDetail = () => {
 
   const updateBrand = (event) => {
     event.preventDefault();
+    if ((title === "" && description === "") || title === "" || description === "") {
+      handleShow();
+      setAlertTitle("Error")
+      setAlertMessage("Please fill in all of the fields")
+      setAlertType("failure")
+      return;
+      //we will add toastify here
+    }
     const body = {
       name: title,
       description: description,
@@ -42,9 +55,16 @@ const BrandDetail = () => {
       })
       .then((res) => {
         handleShow();
+        handleShow();
+        setAlertTitle("Success")
+        setAlertMessage("The brand was succesfuly updated")
+        setAlertType("success")
       })
       .catch((err) => {
-        console.log(err);
+        setAlertTitle("Error")
+        setAlertMessage("Error occured, please try again later")
+        setAlertType("failure")
+        setShow(true);
       });
   };
 
@@ -65,10 +85,10 @@ const BrandDetail = () => {
   return (
     <div>
       <Alert
-        title="Brand Updated"
-        message="The brand was succesfuly updated."
+        title= {alertTitle}
+        message= {alertMessage}
         show={show}
-        variant="success"
+        variant={alertType === "success" ? "success" : "failure"}
         handleClose={handleClose}
         handleShow={handleShow}
       />

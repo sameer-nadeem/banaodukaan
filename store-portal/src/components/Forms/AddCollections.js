@@ -10,10 +10,22 @@ const AddCollections = () => {
   const [description, setDescription] = useState("");
   let history = useHistory();
 
+  const [alertTitle, setAlertTitle] = useState('')
+  const [alertType, setAlertType] = useState('')
+  const [alertMessage, setAlertMessage] = useState('')
+
+
   const handleSubmit = (e) => {
-    if (title === "" && description === "") {
+    e.preventDefault()
+    if (title === "" && description === "" || title === "" || description === "") {
+      handleShow();
+      setAlertTitle("Error")
+      setAlertMessage("Please fill in all of the fields")
+      setAlertType("failure")
       return;
       //we will add toastify here
+
+    
     }
     e.preventDefault();
     const body = {
@@ -30,9 +42,14 @@ const AddCollections = () => {
       })
       .then((res) => {
         handleShow();
+        setAlertTitle("Success")
+        setAlertMessage("The collection was succesfuly added to the store")
+        setAlertType("success")
       })
       .catch((err) => {
-        console.log(err);
+        setAlertTitle("Error")
+        setAlertMessage("Error occured, please try again later")
+        setAlertType("failure")
       });
   };
 
@@ -54,10 +71,10 @@ const AddCollections = () => {
   return (
     <div>
       <Alert
-        title="Collection Added"
-        message="The collection was succesfuly added to the store"
+        title={alertTitle}
+        message= {alertMessage}
         show={show}
-        variant="success"
+        variant={alertType === "success" ? "success" : "failure"}
         handleClose={handleClose}
         handleShow={handleShow}
       />
