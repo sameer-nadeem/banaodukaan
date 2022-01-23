@@ -83,6 +83,13 @@ const SignUpForm = () => {
       handleShow();
       return;
     }
+    else if (!email.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)){
+      setAlertTitle("Invalid Email")
+      setAlertMessage("Incorrect format of email address")
+      setAlertVariant("failure")
+      handleShow();
+      return;
+    }
 
     // try {
     //both passwords match then send to backend

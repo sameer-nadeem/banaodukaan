@@ -95,6 +95,14 @@ const UpdateProfileForm = () => {
   const updateProfile = async (event) => {
     event.preventDefault();
 
+    if (!address.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)) {
+      setTitle("Invalid Email");
+      setMsg("Incorrect format of email address");
+      setStatus("failure");
+      handleShow();
+      return;
+    }
+
     const data = {
       firstName: firstName,
       lastName: lastName,
@@ -130,10 +138,19 @@ const UpdateProfileForm = () => {
       setTitle("Error");
       setMsg("New passwords entered do not match");
       setStatus("failure");
-    } else if (!newPassword.match(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/) || !confirmNewPassword.match(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/)) {
+    } else if (
+      !newPassword.match(
+        /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/
+      ) ||
+      !confirmNewPassword.match(
+        /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/
+      )
+    ) {
       handleShow();
       setTitle("Password Error");
-      setMsg("Minimum eight characters, at least one letter, one number and one special character");
+      setMsg(
+        "Minimum eight characters, at least one letter, one number and one special character"
+      );
       setStatus("failure");
     } else {
       const data = {
