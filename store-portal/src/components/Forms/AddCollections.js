@@ -64,7 +64,9 @@ const AddCollections = () => {
   const [show, setShow] = useState(false);
   const handleClose = () => {
     setShow(false);
+    if (alertType === 'success'){
     history.push("/admin/collections");
+    }
   };
   const handleShow = () => setShow(true);
 
@@ -111,7 +113,8 @@ const AddCollections = () => {
               <JoditEditor
                 value={description}
                 tabIndex={1} // tabIndex of textarea
-                onChange={onChangeDescription}
+                onBlur={newContent => setDescription(newContent)}
+                onChange={newContent => {}}
               />
             </div>
             <button

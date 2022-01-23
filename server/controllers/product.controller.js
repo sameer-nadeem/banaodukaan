@@ -93,7 +93,7 @@ const getProduct = async (req, res) => {
         console.log(err)
 
         return res.status(500).json({
-            error: errors.SERVER_ERROR
+            error: "SERVER_ERROR"
         })
     }
 }
