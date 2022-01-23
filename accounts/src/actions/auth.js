@@ -94,11 +94,12 @@ export const login = (email, password, history, alertHandler, ref = null) => asy
     dispatch({
       type: 'LOGIN_FAIL'
     })
-    alertHandler.setAlertTitle("Error")
-    alertHandler.setAlertMessage("Incorrect Password or Email ID Entered")
-    alertHandler.setAlertVariant("failure")
-    alertHandler.handleShow();
-    console.log("error", err);
+    alertHandler.setAuthError('Invalid email or password.')
+    // alertHandler.setAlertTitle("Error")
+    // alertHandler.setAlertMessage("Incorrect Password or Email ID Entered")
+    // alertHandler.setAlertVariant("failure")
+    // alertHandler.handleShow();
+    // console.log("error", err);
   }
 }
 
