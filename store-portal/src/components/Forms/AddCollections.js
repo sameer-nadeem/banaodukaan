@@ -117,7 +117,7 @@ const AddCollections = () => {
             <button
               type="submit"
               className="btn btn-success"
-              style={{ width: "12%" }}
+              style={{ width: "12%", backgroundColor: '#3B8AC4'}}
             >
               Save
             </button>

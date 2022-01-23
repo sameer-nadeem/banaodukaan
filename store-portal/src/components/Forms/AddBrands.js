@@ -119,7 +119,7 @@ const AddBrands = () => {
             <button
               type="submit"
               class="btn btn-success"
-              style={{ width: "12%" }}
+              style={{ width: "12%", backgroundColor: '#3B8AC4' }}
             >
               Save
             </button>

@@ -14,7 +14,7 @@ const Products = () => {
             <Link to="/admin/products/new">
               <Button
                 variant="outlined"
-                style={{ backgroundColor: "#12824C", color: "#FFFFFF" }}
+                style={{ backgroundColor: "#3B8AC4", color: "#FFFFFF" }}
               >
                 Add Product
               </Button>

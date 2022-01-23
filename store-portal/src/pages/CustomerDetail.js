@@ -309,7 +309,7 @@ const CustomerDetail = () => {
 
                 <button
                 class="btn btn-success"
-                style={{ width: "25%",}}
+                style={{ width: "25%", backgroundColor: '#3B8AC4'}}
                 onClick ={(e) => updateCustomer(e)}
                 >
                     Update Customer

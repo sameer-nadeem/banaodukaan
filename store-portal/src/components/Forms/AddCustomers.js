@@ -269,7 +269,7 @@ const AddCustomers = () => {
 
                         <button
                             class="btn btn-success"
-                            style={{ width: "25%", }}
+                            style={{ width: "25%", backgroundColor: '#3B8AC4' }}
                             onClick={(e) => addCustomer(e)}
                         >
                             Add Customer
