@@ -234,6 +234,12 @@ const updateStore = async (req, res) => {
 }
 
 
+const validateStore = async (req, res) => {
+    const storeTitle = req.query.store
+    const isValid = !(await Store.exists({ title: storeTitle }))
+    res.status(200).json({ isValid })
+}
+
 module.exports = {
     getMyStores,
     addStore,
@@ -241,6 +247,6 @@ module.exports = {
     updateMyProfile,
     getStore,
     updateStore,
-    updateMyPassword
-
+    updateMyPassword,
+    validateStore
 }
