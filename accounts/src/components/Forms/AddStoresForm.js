@@ -109,6 +109,11 @@ const AddStoresForm = () => {
       handleShow();
     } catch (err) {
       console.log(err);
+      setRedirectCheck(false)
+      setAlertTitle("Error")
+      setMsg("Store with same name already exists")
+      setStatus("failure")
+      handleShow();
     }
 
   };
