@@ -6,7 +6,7 @@ import countryList from "react-select-country-list";
 import Select from "react-select";
 let validationCancelToken;
 
-import { AlertTitle } from "@mui/material";
+// import { AlertTitle } from "@mui/material";
 
 const AddStoresForm = () => {
   //success modal
@@ -31,12 +31,11 @@ const AddStoresForm = () => {
   const [apartment, setApartment] = useState("");
   const [firstName, setFirstName] = useState("");
 
-  const [lastName, setLastName] = useState('')
+  const [lastName, setLastName] = useState("");
   const [titleAlert, setAlertTitle] = useState("");
   const [msg, setMsg] = useState("");
   const [status, setStatus] = useState("");
-  const [redirectCheck, setRedirectCheck] = useState(false)
-
+  const [redirectCheck, setRedirectCheck] = useState(false);
 
   const onChangeTitle = (event) => {
     setTitle(event.target.value);
@@ -76,7 +75,6 @@ const AddStoresForm = () => {
   const addStores = async (event) => {
     event.preventDefault();
 
-
     const data = {
       title: title,
       adress: adress,
@@ -95,17 +93,17 @@ const AddStoresForm = () => {
           "Content-Type": "application/json",
         },
       });
-      setRedirectCheck(true)
-      setAlertTitle("Store Added")
-      setMsg("The Store was succesfuly created")
-      setStatus("success")
+      setRedirectCheck(true);
+      setAlertTitle("Store Added");
+      setMsg("The Store was succesfuly created");
+      setStatus("success");
       handleShow();
     } catch (err) {
       console.log(err);
-      setRedirectCheck(false)
-      setAlertTitle("Error")
-      setMsg("Store with same name already exists")
-      setStatus("failure")
+      setRedirectCheck(false);
+      setAlertTitle("Error");
+      setMsg("Store with same name already exists");
+      setStatus("failure");
       handleShow();
     }
   };
