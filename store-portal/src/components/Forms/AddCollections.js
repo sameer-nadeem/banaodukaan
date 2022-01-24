@@ -17,7 +17,7 @@ const AddCollections = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    if (title === "" && description === "" || title === "" || description === "") {
+    if (title === "" || description === "") {
       handleShow();
       setAlertTitle("Error")
       setAlertMessage("Please fill in all of the fields")
@@ -25,7 +25,7 @@ const AddCollections = () => {
       return;
       //we will add toastify here
 
-    
+
     }
     e.preventDefault();
     const body = {
@@ -57,15 +57,15 @@ const AddCollections = () => {
     setTitle(event.target.value);
   };
 
-  const onChangeDescription = (value) => {
-    setDescription(value);
-  };
+  // const onChangeDescription = (value) => {
+  //   setDescription(value);
+  // };
 
   const [show, setShow] = useState(false);
   const handleClose = () => {
     setShow(false);
-    if (alertType === 'success'){
-    history.push("/admin/collections");
+    if (alertType === 'success') {
+      history.push("/admin/collections");
     }
   };
   const handleShow = () => setShow(true);
@@ -74,7 +74,7 @@ const AddCollections = () => {
     <div>
       <Alert
         title={alertTitle}
-        message= {alertMessage}
+        message={alertMessage}
         show={show}
         variant={alertType === "success" ? "success" : "failure"}
         handleClose={handleClose}
@@ -82,7 +82,7 @@ const AddCollections = () => {
       />
       <div style={{ display: "flex", justifyContent: "center", padding: 20 }}>
         <div
-          className="card"
+          className="card form-card"
           style={{
             padding: 40,
             paddingTop: 25,
@@ -114,13 +114,13 @@ const AddCollections = () => {
                 value={description}
                 tabIndex={1} // tabIndex of textarea
                 onBlur={newContent => setDescription(newContent)}
-                onChange={newContent => {}}
+                onChange={newContent => { }}
               />
             </div>
             <button
               type="submit"
               className="btn btn-success"
-              style={{ width: "12%", backgroundColor: '#3B8AC4'}}
+              style={{ width: "12%", backgroundColor: '#3B8AC4' }}
             >
               Save
             </button>

@@ -41,6 +41,15 @@ const ProductsTable = () => {
   };
 
   const columns = [
+
+    {
+      name: "id",
+      label: "Id",
+      options: {
+        filter: false,
+        sort: false,
+      }
+    },
     {
       name: "image",
       label: "Picture",

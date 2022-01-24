@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useMemo } from "react";
 import axios from "axios";
 import { uri } from "../../api.json";
 import { useHistory } from "react-router-dom";
@@ -118,7 +118,7 @@ const AddCustomers = () => {
             <form style={{ paddingTop: 25 }}>
                 <div style={{ display: "flex", justifyContent: "center", padding: 20 }}>
                     <div
-                        class="card"
+                        className="card form-card"
                         style={{
                             padding: 40,
                             paddingTop: 25,
@@ -126,18 +126,18 @@ const AddCustomers = () => {
                             backgroundColor: "white",
                         }}
                     >
-                        <i style={{ cursor: "pointer" }} onClick={() => history.push('/admin/customers')} class="fas mb-5 fa-2x fa-arrow-left"></i>
+                        <i style={{ cursor: "pointer" }} onClick={() => history.push('/admin/customers')} className="fas mb-5 fa-2x fa-arrow-left"></i>
 
                         <div>
                             <h1 style={{ fontSize: 24, color: "black" }}>Add Customers</h1>
                         </div>
 
-                        <div class="mb-3" style={{ paddingTop: 25 }}>
-                            <label class="form-label" style={{ color: "black" }}>
+                        <div className="mb-3" style={{ paddingTop: 25 }}>
+                            <label className="form-label" style={{ color: "black" }}>
                                 Email
                             </label>
                             <input
-                                class="form-control"
+                                className="form-control"
                                 type="email"
                                 style={{ backgroundColor: "white", color: "black" }}
                                 value={email}
@@ -145,14 +145,14 @@ const AddCustomers = () => {
                                 required
                             />
                         </div>
-                        <div class="row">
-                            <div class="col">
-                                <div class="mb-3">
-                                    <label class="form-label" style={{ color: "black" }}>
+                        <div className="row">
+                            <div className="col">
+                                <div className="mb-3">
+                                    <label className="form-label" style={{ color: "black" }}>
                                         First Name
                                     </label>
                                     <input
-                                        class="form-control"
+                                        className="form-control"
                                         type="text"
                                         style={{ backgroundColor: "white", color: "black" }}
                                         value={firstName}
@@ -161,13 +161,13 @@ const AddCustomers = () => {
                                     />
                                 </div>
                             </div>
-                            <div class="col">
-                                <div class="mb-3">
-                                    <label class="form-label" style={{ color: "black" }}>
+                            <div className="col">
+                                <div className="mb-3">
+                                    <label className="form-label" style={{ color: "black" }}>
                                         Last Name
                                     </label>
                                     <input
-                                        class="form-control"
+                                        className="form-control"
                                         type="text"
                                         style={{ backgroundColor: "white", color: "black" }}
                                         value={lastName}
@@ -177,12 +177,12 @@ const AddCustomers = () => {
                                 </div>
                             </div>
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label" style={{ color: "black" }}>
+                        <div className="mb-3">
+                            <label className="form-label" style={{ color: "black" }}>
                                 Phone Number
                             </label>
                             <input
-                                class="form-control"
+                                className="form-control"
                                 type="tel"
                                 style={{ backgroundColor: "white", color: "black" }}
                                 value={phone}
@@ -194,7 +194,7 @@ const AddCustomers = () => {
                 </div>
                 <div style={{ display: "flex", justifyContent: "center", padding: 20 }}>
                     <div
-                        class="card"
+                        className="card form-card"
                         style={{
                             padding: 40,
                             paddingTop: 25,
@@ -268,7 +268,7 @@ const AddCustomers = () => {
                         </div>
 
                         <button
-                            class="btn btn-success"
+                            className="btn btn-success"
                             style={{ width: "25%", backgroundColor: '#3B8AC4' }}
                             onClick={(e) => addCustomer(e)}
                         >
