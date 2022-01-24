@@ -34,10 +34,8 @@ const CollectionDetail = () => {
   const onChangeTitle = (event) => {
     setTitle(event.target.value);
   };
-  // const onChangeDescription = (value) => {
-  //   setDescription(value);
-  // };
 
+  // function that handles the update collection button click
   const updateCollection = async (event) => {
     event.preventDefault();
     if (title === "" || description === "") {
@@ -46,9 +44,6 @@ const CollectionDetail = () => {
       setAlertMessage("Please fill in all of the fields")
       setAlertType("failure")
       return;
-      //we will add toastify here
-
-
     }
 
     const body = {
@@ -73,6 +68,7 @@ const CollectionDetail = () => {
     }
   };
 
+  // use effect to get collection details from its id
   useEffect(() => {
     const getCollection = async (id) => {
       try {

@@ -13,6 +13,7 @@ const AddCustomers = () => {
     const [alertType, setAlertType] = useState('')
     const [alertMessage, setAlertMessage] = useState('')
 
+    // alerts handle close function
     const handleClose = () => {
         setShow(false);
         if (alertType === 'success') {
@@ -22,6 +23,7 @@ const AddCustomers = () => {
 
     const handleShow = () => setShow(true);
 
+    // add customer handler
     const addCustomer = async (event) => {
         event.preventDefault()
 

@@ -14,8 +14,6 @@ const AddBrands = () => {
   const [alertTitle, setAlertTitle] = useState('')
   const [alertType, setAlertType] = useState('')
   const [alertMessage, setAlertMessage] = useState('')
-
-
   //success modal
   const [show, setShow] = useState(false);
   const handleClose = () => {
@@ -27,6 +25,11 @@ const AddBrands = () => {
   const handleShow = () => setShow(true);
   //success modal states end
 
+  const onChangeTitle = (event) => {
+    setTitle(event.target.value);
+  };
+
+  // add brand handler
   const addBrand = (e) => {
     e.preventDefault()
     if (title === "" || description === "") {
@@ -65,13 +68,6 @@ const AddBrands = () => {
       });
   };
 
-  const onChangeTitle = (event) => {
-    setTitle(event.target.value);
-  };
-
-  // const onChangeDescription = (value) => {
-  //   setDescription(value);
-  // };
   return (
     <div>
       <Alert

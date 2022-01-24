@@ -14,7 +14,7 @@ const AddCollections = () => {
   const [alertType, setAlertType] = useState('')
   const [alertMessage, setAlertMessage] = useState('')
 
-
+  // add collection handler
   const handleSubmit = (e) => {
     e.preventDefault()
     if (title === "" || description === "") {
@@ -57,10 +57,7 @@ const AddCollections = () => {
     setTitle(event.target.value);
   };
 
-  // const onChangeDescription = (value) => {
-  //   setDescription(value);
-  // };
-
+  // alert states and functions start here
   const [show, setShow] = useState(false);
   const handleClose = () => {
     setShow(false);
@@ -69,6 +66,7 @@ const AddCollections = () => {
     }
   };
   const handleShow = () => setShow(true);
+  // alert states and functions end here
 
   return (
     <div>
