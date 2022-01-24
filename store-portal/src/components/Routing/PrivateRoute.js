@@ -14,7 +14,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
         auth.isAuthenticated ? (
           <Component {...props} />
         ) : (
-          <h1>Accounts</h1>)
+          <Accounts />)
     }
   />)
 }
