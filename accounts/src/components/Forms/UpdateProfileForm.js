@@ -17,7 +17,7 @@ const UpdateProfileForm = () => {
   };
   const handleShow = () => setShow(true);
   //success modal states end
-
+  //states for all the relevant fields
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [address, setAddress] = useState("");
@@ -31,7 +31,7 @@ const UpdateProfileForm = () => {
   const [showOldPassword, setShowOldPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-
+  //onchange functions
   const onChangeFirstName = (event) => {
     setFirstName(event.target.value);
   };
@@ -79,7 +79,7 @@ const UpdateProfileForm = () => {
   const handleMouseDownNewPassword = () => {
     setShowNewPassword(!showNewPassword);
   };
-
+  //getting the merchant profile and setting the states of variables
   const getProfile = async () => {
     try {
       const res = await axios.get(`/api/merchant/profile`, {});
@@ -91,10 +91,10 @@ const UpdateProfileForm = () => {
       console.log(err);
     }
   };
-
+  //function to update profile
   const updateProfile = async (event) => {
     event.preventDefault();
-
+    //checking whether email address matches specified format
     if (!address.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)) {
       setTitle("Invalid Email");
       setMsg("Incorrect format of email address");
@@ -110,7 +110,7 @@ const UpdateProfileForm = () => {
     };
 
     console.log(data);
-
+    //put request
     try {
       await axios.put(`/api/merchant/profile`, data, {
         headers: {
@@ -125,9 +125,10 @@ const UpdateProfileForm = () => {
       console.log(err);
     }
   };
-
+  //function to change passowrd
   const changePassword = async (event) => {
     event.preventDefault();
+    //various cases for input validation, matching format of password as well using regex
     if (oldPassword === "" || newPassword === "" || confirmNewPassword === "") {
       handleShow();
       setTitle("Error");
@@ -178,7 +179,7 @@ const UpdateProfileForm = () => {
         console.log(err);
         handleShow();
         setTitle("Error");
-        setMsg("Old Password does not match with the one stored in database");
+        setMsg("Old Password does not match with the one stored in database"); //in case the old password does not match new password
         setStatus("failure");
       }
     }
