@@ -45,9 +45,6 @@ const ProductDetail = () => {
   const onChangeTitle = (event) => {
     setTitle(event.target.value);
   };
-  // const onChangeDescription = (value) => {
-  //   setDescription(value);
-  // };
   const onChangeImage = (event) => {
     setImage(event.target.files[0]);
   };
@@ -67,7 +64,8 @@ const ProductDetail = () => {
   const onChangeStatus = (event) => {
     setStatus(event.target.value);
   };
-
+  
+  // use effect to get collections
   useEffect(() => {
     const getCollections = async () => {
       try {
@@ -80,6 +78,7 @@ const ProductDetail = () => {
     getCollections();
   }, []);
 
+  // use effect to get brands
   useEffect(() => {
     const getBrands = async () => {
       try {
@@ -92,6 +91,7 @@ const ProductDetail = () => {
     getBrands();
   }, []);
 
+  // useEffect to get product details of a certain product and setting the variables accordingly
   useEffect(() => {
     const getProductById = async (id) => {
       try {
@@ -114,6 +114,7 @@ const ProductDetail = () => {
     getProductById();
   }, [productId]);
 
+  // update products function
   const updateProducts = async (event) => {
     event.preventDefault();
     if (
@@ -160,6 +161,7 @@ const ProductDetail = () => {
     }
   };
 
+  // upload image handler
   const uploadImages = async (event) => {
     if (image.length === 0) {
       handleShow();

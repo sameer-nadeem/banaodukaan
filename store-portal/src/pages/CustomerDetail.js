@@ -70,8 +70,9 @@ const CustomerDetail = () => {
         setCity(event.target.value);
     };
 
+    // use effect to get customer from their id
     useEffect(() => {
-        const getBrandById = async (id) => {
+        const getCustomerById = async (id) => {
             try {
                 const res = await axios.get(`${uri}/customer/${id}`);
                 let data = res.data.customer
@@ -89,11 +90,11 @@ const CustomerDetail = () => {
                 console.log(err);
             }
         };
-        getBrandById(customerId);
+        getCustomerById(customerId);
     }, [customerId]);
 
 
-
+    // update customer function 
     const updateCustomer = async (event) => {
         event.preventDefault()
 
@@ -141,10 +142,6 @@ const CustomerDetail = () => {
             setShow(true);
         }
     }
-
-
-
-
 
     return (
         <div>

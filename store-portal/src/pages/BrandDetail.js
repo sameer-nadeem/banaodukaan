@@ -30,10 +30,8 @@ const BrandDetail = () => {
   const onChangeTitle = (event) => {
     setTitle(event.target.value);
   };
-  // const onChangeDescription = (value) => {
-  //   setDescription(value);
-  // };
 
+  // update brand handler function
   const updateBrand = (event) => {
     event.preventDefault();
     if ((title === "" && description === "") || title === "" || description === "") {
@@ -42,7 +40,6 @@ const BrandDetail = () => {
       setAlertMessage("Please fill in all of the fields")
       setAlertType("failure")
       return;
-      //we will add toastify here
     }
     const body = {
       name: title,
@@ -70,6 +67,7 @@ const BrandDetail = () => {
       });
   };
 
+  // useEffect to get brand details from brand id 
   useEffect(() => {
     const getBrandById = async (id) => {
       try {

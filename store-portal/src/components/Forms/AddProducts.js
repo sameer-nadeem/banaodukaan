@@ -63,6 +63,7 @@ const AddProducts = () => {
     setStatus(event.target.value);
   };
 
+  // function to get collections from the backend
   const getCollections = async () => {
     try {
       const res = await axios.get(`${uri}/collection`);
@@ -72,6 +73,7 @@ const AddProducts = () => {
     }
   };
 
+  // function to get brands from backend
   const getBrands = async () => {
     try {
       const res = await axios.get(`${uri}/brand`);
@@ -81,11 +83,13 @@ const AddProducts = () => {
     }
   };
 
+  // use effect to get collections and brands when page loads
   useEffect(() => {
     getCollections();
     getBrands();
   }, []);
 
+  // add products handler
   const addProducts = async (event) => {
     if (
       image.length === 0 ||
@@ -140,6 +144,7 @@ const AddProducts = () => {
     }
   };
 
+  // upload images handler
   const uploadImages = async (event) => {
     event.preventDefault();
 
