@@ -13,15 +13,15 @@ const CustomerDetail = () => {
 
     const [show, setShow] = useState(false);
     const handleClose = () => {
-    setShow(false);
-    if (alertType === 'success'){
-    history.push("/admin/customers");
-    }
+        setShow(false);
+        if (alertType === 'success') {
+            history.push("/admin/customers");
+        }
     };
 
-     const handleShow = () => setShow(true);
+    const handleShow = () => setShow(true);
     //Alerts
-   
+
     const [alertTitle, setAlertTitle] = useState('')
     const [alertType, setAlertType] = useState('')
     const [alertMessage, setAlertMessage] = useState('')
@@ -38,7 +38,7 @@ const CustomerDetail = () => {
     const [address, setAddress] = useState("")
     const [city, setCity] = useState("");
     const [postalCode, setPostalCode] = useState(0);
-    const [customer, setCustomer] = useState([]);
+    // const [customer, setCustomer] = useState([]);
 
 
     const history = useHistory();
@@ -72,36 +72,36 @@ const CustomerDetail = () => {
 
     useEffect(() => {
         const getBrandById = async (id) => {
-          try {
-            const res = await axios.get(`${uri}/customer/${id}`);
-            let data = res.data.customer
-            console.log("customer detail ", data)
-            setCity(data.city)
-            setAddress(data.address)
-            setApartment(data.apartment)
-            setPhone(data.phone)
-            setPostalCode(data.postalCode)
-            setCountry(data.country)
-            setEmail(data.userId.email)
-            setFirstName(data.userId.firstName)
-            setLastName(data.userId.lastName)
-          } catch (err) {
-            console.log(err);
-          }
+            try {
+                const res = await axios.get(`${uri}/customer/${id}`);
+                let data = res.data.customer
+                console.log("customer detail ", data)
+                setCity(data.city)
+                setAddress(data.address)
+                setApartment(data.apartment)
+                setPhone(data.phone)
+                setPostalCode(data.postalCode)
+                setCountry(data.country)
+                setEmail(data.userId.email)
+                setFirstName(data.userId.firstName)
+                setLastName(data.userId.lastName)
+            } catch (err) {
+                console.log(err);
+            }
         };
         getBrandById(customerId);
-      }, [customerId]);
+    }, [customerId]);
 
 
 
-      const updateCustomer = async (event) => {
+    const updateCustomer = async (event) => {
         event.preventDefault()
 
-        if (email === '' || firstName === '' || lastName === '' || city === '' || address === '' || apartment === '' || postalCode === '' 
-        || phone === '' || country === undefined){
+        if (email === '' || firstName === '' || lastName === '' || city === '' || address === '' || apartment === '' || postalCode === ''
+            || phone === '' || country === undefined) {
             // add alert here
-           // event.preventDefault();
-            
+            // event.preventDefault();
+
             handleShow();
             setAlertTitle("Error")
             setAlertMessage("Please fill in all of the fields")
@@ -124,15 +124,15 @@ const CustomerDetail = () => {
 
         try {
             await axios.put(`${uri}/customer/${customerId}`, data, {
-              headers: {
-                "Content-Type": "application/json",
-              },
+                headers: {
+                    "Content-Type": "application/json",
+                },
             });
             handleShow();
             setAlertTitle("Success")
             setAlertMessage("Customer updated successfully!")
             setAlertType("success")
-            //setShow(true);  
+            //setShow(true);
         }
         catch (err) {
             setAlertTitle("Error")
@@ -144,181 +144,183 @@ const CustomerDetail = () => {
 
 
 
-    
+
 
     return (
         <div>
-        <div>
-        <Alert
-          title= {alertTitle}
-          message= {alertMessage}
-          show={show}
-          variant={alertType === "success" ? "success" : "failure"}
-          handleClose={handleClose}
-          handleShow={handleShow}
-        />
-      </div>
-        <form style={{ paddingTop: 25 }}>
-            <div style={{ display: "flex", justifyContent: "center", padding: 20 }}>
-            <div
-                class="card"
-                style={{
-                padding: 40,
-                paddingTop: 25,
-                width: "85%",
-                backgroundColor: "white",
-                }}
-            >
-                <div>
-                <h1 style={{ fontSize: 24, color: "black" }}>Customer Detail</h1>
-                </div>
-
-                <div class="mb-3" style={{ paddingTop: 25 }}>
-                <label class="form-label" style={{ color: "black" }}>
-                    Email
-                </label>
-                <input
-                    class="form-control"
-                    type = "email"
-                    style={{ backgroundColor: "white", color: "black" }}
-                    value = {email}
-                    onChange={onChangeEmail}
-                    required
+            <div>
+                <Alert
+                    title={alertTitle}
+                    message={alertMessage}
+                    show={show}
+                    variant={alertType === "success" ? "success" : "failure"}
+                    handleClose={handleClose}
+                    handleShow={handleShow}
                 />
-                </div>
-                <div class="row">
-                <div class="col">
-                    <div class="mb-3">
-                    <label class="form-label" style={{ color: "black" }}>
-                        First Name
-                    </label>
-                    <input
-                        class="form-control"
-                        type="text"
-                        style={{ backgroundColor: "white", color: "black" }}
-                        value = {firstName}
-                        onChange={onChangeFirstName}
-                        required
-                    />
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="mb-3">
-                    <label class="form-label" style={{ color: "black" }}>
-                        Last Name
-                    </label>
-                    <input
-                        class="form-control"
-                        type="text"
-                        style={{ backgroundColor: "white", color: "black" }}
-                        value = {lastName}
-                        onChange={onChangeLastName}
-                        required
-                    />
-                    </div>
-                </div>
-                </div>
-                <div class="mb-3">
-                <label class="form-label" style={{ color: "black" }}>
-                    Phone Number
-                </label>
-                <input
-                    class="form-control"
-                    type = "tel"
-                    style={{ backgroundColor: "white", color: "black" }}
-                    value={phone}
-                    onChange={onChangePhone}
-                    required
-                />
-                </div>
             </div>
-            </div>
-            <div style={{ display: "flex", justifyContent: "center", padding: 20 }}>
-            <div
-                class="card"
-                style={{
-                padding: 40,
-                paddingTop: 25,
-                width: "85%",
-                backgroundColor: "white",
-                }}
-            >
-                <div className="mb-3" style={{ paddingTop: 25 }}>
-                    <label className="form-label" style={{ color: "black" }}>
-                        Country/region
-                    </label>
-                    <Select options={options} value={country} onChange={onChangeCountry} placeholder = {country} />
-                </div>
+            <form style={{ paddingTop: 25 }}>
+                <div style={{ display: "flex", justifyContent: "center", padding: 20 }}>
+                    <div
+                        className="card form-card"
+                        style={{
+                            padding: 40,
+                            paddingTop: 25,
+                            width: "85%",
+                            backgroundColor: "white",
+                        }}
+                    >
+                        <i style={{ cursor: "pointer" }} onClick={() => history.push('/admin/products')} className="fas mb-5 fa-2x fa-arrow-left"></i>
 
-                <div className="mb-3">
-                <label className="form-label" style={{ color: "black" }}>
-                    Address
-                </label>
-                <input
-                    className="form-control"
-                    style={{ backgroundColor: "white", color: "black" }}
-                    onChange={onChangeAddress}
-                    value={address}
-                    required
-                />
-                </div>
-                
-                
-                <div className="mb-3">
-                <label className="form-label" style={{ color: "black" }}>
-                    Apartment,suite,etc.
-                </label>
-                <input
-                    className="form-control"
-                    style={{ backgroundColor: "white", color: "black" }}
-                    onChange={onChangeApartment}
-                    value={apartment}
-                    required
-                />
-                </div>
-
-                <div className="row">
-                    <div className="col">
-                        <div className="mb-3">
-                        <label className="form-label" style={{ color: "black" }}>
-                            City
-                        </label>
-                        <input
-                            className="form-control"
-
-                            style={{ backgroundColor: "white", color: "black" }}
-                            value = {city}
-                            onChange={onChangeCity}
-                            required
-                        />
+                        <div>
+                            <h1 style={{ fontSize: 24, color: "black" }}>Customer Detail</h1>
                         </div>
-                    </div>
-                    <div className="col">
+
+                        <div className="mb-3" style={{ paddingTop: 25 }}>
+                            <label className="form-label" style={{ color: "black" }}>
+                                Email
+                            </label>
+                            <input
+                                className="form-control"
+                                type="email"
+                                style={{ backgroundColor: "white", color: "black" }}
+                                value={email}
+                                onChange={onChangeEmail}
+                                required
+                            />
+                        </div>
+                        <div className="row">
+                            <div className="col">
+                                <div className="mb-3">
+                                    <label className="form-label" style={{ color: "black" }}>
+                                        First Name
+                                    </label>
+                                    <input
+                                        className="form-control"
+                                        type="text"
+                                        style={{ backgroundColor: "white", color: "black" }}
+                                        value={firstName}
+                                        onChange={onChangeFirstName}
+                                        required
+                                    />
+                                </div>
+                            </div>
+                            <div className="col">
+                                <div className="mb-3">
+                                    <label className="form-label" style={{ color: "black" }}>
+                                        Last Name
+                                    </label>
+                                    <input
+                                        className="form-control"
+                                        type="text"
+                                        style={{ backgroundColor: "white", color: "black" }}
+                                        value={lastName}
+                                        onChange={onChangeLastName}
+                                        required
+                                    />
+                                </div>
+                            </div>
+                        </div>
                         <div className="mb-3">
-                        <label className="form-label" style={{ color: "black" }}>
-                            Postal code
-                        </label>
-                        <input
-                            className="form-control"
-                            style={{ backgroundColor: "white", color: "black" }}
-                            value = {postalCode}
-                            onChange={onChangePostalCode}
-                            required
-                        />
+                            <label className="form-label" style={{ color: "black" }}>
+                                Phone Number
+                            </label>
+                            <input
+                                className="form-control"
+                                type="tel"
+                                style={{ backgroundColor: "white", color: "black" }}
+                                value={phone}
+                                onChange={onChangePhone}
+                                required
+                            />
                         </div>
                     </div>
                 </div>
+                <div style={{ display: "flex", justifyContent: "center", padding: 20 }}>
+                    <div
+                        className="card form-card"
+                        style={{
+                            padding: 40,
+                            paddingTop: 25,
+                            width: "85%",
+                            backgroundColor: "white",
+                        }}
+                    >
+                        <div className="mb-3" style={{ paddingTop: 25 }}>
+                            <label className="form-label" style={{ color: "black" }}>
+                                Country/region
+                            </label>
+                            <Select options={options} value={country} onChange={onChangeCountry} placeholder={country} />
+                        </div>
 
-                <button
-                class="btn btn-success"
-                style={{ width: "25%", backgroundColor: '#3B8AC4'}}
-                onClick ={(e) => updateCustomer(e)}
-                >
-                    Update Customer
-                </button>
-            </div>
-            </div>
-        </form>
+                        <div className="mb-3">
+                            <label className="form-label" style={{ color: "black" }}>
+                                Address
+                            </label>
+                            <input
+                                className="form-control"
+                                style={{ backgroundColor: "white", color: "black" }}
+                                onChange={onChangeAddress}
+                                value={address}
+                                required
+                            />
+                        </div>
+
+
+                        <div className="mb-3">
+                            <label className="form-label" style={{ color: "black" }}>
+                                Apartment,suite,etc.
+                            </label>
+                            <input
+                                className="form-control"
+                                style={{ backgroundColor: "white", color: "black" }}
+                                onChange={onChangeApartment}
+                                value={apartment}
+                                required
+                            />
+                        </div>
+
+                        <div className="row">
+                            <div className="col">
+                                <div className="mb-3">
+                                    <label className="form-label" style={{ color: "black" }}>
+                                        City
+                                    </label>
+                                    <input
+                                        className="form-control"
+
+                                        style={{ backgroundColor: "white", color: "black" }}
+                                        value={city}
+                                        onChange={onChangeCity}
+                                        required
+                                    />
+                                </div>
+                            </div>
+                            <div className="col">
+                                <div className="mb-3">
+                                    <label className="form-label" style={{ color: "black" }}>
+                                        Postal code
+                                    </label>
+                                    <input
+                                        className="form-control"
+                                        style={{ backgroundColor: "white", color: "black" }}
+                                        value={postalCode}
+                                        onChange={onChangePostalCode}
+                                        required
+                                    />
+                                </div>
+                            </div>
+                        </div>
+
+                        <button
+                            className="btn btn-success"
+                            style={{ width: "25%", backgroundColor: '#3B8AC4' }}
+                            onClick={(e) => updateCustomer(e)}
+                        >
+                            Update Customer
+                        </button>
+                    </div>
+                </div>
+            </form>
         </div>
     )
 };

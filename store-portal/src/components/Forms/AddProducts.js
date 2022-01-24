@@ -11,8 +11,8 @@ const AddProducts = () => {
   const [show, setShow] = useState(false);
   const handleClose = () => {
     setShow(false);
-    if (alertType === 'success'){
-    history.push("/admin/products");
+    if (alertType === 'success') {
+      history.push("/admin/products");
     }
   };
   const handleShow = () => setShow(true);
@@ -41,9 +41,9 @@ const AddProducts = () => {
   const onChangeTitle = (event) => {
     setTitle(event.target.value);
   };
-  const onChangeDescription = (value) => {
-    setDescription(value);
-  };
+  // const onChangeDescription = (value) => {
+  //   setDescription(value);
+  // };
   const onChangeImage = (event) => {
     setImage(event.target.files[0]);
   };
@@ -191,8 +191,8 @@ const AddProducts = () => {
   return (
     <div>
       <Alert
-        title = {alertTitle}
-        message= {alertMessage}
+        title={alertTitle}
+        message={alertMessage}
         show={show}
         variant={alertType === "success" ? "success" : "failure"}
         handleClose={handleClose}
@@ -201,7 +201,7 @@ const AddProducts = () => {
       <form style={{ paddingTop: 25 }}>
         <div style={{ display: "flex", justifyContent: "center", padding: 20 }}>
           <div
-            class="card"
+            className="card form-card"
             style={{
               padding: 40,
               paddingTop: 25,
@@ -219,43 +219,43 @@ const AddProducts = () => {
               </div>
             </div>
 
-            <div class="mb-3" style={{ paddingTop: 25 }}>
-              <label class="form-label" style={{ color: "black" }}>
+            <div className="mb-3" style={{ paddingTop: 25 }}>
+              <label className="form-label" style={{ color: "black" }}>
                 Title
               </label>
               <input
-                class="form-control"
+                className="form-control"
                 style={{ backgroundColor: "white", color: "black" }}
                 onChange={onChangeTitle}
                 required
               />
             </div>
-            <div class="mb-3">
-              <label class="form-label" style={{ color: "black" }}>
+            <div className="mb-3">
+              <label className="form-label" style={{ color: "black" }}>
                 Description
               </label>
               {/* <Editor
-                toolbarClassName="toolbarClassName"
-                wrapperClassName="wrapperClassName"
-                editorClassName="editorClassName"
+                toolbarClassNameName="toolbarClassNameName"
+                wrapperClassNameName="wrapperClassNameName"
+                editorClassNameName="editorClassNameName"
                 onChange={onChangeDescription}
               /> */}
               <JoditEditor
                 value={description}
                 tabIndex={1} // tabIndex of textarea
                 onBlur={newContent => setDescription(newContent)}
-                onChange={newContent => {}}
+                onChange={newContent => { }}
               />
             </div>
-            <div class="row">
-              <div class="col">
-                <div class="mb-3">
+            <div className="row">
+              <div className="col">
+                <div className="mb-3">
                   <form>
-                    <label class="form-label" style={{ color: "black" }}>
+                    <label className="form-label" style={{ color: "black" }}>
                       Image
                     </label>
                     <input
-                      class="form-control"
+                      className="form-control"
                       type="file"
                       name="myImage"
                       style={{ backgroundColor: "white", color: "black" }}
@@ -271,8 +271,8 @@ const AddProducts = () => {
                     )}
                     <div style={{ marginTop: 5 }}>
                       <button
-                        class="btn btn-success"
-                        style={{ width: "30%", backgroundColor: '#3B8AC4' }}
+                        className="btn btn-success"
+                        style={{ width: "100%", backgroundColor: '#3B8AC4' }}
                         onClick={(e) => uploadImages(e)}
                       >
                         Upload
@@ -281,13 +281,13 @@ const AddProducts = () => {
                   </form>
                 </div>
               </div>
-              <div class="col">
-                <div class="mb-3">
-                  <label class="form-label" style={{ color: "black" }}>
+              <div className="col">
+                <div className="mb-3">
+                  <label className="form-label" style={{ color: "black" }}>
                     Price
                   </label>
                   <input
-                    class="form-control"
+                    className="form-control"
                     type="number"
                     style={{ backgroundColor: "white", color: "black" }}
                     onChange={onChangePrice}
@@ -295,13 +295,13 @@ const AddProducts = () => {
                   />
                 </div>
               </div>
-              <div class="col">
-                <div class="mb-3">
-                  <label class="form-label" style={{ color: "black" }}>
+              <div className="col">
+                <div className="mb-3">
+                  <label className="form-label" style={{ color: "black" }}>
                     Quantity
                   </label>
                   <input
-                    class="form-control"
+                    className="form-control"
                     type="number"
                     style={{ backgroundColor: "white", color: "black" }}
                     onChange={onChangeQuantity}
@@ -314,7 +314,7 @@ const AddProducts = () => {
         </div>
         <div style={{ display: "flex", justifyContent: "center", padding: 20 }}>
           <div
-            class="card"
+            className="card form-card"
             style={{
               padding: 40,
               paddingTop: 25,
@@ -322,14 +322,14 @@ const AddProducts = () => {
               backgroundColor: "white",
             }}
           >
-            <div class="row">
-              <div class="col">
-                <div class="mb-3">
-                  <label class="form-label" style={{ color: "black" }}>
+            <div className="row">
+              <div className="col">
+                <div className="mb-3">
+                  <label className="form-label" style={{ color: "black" }}>
                     Brand
                   </label>
                   <select
-                    class="form-select"
+                    className="form-select"
                     style={{ backgroundColor: "white", color: "black" }}
                     onChange={onChangeBrand}
                     required
@@ -345,13 +345,13 @@ const AddProducts = () => {
                   </select>
                 </div>
               </div>
-              <div class="col">
-                <div class="mb-3">
-                  <label class="form-label" style={{ color: "black" }}>
+              <div className="col">
+                <div className="mb-3">
+                  <label className="form-label" style={{ color: "black" }}>
                     Collection
                   </label>
                   <select
-                    class="form-select"
+                    className="form-select"
                     style={{ backgroundColor: "white", color: "black" }}
                     onChange={onChangeCollection}
                     required
@@ -368,14 +368,14 @@ const AddProducts = () => {
                 </div>
               </div>
             </div>
-            <div class="row">
-              <div class="col">
-                <div class="mb-3">
-                  <label class="form-label" style={{ color: "black" }}>
+            <div className="row">
+              <div className="col">
+                <div className="mb-3">
+                  <label className="form-label" style={{ color: "black" }}>
                     Status
                   </label>
                   <select
-                    class="form-select"
+                    className="form-select"
                     style={{ backgroundColor: "white", color: "black" }}
                     onChange={onChangeStatus}
                     required
@@ -388,8 +388,10 @@ const AddProducts = () => {
               </div>
             </div>
             <button
+
               class="btn btn-success"
               style={{ width: "25%", backgroundColor: '#3B8AC4', boxShadow: '0px 8px 15px rgba(0, 0, 0, 0.1)'}}
+
               onClick={(e) => addProducts(e)}
             >
               Add Product

@@ -3,7 +3,7 @@ import Menu from '@mui/material/Menu';
 import Box from '@mui/material/Box';
 import MenuItem from '@mui/material/MenuItem';
 import Avatar from '@mui/material/Avatar';
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logout } from '../../actions/auth';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Divider from '@mui/material/Divider';
@@ -12,37 +12,38 @@ import IconButton from '@mui/material/IconButton';
 import { useNavigate } from 'react-router-dom';
 import Logout from '@mui/icons-material/Logout';
 const MenuDropdown = () => {
-    const dispatch = useDispatch()
-    const [anchorEl, setAnchorEl] = useState(null);
-    const open = Boolean(anchorEl);
-    let history = useNavigate();
-    const handleClick = (event) => {
-      setAnchorEl(event.currentTarget);
-    };
-    const handleClose = () => {
-      setAnchorEl(null);
-    };
-    const openMyAccount = () => {
-        history('/my-profile')
-        setAnchorEl(null);
-    };
-    return (
-        <React.Fragment>
-        <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
-            <Tooltip title="Account settings">
-            <IconButton
-                onClick={handleClick}
-                size="small"
-                sx={{ ml: 2, }}
-                aria-controls={open ? 'account-menu' : undefined}
-                aria-haspopup="true"
-                aria-expanded={open ? 'true' : undefined}
-            >
-                <Avatar sx={{ width: 40, height: 40,}}>AA</Avatar>
-            </IconButton>
-            </Tooltip>
-        </Box>
-        <Menu
+  const dispatch = useDispatch()
+  const user = useSelector(state => state.auth.user)
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+  let history = useNavigate();
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const openMyAccount = () => {
+    history('/my-profile')
+    setAnchorEl(null);
+  };
+  return (
+    <React.Fragment>
+      <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
+        <Tooltip title="Account settings">
+          <IconButton
+            onClick={handleClick}
+            size="small"
+            sx={{ ml: 2, }}
+            aria-controls={open ? 'account-menu' : undefined}
+            aria-haspopup="true"
+            aria-expanded={open ? 'true' : undefined}
+          >
+            <Avatar sx={{ width: 40, height: 40, }}>{`${user?.firstName[0]}${user?.lastName[0]}`}</Avatar>
+          </IconButton>
+        </Tooltip>
+      </Box>
+      <Menu
         anchorEl={anchorEl}
         id="account-menu"
         open={open}
@@ -77,20 +78,20 @@ const MenuDropdown = () => {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <MenuItem onClick = {openMyAccount}>
+        <MenuItem onClick={openMyAccount}>
           <Avatar /> Profile
         </MenuItem>
         <Divider />
         <MenuItem onClick={() => dispatch(logout())}>
-            <ListItemIcon>
-                <Logout fontSize="small" />
-            </ListItemIcon>
-            Logout
+          <ListItemIcon>
+            <Logout fontSize="small" />
+          </ListItemIcon>
+          Logout
         </MenuItem>
       </Menu>
-      </React.Fragment>
-        
-    );
+    </React.Fragment>
+
+  );
 };
 
 export default MenuDropdown;

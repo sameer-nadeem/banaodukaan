@@ -12,7 +12,7 @@ const ProductDetail = () => {
   const [show, setShow] = useState(false);
   const handleClose = () => {
     setShow(false);
-    if (alertType === 'success'){
+    if (alertType === 'success') {
       history.push("/admin/products");
     }
   };
@@ -45,9 +45,9 @@ const ProductDetail = () => {
   const onChangeTitle = (event) => {
     setTitle(event.target.value);
   };
-  const onChangeDescription = (value) => {
-    setDescription(value);
-  };
+  // const onChangeDescription = (value) => {
+  //   setDescription(value);
+  // };
   const onChangeImage = (event) => {
     setImage(event.target.files[0]);
   };
@@ -123,7 +123,7 @@ const ProductDetail = () => {
       collection === "" ||
       status === ""
     ) {
-      
+
       //alert("Please Check Fields");
       handleShow();
       setAlertTitle("Error")
@@ -183,7 +183,7 @@ const ProductDetail = () => {
           formData,
           config
         );
-        
+
         handleShow();
         setAlertTitle("Success")
         setAlertMessage("Image has been uploaded successfully")
@@ -199,8 +199,8 @@ const ProductDetail = () => {
     <div>
       <div>
         <Alert
-          title= {alertTitle}
-          message= {alertMessage}
+          title={alertTitle}
+          message={alertMessage}
           show={show}
           variant={alertType === "success" ? "success" : "failure"}
           handleClose={handleClose}
@@ -210,7 +210,7 @@ const ProductDetail = () => {
       <form style={{ paddingTop: 25 }}>
         <div style={{ display: "flex", justifyContent: "center", padding: 20 }}>
           <div
-            class="card"
+            className="card form-card"
             style={{
               padding: 40,
               paddingTop: 25,
@@ -218,28 +218,30 @@ const ProductDetail = () => {
               backgroundColor: "white",
             }}
           >
+            <i style={{ cursor: "pointer" }} onClick={() => history.push('/admin/products')} className="fas mb-5 fa-2x fa-arrow-left"></i>
+
             <div>
               <h1 style={{ fontSize: 24, color: "black" }}>
                 {product === undefined ? "" : product.title}
               </h1>
             </div>
 
-            <div class="mb-3" style={{ paddingTop: 25 }}>
-              <label class="form-label" style={{ color: "black" }}>
+            <div className="mb-3" style={{ paddingTop: 25 }}>
+              <label className="form-label" style={{ color: "black" }}>
                 Title
               </label>
               <input
-                class="form-control"
+                className="form-control"
                 value={title}
                 style={{ backgroundColor: "white", color: "black" }}
                 onChange={onChangeTitle}
                 required
               />
             </div>
-            <div class="mb-3">
+            <div className="mb-3">
               <div>
                 <label
-                  class="form-label"
+                  className="form-label"
                   style={{ color: "black", paddingTop: 25 }}
                 >
                   Description
@@ -248,18 +250,18 @@ const ProductDetail = () => {
                   value={description}
                   tabIndex={1} // tabIndex of textarea
                   onBlur={newContent => setDescription(newContent)}
-                  onChange={newContent => {}}
+                  onChange={newContent => { }}
                 />
               </div>
             </div>
-            <div class="row">
-              <div class="col">
-                <div class="mb-3">
-                  <label class="form-label" style={{ color: "black" }}>
+            <div className="row">
+              <div className="col">
+                <div className="mb-3">
+                  <label className="form-label" style={{ color: "black" }}>
                     Price
                   </label>
                   <input
-                    class="form-control"
+                    className="form-control"
                     value={price}
                     type="number"
                     style={{ backgroundColor: "white", color: "black" }}
@@ -268,13 +270,13 @@ const ProductDetail = () => {
                   />
                 </div>
               </div>
-              <div class="col">
-                <div class="mb-3">
-                  <label class="form-label" style={{ color: "black" }}>
+              <div className="col">
+                <div className="mb-3">
+                  <label className="form-label" style={{ color: "black" }}>
                     Quantity
                   </label>
                   <input
-                    class="form-control"
+                    className="form-control"
                     value={quantity}
                     type="number"
                     style={{ backgroundColor: "white", color: "black" }}
@@ -288,7 +290,7 @@ const ProductDetail = () => {
         </div>
         <div style={{ display: "flex", justifyContent: "center", padding: 20 }}>
           <div
-            class="card"
+            className="card form-card"
             style={{
               padding: 40,
               paddingTop: 25,
@@ -296,7 +298,7 @@ const ProductDetail = () => {
               backgroundColor: "white",
             }}
           >
-            <div class="col">
+            <div className="col">
               <h1 style={{ fontSize: 20, color: "black" }}>Media</h1>
               <div style={{ display: "flex", justifyContent: "center" }}>
                 <img
@@ -306,16 +308,16 @@ const ProductDetail = () => {
                   alt=""
                 />
               </div>
-              <div class="mb-3">
+              <div className="mb-3">
                 <form>
                   <label
-                    class="form-label"
+                    className="form-label"
                     style={{ color: "black", padding: 5 }}
                   >
                     Image
                   </label>
                   <input
-                    class="form-control"
+                    className="form-control"
                     type="file"
                     name="myImage"
                     style={{ backgroundColor: "white", color: "black" }}
@@ -324,8 +326,8 @@ const ProductDetail = () => {
                   />
                   <div style={{ marginTop: 5 }}>
                     <button
-                      class="btn btn-success"
-                      style={{ width: "10%", backgroundColor: '#3B8AC4' }}
+                      className="btn btn-success"
+                      style={{ width: "14%", backgroundColor: '#3B8AC4' }}
                       onClick={(e) => uploadImages(e)}
                     >
                       Upload
@@ -338,7 +340,7 @@ const ProductDetail = () => {
         </div>
         <div style={{ display: "flex", justifyContent: "center", padding: 20 }}>
           <div
-            class="card"
+            className="card form-card"
             style={{
               padding: 40,
               paddingTop: 25,
@@ -346,14 +348,14 @@ const ProductDetail = () => {
               backgroundColor: "white",
             }}
           >
-            <div class="row">
-              <div class="col">
-                <div class="mb-3">
-                  <label class="form-label" style={{ color: "black" }}>
+            <div className="row">
+              <div className="col">
+                <div className="mb-3">
+                  <label className="form-label" style={{ color: "black" }}>
                     Brand
                   </label>
                   <select
-                    class="form-select"
+                    className="form-select"
                     style={{ backgroundColor: "white", color: "black" }}
                     onChange={onChangeBrand}
                     required
@@ -372,13 +374,13 @@ const ProductDetail = () => {
                   </select>
                 </div>
               </div>
-              <div class="col">
-                <div class="mb-3">
-                  <label class="form-label" style={{ color: "black" }}>
+              <div className="col">
+                <div className="mb-3">
+                  <label className="form-label" style={{ color: "black" }}>
                     Collection
                   </label>
                   <select
-                    class="form-select"
+                    className="form-select"
                     style={{ backgroundColor: "white", color: "black" }}
                     onChange={onChangeCollection}
                     required
@@ -400,14 +402,14 @@ const ProductDetail = () => {
                 </div>
               </div>
             </div>
-            <div class="row">
-              <div class="col">
-                <div class="mb-3">
-                  <label class="form-label" style={{ color: "black" }}>
+            <div className="row">
+              <div className="col">
+                <div className="mb-3">
+                  <label className="form-label" style={{ color: "black" }}>
                     Status
                   </label>
                   <select
-                    class="form-select"
+                    className="form-select"
                     style={{ backgroundColor: "white", color: "black" }}
                     onChange={onChangeStatus}
                     required
@@ -422,7 +424,7 @@ const ProductDetail = () => {
               </div>
             </div>
             <button
-              class="btn btn-success"
+              className="btn btn-success"
               style={{ width: "25%", backgroundColor: '#3B8AC4' }}
               onClick={(e) => updateProducts(e)}
             >

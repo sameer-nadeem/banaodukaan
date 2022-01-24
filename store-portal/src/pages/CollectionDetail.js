@@ -17,8 +17,8 @@ const CollectionDetail = () => {
   const [show, setShow] = useState(false);
   const handleClose = () => {
     setShow(false);
-    if (alertType === 'success'){
-    history.push("/admin/collections");
+    if (alertType === 'success') {
+      history.push("/admin/collections");
     }
   };
   const handleShow = () => setShow(true);
@@ -34,13 +34,13 @@ const CollectionDetail = () => {
   const onChangeTitle = (event) => {
     setTitle(event.target.value);
   };
-  const onChangeDescription = (value) => {
-    setDescription(value);
-  };
+  // const onChangeDescription = (value) => {
+  //   setDescription(value);
+  // };
 
   const updateCollection = async (event) => {
     event.preventDefault();
-    if (title === "" && description === "" || title === "" || description === "") {
+    if (title === "" || description === "") {
       handleShow();
       setAlertTitle("Error")
       setAlertMessage("Please fill in all of the fields")
@@ -48,7 +48,7 @@ const CollectionDetail = () => {
       return;
       //we will add toastify here
 
-    
+
     }
 
     const body = {
@@ -90,8 +90,8 @@ const CollectionDetail = () => {
   return (
     <div>
       <Alert
-        title= {alertTitle}
-        message= {alertMessage}
+        title={alertTitle}
+        message={alertMessage}
         show={show}
         variant={alertType === "success" ? "success" : "failure"}
         handleClose={handleClose}
@@ -100,7 +100,7 @@ const CollectionDetail = () => {
       <form style={{ paddingTop: 25 }}>
         <div style={{ display: "flex", justifyContent: "center", padding: 20 }}>
           <div
-            class="card"
+            className="card form-card"
             style={{
               padding: 40,
               paddingTop: 25,
@@ -108,28 +108,30 @@ const CollectionDetail = () => {
               backgroundColor: "white",
             }}
           >
+            <i style={{ cursor: "pointer" }} onClick={() => history.push('/admin/collections')} className="fas mb-5 fa-2x fa-arrow-left"></i>
+
             <div>
               <h1 style={{ fontSize: 24, color: "black" }}>
                 {collection === undefined ? "" : collection.name}
               </h1>
             </div>
 
-            <div class="mb-3" style={{ paddingTop: 25 }}>
-              <label class="form-label" style={{ color: "black" }}>
+            <div className="mb-3" style={{ paddingTop: 25 }}>
+              <label className="form-label" style={{ color: "black" }}>
                 Title
               </label>
               <input
-                class="form-control"
+                className="form-control"
                 value={title}
                 style={{ backgroundColor: "white", color: "black" }}
                 onChange={onChangeTitle}
                 required
               />
             </div>
-            <div class="mb-3">
+            <div className="mb-3">
               <div>
                 <label
-                  class="form-label"
+                  className="form-label"
                   style={{ color: "black", paddingTop: 25 }}
                 >
                   Description
@@ -139,13 +141,13 @@ const CollectionDetail = () => {
                   value={collection.description}
                   tabIndex={1} // tabIndex of textarea
                   onBlur={newContent => setDescription(newContent)}
-                  onChange={newContent => {}}
+                  onChange={newContent => { }}
                 />
               </div>
             </div>
             <button
-              class="btn btn-success"
-              style={{ width: "25%" , backgroundColor:'#3B8AC4'}}
+              className="btn btn-success"
+              style={{ width: "25%", backgroundColor: '#3B8AC4' }}
               onClick={(e) => updateCollection(e)}
             >
               Update Collection
