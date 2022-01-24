@@ -3,7 +3,7 @@
 :root {
   --header-height: 3rem;
   --nav-width: 68px;
-  --first-color: #345DA7;
+  --first-color: #345da7;
   --first-color-light: #afa5d9;
   --white-color: #f7f6fb;
   --body-font: "Nunito", sans-serif;
@@ -202,4 +202,9 @@ a {
 
 table tbody tr {
   cursor: pointer;
+}
+
+.form-card {
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px,
+    rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
 }
