@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 import Alert from "../Alerts/Alert";
 import { ProgressBar } from "react-bootstrap";
 import JoditEditor from "jodit-react";
+import BackspaceRoundedIcon from '@mui/icons-material/BackspaceRounded';
 const AddProducts = () => {
   //success modal
   const [show, setShow] = useState(false);
@@ -208,10 +209,14 @@ const AddProducts = () => {
               backgroundColor: "white",
             }}
           >
-            <i style={{ cursor: "pointer" }} onClick={() => history.push('/admin/products')} className="fas mb-5 fa-2x fa-arrow-left"></i>
-
-            <div>
-              <h1 style={{ fontSize: 24, color: "black" }}>Add Products</h1>
+            <div class = "d-flex flex-row"> 
+              <div class="p2" style = {{marginRight: 20}}>
+                <BackspaceRoundedIcon style = {{fill: '#345DA7', cursor: 'pointer', }}  onClick={() => history.push('/admin/products')} />
+                {/* <i style={{ cursor: "pointer", }} onClick={() => history.push('/admin/products')} class="fas mb-5 fa-2x fa-arrow-left"></i> */}
+              </div>
+              <div class="p2">
+                <h1 style={{ fontSize: 24, fontWeight: 'bold', color: "black" }}>Add Products</h1>
+              </div>
             </div>
 
             <div className="mb-3" style={{ paddingTop: 25 }}>
@@ -383,8 +388,10 @@ const AddProducts = () => {
               </div>
             </div>
             <button
-              className="btn btn-success"
-              style={{ width: "25%", backgroundColor: '#3B8AC4' }}
+
+              class="btn btn-success"
+              style={{ width: "25%", backgroundColor: '#3B8AC4', boxShadow: '0px 8px 15px rgba(0, 0, 0, 0.1)'}}
+
               onClick={(e) => addProducts(e)}
             >
               Add Product
