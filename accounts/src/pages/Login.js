@@ -4,11 +4,12 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import LoginForm from "../components/Forms/LoginForm.js";
 const Login = () => {
-  const isAuthenticated = useSelector(state => state.auth.isAuthenticated)
-  const navigate = useNavigate()
+  //redux used to maintain global state of user to ensure that authenticated user is accessing the portal
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const navigate = useNavigate();
   useEffect(() => {
-    if (isAuthenticated) navigate('/my-stores')
-  }, [isAuthenticated, navigate])
+    if (isAuthenticated) navigate("/my-stores");
+  }, [isAuthenticated, navigate]);
   return (
     <div
       style={{

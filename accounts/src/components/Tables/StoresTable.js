@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Card } from "@material-ui/core";
-import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
-import StorefrontIcon from '@mui/icons-material/Storefront';
-import { CardActionArea } from '@mui/material';
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import StorefrontIcon from "@mui/icons-material/Storefront";
+import { CardActionArea } from "@mui/material";
 import { Link } from "react-router-dom";
 import Grid from "@mui/material/Grid";
 import StoreListLoader from "../Loaders/StoreListLoader";
 const StoresTable = () => {
-
   const [stores, setStores] = useState([]);
-  const [storeListLoading, setStoreListLoading] = useState(true)
+  const [storeListLoading, setStoreListLoading] = useState(true);
   // const [newRows, setRows] = useState([]);
-
+  //fetching stores of a particular merchant
   const getStores = async () => {
     try {
       const res = await axios.get(`/api/merchant/store`, {
@@ -22,13 +21,12 @@ const StoresTable = () => {
       });
       console.log("stores list: ", res);
       let list = res.data.stores;
-      console.log(list)
+      console.log(list);
       setStores(list);
-      setStoreListLoading(false)
-
+      setStoreListLoading(false);
     } catch (err) {
       console.log(err);
-      setStoreListLoading(false)
+      setStoreListLoading(false);
     }
   };
 
@@ -109,56 +107,65 @@ const StoresTable = () => {
   }, [stores]);
 
   // const history = useNavigate();
-
+  //redirects the merchant to portal of the store that was clicked
   const handleClick = (storeName) => {
-    window.location.href = `http://${storeName}.bdstaging.com:3000/admin`
-  }
-
+    window.location.href = `http://${storeName}.bdstaging.com:3000/admin`;
+  };
+  //rendering the store list
   return (
     <div style={{ margin: 45 }}>
-      {storeListLoading && (<StoreListLoader />)}      {
-        stores.map((eachStore => (
-          <div className="row mb-3" key={eachStore._id}>
-            <div className="col-10">
-              <Card >
-                <CardActionArea key={eachStore._id} onClick={() => handleClick(eachStore.title)}>
-                  <div style={{ padding: 20 }}>
-                    <Grid container direction="row" alignItems="center">
-                      <Grid item xs={1}>
-                        <StorefrontIcon />
-                      </Grid>
-                      <Grid item xs={10}>
-                        <h1 style={{
+      {storeListLoading && <StoreListLoader />}{" "}
+      {stores.map((eachStore) => (
+        <div className="row mb-3" key={eachStore._id}>
+          <div className="col-10">
+            <Card>
+              <CardActionArea
+                key={eachStore._id}
+                onClick={() => handleClick(eachStore.title)}
+              >
+                <div style={{ padding: 20 }}>
+                  <Grid container direction="row" alignItems="center">
+                    <Grid item xs={1}>
+                      <StorefrontIcon />
+                    </Grid>
+                    <Grid item xs={10}>
+                      <h1
+                        style={{
                           fontSize: "1.0rem",
                           fontWeight: "600",
                           marginLeft: 20,
                           marginTop: 5,
-
-                        }}>
-                          {eachStore.title}.banaodukaan.com/admin
-                        </h1>
-                      </Grid>
-                      <Grid item alignContent='flex-end'>
-                        <KeyboardArrowRightIcon />
-                      </Grid>
+                        }}
+                      >
+                        {eachStore.title}.banaodukaan.com/admin
+                      </h1>
                     </Grid>
-                  </div>
-                </CardActionArea>
-              </Card>
-            </div>
-            <div
-              style={{ cursor: "pointer" }}
-              className="col justify-content-center d-flex align-items-center">
-              <Link style={{ textDecoration: "none", display: "inline", color: "black" }}
-                to={`/my-stores/${eachStore._id}`}>
-                <i style={{ fontSize: "20px" }} className="fas fa-edit"></i>
-              </Link>
-            </div>
+                    <Grid item alignContent="flex-end">
+                      <KeyboardArrowRightIcon />
+                    </Grid>
+                  </Grid>
+                </div>
+              </CardActionArea>
+            </Card>
           </div>
-        )))
-      }
-
-    </div >
+          <div
+            style={{ cursor: "pointer" }}
+            className="col justify-content-center d-flex align-items-center"
+          >
+            <Link
+              style={{
+                textDecoration: "none",
+                display: "inline",
+                color: "black",
+              }}
+              to={`/my-stores/${eachStore._id}`}
+            >
+              <i style={{ fontSize: "20px" }} className="fas fa-edit"></i>
+            </Link>
+          </div>
+        </div>
+      ))}
+    </div>
   );
 };
 

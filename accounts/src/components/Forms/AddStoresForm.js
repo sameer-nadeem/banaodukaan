@@ -18,7 +18,7 @@ const AddStoresForm = () => {
   };
   const handleShow = () => setShow(true);
   //success modal states end
-
+  //defining the appropriate states for each field in the form
   const options = useMemo(() => countryList().getData(), []);
   const [title, setTitle] = useState("");
   const [value, setValue] = useState("");
@@ -36,7 +36,7 @@ const AddStoresForm = () => {
   const [msg, setMsg] = useState("");
   const [status, setStatus] = useState("");
   const [redirectCheck, setRedirectCheck] = useState(false);
-
+  //set the relevant fields once their state changes
   const onChangeTitle = (event) => {
     setTitle(event.target.value);
   };
@@ -62,6 +62,7 @@ const AddStoresForm = () => {
   const onChangeWebsite = (event) => {
     setWebsite(event.target.value);
   };
+  //getting the merchant profile details, can be done via global state as well
   const getProfile = async () => {
     try {
       const res = await axios.get(`/api/merchant/profile`, {});
@@ -71,8 +72,9 @@ const AddStoresForm = () => {
       console.log(err);
     }
   };
-
+  // function to add store
   const addStores = async (event) => {
+    // prevent the default action of onSubmit function
     event.preventDefault();
 
     const data = {
@@ -86,19 +88,21 @@ const AddStoresForm = () => {
     };
 
     console.log(data);
-
+    //try to send a post request
     try {
       await axios.post(`/api/merchant/store`, data, {
         headers: {
           "Content-Type": "application/json",
         },
       });
+      //if the request is successful, alert displayed and merchant redirected to stores
       setRedirectCheck(true);
       setAlertTitle("Store Added");
       setMsg("The Store was succesfuly created");
       setStatus("success");
       handleShow();
     } catch (err) {
+      // in case of error, appropriate alert is displayed
       console.log(err);
       setRedirectCheck(false);
       setAlertTitle("Error");
@@ -115,11 +119,12 @@ const AddStoresForm = () => {
 
   const [titleError, setTitleError] = useState(null);
   useEffect(() => {
+    //regex for making sure that valid store title is entered
     const titleRegex = /^((?!-)[a-z0-9-]{0,63}[a-z0-9]\.)+[a-z]{2,63}$/;
     const validateStoreTitle = async () => {
       validationCancelToken && validationCancelToken.cancel();
       validationCancelToken = axios.CancelToken.source();
-
+      //checking whether the store name already exists
       const { data } = await axios.get(
         `/api/merchant/new-store/validate?store=${title}`,
         { cancelToken: validationCancelToken.token }
@@ -128,7 +133,7 @@ const AddStoresForm = () => {
         setTitleError("This title is already taken");
       }
     };
-
+    //In case the title entered does not match the format specified, appropriate output displayed
     const TitleError = () => (
       <ul>
         <li>Store title cannot contain spaces</li>
@@ -148,7 +153,7 @@ const AddStoresForm = () => {
       setTitleError(null);
     }
   }, [title]);
-
+  // for rendering the actual form with appropriate fields and onChange functions assigned to each field as made above
   return (
     <div>
       <Alert

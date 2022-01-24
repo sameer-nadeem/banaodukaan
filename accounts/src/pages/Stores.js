@@ -7,7 +7,7 @@ import { logout } from "../actions/auth";
 import MenuDropdown from "../components/Menu/MenuDropdown";
 import StoresTable from "../components/Tables/StoresTable";
 const Stores = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const history = useNavigate();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -15,15 +15,23 @@ const Stores = () => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
-    history('/my-profile')
+    history("/my-profile");
     setAnchorEl(null);
   };
   return (
     <div style={{ width: 600 }}>
-      <div style={{ height: '100%' }}>
-        <Card style={{ height: '100vh' }}>
+      <div style={{ height: "100%" }}>
+        <Card style={{ height: "100vh" }}>
           <div style={{ display: "flex" }}>
-            <div style={{ flex: 1, justifyContent: "flex-start", padding: 20, paddingTop: 80, paddingLeft: 40 }}>
+            <div
+              style={{
+                flex: 1,
+                justifyContent: "flex-start",
+                padding: 20,
+                paddingTop: 80,
+                paddingLeft: 40,
+              }}
+            >
               <img
                 width="200"
                 height="50"
@@ -31,7 +39,13 @@ const Stores = () => {
                 alt=""
               />
             </div>
-            <div style={{ justifyContent: 'flex-end', paddingTop: 80, paddingRight: 40 }}>
+            <div
+              style={{
+                justifyContent: "flex-end",
+                paddingTop: 80,
+                paddingRight: 40,
+              }}
+            >
               <MenuDropdown />
               {/* <i
                 id="basic-button"
@@ -60,8 +74,10 @@ const Stores = () => {
               </Menu> */}
             </div>
           </div>
-          <div style={{ display: 'flex', paddingTop: 40 }}>
-            <div style={{ flex: 1, justifyContent: 'flex-start', paddingLeft: 40 }}>
+          <div style={{ display: "flex", paddingTop: 40 }}>
+            <div
+              style={{ flex: 1, justifyContent: "flex-start", paddingLeft: 40 }}
+            >
               <h1
                 style={{
                   fontSize: "1.8rem",
@@ -72,7 +88,7 @@ const Stores = () => {
               </h1>
             </div>
             <div style={{ justifyContent: "flex-end", paddingRight: 40 }}>
-              <Link style={{ textDecoration: "none" }} to="/my-stores/new/" >
+              <Link style={{ textDecoration: "none" }} to="/my-stores/new/">
                 <Button
                   variant="outlined"
                   style={{ backgroundColor: "#3B8AC4", color: "#FFFFFF" }}
@@ -82,7 +98,7 @@ const Stores = () => {
               </Link>
             </div>
           </div>
-          <hr style={{ margin: 45, color: '#6d7175' }} />
+          <hr style={{ margin: 45, color: "#6d7175" }} />
           <StoresTable />
         </Card>
       </div>

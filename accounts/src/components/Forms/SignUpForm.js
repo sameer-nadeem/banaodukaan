@@ -10,16 +10,17 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Alert from "../Alerts/Alert";
 import { register } from "../../actions/auth";
-import { useDispatch } from 'react-redux'
+import { useDispatch } from "react-redux";
 
 const SignUpForm = () => {
+  //variables and their states
   const [email, setEmail] = useState(""); //to store and keep track of the email entered
   const [password, setPassword] = useState(""); //to store and keep track of the password entered
   const [confirmPassword, setConfirmPassword] = useState(""); // to store and keep track of the confirm password field
   const [firstName, setFirstName] = useState(""); // to store and keep track of the firstname
   const [lastName, setLastName] = useState(""); // to store and keep track of the last name
   const history = useNavigate();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const handleMouseDownPassword = () => setShowPassword(!showPassword);
@@ -64,29 +65,38 @@ const SignUpForm = () => {
   };
 
   // handle submit function
+  //input validation done as well, corner cases catered
+  //regex used
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (password !== confirmPassword) {
       //add alert here
-      setAlertTitle("Error")
-      setAlertMessage("Passwords dont match!")
-      setAlertVariant("failure")
+      setAlertTitle("Error");
+      setAlertMessage("Passwords dont match!");
+      setAlertVariant("failure");
       handleShow();
       console.log("passwords dont match");
       return;
-    }
-    else if (!password.match(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/) || !confirmPassword.match(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/)) {
+    } else if (
+      !password.match(
+        /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/
+      ) ||
+      !confirmPassword.match(
+        /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/
+      )
+    ) {
       //add alert here
-      setAlertTitle("Password Error")
-      setAlertMessage("Minimum eight characters, at least one letter, one number and one special character")
-      setAlertVariant("failure")
+      setAlertTitle("Password Error");
+      setAlertMessage(
+        "Minimum eight characters, at least one letter, one number and one special character"
+      );
+      setAlertVariant("failure");
       handleShow();
       return;
-    }
-    else if (!email.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)){
-      setAlertTitle("Invalid Email")
-      setAlertMessage("Incorrect format of email address")
-      setAlertVariant("failure")
+    } else if (!email.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)) {
+      setAlertTitle("Invalid Email");
+      setAlertMessage("Incorrect format of email address");
+      setAlertVariant("failure");
       handleShow();
       return;
     }
@@ -100,7 +110,13 @@ const SignUpForm = () => {
       lastName: lastName,
       password: password,
     };
-    dispatch(register(body, { setAlertMessage, setAlertTitle, setAlertVariant, handleShow }, history))
+    dispatch(
+      register(
+        body,
+        { setAlertMessage, setAlertTitle, setAlertVariant, handleShow },
+        history
+      )
+    );
 
     // const response = await axios.post(`/api/auth/register-merchant`, body, {
     //   headers: {
@@ -121,8 +137,8 @@ const SignUpForm = () => {
 
   const [show, setShow] = useState(false);
   const [alertTitle, setAlertTitle] = useState("");
-  const [alertMessage, setAlertMessage] = useState("")
-  const [alertVariant, setAlertVariant] = useState("")
+  const [alertMessage, setAlertMessage] = useState("");
+  const [alertVariant, setAlertVariant] = useState("");
 
   const handleClose = () => {
     setShow(false);

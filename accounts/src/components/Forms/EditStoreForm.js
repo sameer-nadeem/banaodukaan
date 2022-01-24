@@ -2,33 +2,34 @@ import { useState, useMemo, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import Alert from "../Alerts/Alert";
-import countryList from 'react-select-country-list'
-import Select from 'react-select'
+import countryList from "react-select-country-list";
+import Select from "react-select";
 
 const EditStoreForm = () => {
-  const { id } = useParams()
-  const [storeInfo, setStoreInfo] = useState({ settings: {} })
+  const { id } = useParams();
+  const [storeInfo, setStoreInfo] = useState({ settings: {} });
 
   useEffect(() => {
     const fetchStore = async () => {
-      const { data } = await axios.get(`/api/merchant/store/${id}`)
-      setStoreInfo(data.storeInfo)
-    }
-    fetchStore()
-  }, [id])
+      //gets the store which needs to be updated
+      const { data } = await axios.get(`/api/merchant/store/${id}`); //id is from the store that was clicked on and extracted using useParams
+      setStoreInfo(data.storeInfo);
+    };
+    fetchStore();
+  }, [id]);
 
   useEffect(() => {
-    setTitle(storeInfo.title)
-    setValue(storeInfo.settings.country)
-    setCity(storeInfo.settings.city)
-    console.log("city is city", storeInfo.settings.country)
-    setPostalCode(storeInfo.settings.postalCode)
-    setPhone(storeInfo.settings.phone)
-    setWebsite(storeInfo.settings.website)
-    setApartment(storeInfo.settings.apartment)
-    setAdress(storeInfo.settings.localPickupAddress)
-
-  }, [storeInfo])
+    //sets the states of the various variables of the form
+    setTitle(storeInfo.title);
+    setValue(storeInfo.settings.country);
+    setCity(storeInfo.settings.city);
+    console.log("city is city", storeInfo.settings.country);
+    setPostalCode(storeInfo.settings.postalCode);
+    setPhone(storeInfo.settings.phone);
+    setWebsite(storeInfo.settings.website);
+    setApartment(storeInfo.settings.apartment);
+    setAdress(storeInfo.settings.localPickupAddress);
+  }, [storeInfo]);
 
   const [show, setShow] = useState(false);
   const history = useNavigate();
@@ -38,20 +39,19 @@ const EditStoreForm = () => {
   };
   const handleShow = () => setShow(true);
   //success modal states end
-
-  const options = useMemo(() => countryList().getData(), [])
+  //defining the appropriate states for each field in the form
+  const options = useMemo(() => countryList().getData(), []);
   const [title, setTitle] = useState("");
-  const [value, setValue] = useState('')
+  const [value, setValue] = useState("");
   const [adress, setAdress] = useState("");
 
   const [city, setCity] = useState("");
   const [postalCode, setPostalCode] = useState(0);
   const [phone, setPhone] = useState(0);
   const [website, setWebsite] = useState("");
-  const [apartment, setApartment] = useState("")
+  const [apartment, setApartment] = useState("");
 
-
-
+  //set the relevant fields once their state changes
   const onChangeTitle = (event) => {
     setTitle(event.target.value);
   };
@@ -62,8 +62,8 @@ const EditStoreForm = () => {
     setAdress(event.target.value);
   };
   const onChangeCountry = (value) => {
-    setValue(value)
-    console.log(value)
+    setValue(value);
+    console.log(value);
   };
 
   const onChangePostalCode = (event) => {
@@ -78,11 +78,10 @@ const EditStoreForm = () => {
   const onChangeWebsite = (event) => {
     setWebsite(event.target.value);
   };
-
-
+  //function to update store information
   const updateStore = async (event) => {
-
-    event.preventDefault()
+    //preventing the default behavior of onsubmit function
+    event.preventDefault();
 
     const data = {
       title: title,
@@ -91,25 +90,23 @@ const EditStoreForm = () => {
       postalCode: postalCode,
       phone: phone,
       website: website,
-      country: value.label
+      country: value.label,
     };
 
-
-    console.log(data)
-
+    console.log(data);
+    //put request to update store info
     try {
       await axios.put(`/api/merchant/store/${id}`, data, {
         headers: {
           "Content-Type": "application/json",
         },
       });
-      handleShow();
+      handleShow(); //display alert if successful
     } catch (err) {
       console.log(err);
     }
   };
-
-
+  //rendering the actual form and the relevant fields
   return (
     <div>
       <Alert
@@ -132,7 +129,11 @@ const EditStoreForm = () => {
               backgroundColor: "white",
             }}
           >
-            <i style={{ cursor: "pointer" }} onClick={() => history('/my-stores')} className="fas mb-5 fa-2x fa-arrow-left"></i>
+            <i
+              style={{ cursor: "pointer" }}
+              onClick={() => history("/my-stores")}
+              className="fas mb-5 fa-2x fa-arrow-left"
+            ></i>
             <div>
               <h1 style={{ fontSize: 24, color: "black" }}>Edit Store</h1>
             </div>
@@ -155,7 +156,11 @@ const EditStoreForm = () => {
               <label className="form-label" style={{ color: "black" }}>
                 Country/region
               </label>
-              <Select options={options} value={value} onChange={onChangeCountry} />
+              <Select
+                options={options}
+                value={value}
+                onChange={onChangeCountry}
+              />
             </div>
 
             <div className="row">
@@ -278,7 +283,6 @@ const EditStoreForm = () => {
               backgroundColor: "white",
             }}
           >
-
             <button
               className="btn btn-success"
               style={{ width: "25%" }}

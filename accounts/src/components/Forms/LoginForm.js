@@ -11,26 +11,27 @@ import GoogleLogin from "react-google-login";
 import GoogleButton from "react-google-button";
 import { useNavigate } from "react-router-dom";
 import Alert from "../Alerts/Alert";
-import { useDispatch, useSelector } from 'react-redux'
-import { login, loginGoogle } from '../../actions/auth'
+import { useDispatch, useSelector } from "react-redux";
+import { login, loginGoogle } from "../../actions/auth";
 import useQuery from "../../utils/useQuery";
 
 const LoginForm = () => {
+  //variables and their states for the login form
   const [email, setEmail] = useState(""); //to store and keep track of the email entered
   const [password, setPassword] = useState(""); //to store and keep track of the password entered
   // show password implemented using the below variable and functions
   const [showPassword, setShowPassword] = useState(false);
   const history = useNavigate();
-  const dispatch = useDispatch()
-  const query = useQuery()
-  const [authError, setAuthError] = useState(null)
-  const loginLoading = useSelector(state => state.auth.loading)
+  const dispatch = useDispatch();
+  const query = useQuery();
+  const [authError, setAuthError] = useState(null);
+  const loginLoading = useSelector((state) => state.auth.loading);
   const [show, setShow] = useState(false);
   const [alertTitle, setAlertTitle] = useState("");
-  const [alertMessage, setAlertMessage] = useState("")
-  const [alertVariant, setAlertVariant] = useState("")
+  const [alertMessage, setAlertMessage] = useState("");
+  const [alertVariant, setAlertVariant] = useState("");
 
-
+  //appropriate onchange functions
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
   };
@@ -59,16 +60,12 @@ const LoginForm = () => {
   const responseSuccessGoogle = async (res) => {
     let tokenId = res.tokenId;
     dispatch(
-      loginGoogle(
-        tokenId,
-        history,
-        {
-          setAlertTitle,
-          setAlertVariant,
-          setAlertMessage
-        }
-      )
-    )
+      loginGoogle(tokenId, history, {
+        setAlertTitle,
+        setAlertVariant,
+        setAlertMessage,
+      })
+    );
   };
 
   // for error after clicking on google button
@@ -84,13 +81,15 @@ const LoginForm = () => {
   const handleSubmit = async (event) => {
     // we can simple get the values from the variables
     event.preventDefault();
+    //checking for correct format of email
     if (!email.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)) {
-      setAlertTitle("Invalid Email")
-      setAlertMessage("Incorrect format of email address")
-      setAlertVariant("failure")
+      setAlertTitle("Invalid Email");
+      setAlertMessage("Incorrect format of email address");
+      setAlertVariant("failure");
       handleShow();
       return;
     }
+    //dispatching login action
     dispatch(
       login(
         email,
@@ -101,18 +100,18 @@ const LoginForm = () => {
           setAlertTitle,
           setAlertVariant,
           handleShow,
-          setAuthError
+          setAuthError,
         },
-        query.get('ref')
+        query.get("ref")
       )
-    )
+    );
   };
 
   const handleClose = () => {
     setShow(false);
   };
   const handleShow = () => setShow(true);
-
+  //rendering the form
   return (
     <div>
       <Alert
@@ -124,7 +123,9 @@ const LoginForm = () => {
         handleShow={handleShow}
       />
       {/* form starts here */}
-      <span className="text-danger" style={{ fontWeight: "bold" }}>{authError && authError}</span>
+      <span className="text-danger" style={{ fontWeight: "bold" }}>
+        {authError && authError}
+      </span>
       <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
         <TextField
           onChange={onChangeEmail}
@@ -180,11 +181,13 @@ const LoginForm = () => {
             disabled={loginLoading}
           >
             {!loginLoading && `Log In`}
-            {loginLoading && <div class="d-flex justify-content-center">
-              <div class="spinner-border" role="status">
-                <span class="visually-hidden">Loading...</span>
+            {loginLoading && (
+              <div class="d-flex justify-content-center">
+                <div class="spinner-border" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
               </div>
-            </div>}
+            )}
           </Button>
           <div
             style={{
