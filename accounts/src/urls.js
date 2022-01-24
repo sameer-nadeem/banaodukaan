@@ -1,1 +1,1 @@
-export const store_url = "bdstaging.com:3000/admin"
+export const store_url = "banaodukaan.com/admin"

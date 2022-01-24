@@ -28,13 +28,14 @@ const addCustomer = async (req, res) => {
         await user.save()
 
         const customer = new Customer({
-            userId : user._id,
+            userId: user._id,
             phone,
             country,
             address,
             apartment,
             city,
-            postalCode
+            postalCode,
+            storeId: req.storeId
         })
 
         customer.save()
@@ -68,18 +69,18 @@ const updateCustomer = async (req, res) => {
             postalCode
         } = req.body
 
-        const id = req.params.id       
+        const id = req.params.id
 
         const customer = await Customer
             .findOne({
                 _id: id,
             })
 
-            console.log(customer)
+        console.log(customer)
         const user = await User.findOne({
-                _id: customer.userId,
-            })
-    
+            _id: customer.userId,
+        })
+
         user.firstName = firstName
         user.lastName = lastName
         user.email = email
@@ -114,7 +115,7 @@ const getCustomer = async (req, res) => {
         const customer = await Customer
             .findOne({
                 _id: id,
-                
+
             }).populate("userId")
         return res.status(200).json({
             customer
@@ -135,8 +136,9 @@ const getCustomers = async (req, res) => {
     try {
 
         const customers = await Customer.find({
-           deleteFlag: false,
-    
+            deleteFlag: false,
+            storeId: req.storeId
+
         }).populate("userId")
         return res.status(200).json({
             customers

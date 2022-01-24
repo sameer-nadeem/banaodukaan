@@ -1,5 +1,5 @@
 {
-  "proxy": "http://store.bdstaging.com:5000",
+  "proxy": "http://store.banaodukaan.com:5000",
   "homepage": "http://localhost:5000/admin",
   "name": "store-portal",
   "version": "0.1.0",

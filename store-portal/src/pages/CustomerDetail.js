@@ -169,7 +169,7 @@ const CustomerDetail = () => {
                             backgroundColor: "white",
                         }}
                     >
-                        <i style={{ cursor: "pointer" }} onClick={() => history.push('/admin/products')} className="fas mb-5 fa-2x fa-arrow-left"></i>
+                        <i style={{ cursor: "pointer" }} onClick={() => history.push('/admin/customers')} className="fas mb-5 fa-2x fa-arrow-left"></i>
 
                         <div>
                             <h1 style={{ fontSize: 24, color: "black" }}>Customer Detail</h1>

@@ -54,7 +54,7 @@ app.use((req, res, next) => {
   console.log(req.hostname, req.path)
   next()
 })
-app.use(vhost("*.bdstaging.com", async (req, res, next) => {
+app.use(vhost("*.banaodukaan.com", async (req, res, next) => {
 
   const storeName = req.vhost[0]
   if (storeName === "accounts") return next()
@@ -70,7 +70,7 @@ app.use(vhost("*.bdstaging.com", async (req, res, next) => {
 }))
 
 
-app.use(vhost("accounts.bdstaging.com", require('./accounts')))
+app.use(vhost("accounts.banaodukaan.com", require('./accounts')))
 app.use("/uploads", express.static(path.join(__dirname, 'uploads')))
 
 
@@ -78,12 +78,11 @@ app.use("/uploads", express.static(path.join(__dirname, 'uploads')))
 connectDb()
 initRoutes(app)
 
-if (process.env.NODE_ENV === 'production') {
-  app.use('/admin/', express.static(path.join(__dirname, "../store-portal", 'build')))
-  app.get('/admin/*', function (req, res) {
-    res.sendFile(path.join(__dirname, "../store-portal", 'build', 'index.html'));
-  });
-}
+app.use('/admin/', express.static(path.join(__dirname, "../store-portal", 'build')))
+app.get('/admin/*', function (req, res) {
+  res.sendFile(path.join(__dirname, "../store-portal", 'build', 'index.html'));
+});
+
 
 app.listen(PORT, () => console.log(`Server started @PORT: ${PORT}`))
 

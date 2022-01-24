@@ -111,7 +111,7 @@ const StoresTable = () => {
   // const history = useNavigate();
 
   const handleClick = (storeName) => {
-    window.location.href = `http://${storeName}.bdstaging.com:3000/admin`
+    window.location.href = `http://${storeName}.banaodukaan.com/admin`
   }
 
   return (
