@@ -6,6 +6,8 @@ import JoditEditor from "jodit-react";
 import { useParams } from "react-router";
 import { useHistory } from "react-router-dom";
 import Alert from "../components/Alerts/Alert";
+import BackspaceRoundedIcon from '@mui/icons-material/BackspaceRounded';
+import { Button } from '@material-ui/core'
 
 const CollectionDetail = () => {
   const [title, setTitle] = useState("");
@@ -104,16 +106,24 @@ const CollectionDetail = () => {
               backgroundColor: "white",
             }}
           >
-            <i style={{ cursor: "pointer" }} onClick={() => history.push('/admin/collections')} className="fas mb-5 fa-2x fa-arrow-left"></i>
+            <div class = "d-flex flex-row"> 
+              <div class="p2" style = {{marginRight: 20}}>
+                <BackspaceRoundedIcon style = {{fill: '#345DA7', cursor: 'pointer', }}  onClick={() => history.push('/admin/collections')} />
+              </div>
+              <div class="p2">
+                <h1 style={{ fontSize: 24, fontWeight: 'bold', color: "black" }}>{collection === undefined ? "" : collection.name}</h1>
+              </div>
+            </div>
+            {/* <i style={{ cursor: "pointer" }} onClick={() => history.push('/admin/collections')} className="fas mb-5 fa-2x fa-arrow-left"></i>
 
             <div>
               <h1 style={{ fontSize: 24, color: "black" }}>
                 {collection === undefined ? "" : collection.name}
               </h1>
-            </div>
+            </div> */}
 
             <div className="mb-3" style={{ paddingTop: 25 }}>
-              <label className="form-label" style={{ color: "black" }}>
+              <label className="form-label" style={{ color: "black", fontWeight: '600' }}>
                 Title
               </label>
               <input
@@ -128,7 +138,7 @@ const CollectionDetail = () => {
               <div>
                 <label
                   className="form-label"
-                  style={{ color: "black", paddingTop: 25 }}
+                  style={{ color: "black", paddingTop: 25, fontWeight: '600' }}
                 >
                   Description
                 </label>
@@ -141,13 +151,13 @@ const CollectionDetail = () => {
                 />
               </div>
             </div>
-            <button
-              className="btn btn-success"
-              style={{ width: "25%", backgroundColor: '#3B8AC4' }}
+            <Button
+              variant = "outlined"
+              style={{ width: "25%", backgroundColor: "#3B8AC4", color: "#FFFFFF", boxShadow: '0px 8px 15px rgba(0, 0, 0, 0.1)', fontWeight: 500  }}
               onClick={(e) => updateCollection(e)}
             >
               Update Collection
-            </button>
+            </Button>
           </div>
         </div>
       </form>

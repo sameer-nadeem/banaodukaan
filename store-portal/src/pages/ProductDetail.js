@@ -6,6 +6,8 @@ import { useParams } from "react-router";
 import { useHistory } from "react-router-dom";
 import Alert from "../components/Alerts/Alert";
 import JoditEditor from "jodit-react";
+import BackspaceRoundedIcon from '@mui/icons-material/BackspaceRounded';
+import { Button } from '@material-ui/core'
 
 const ProductDetail = () => {
   //success modal
@@ -220,16 +222,25 @@ const ProductDetail = () => {
               backgroundColor: "white",
             }}
           >
-            <i style={{ cursor: "pointer" }} onClick={() => history.push('/admin/products')} className="fas mb-5 fa-2x fa-arrow-left"></i>
+            <div class = "d-flex flex-row"> 
+              <div class="p2" style = {{marginRight: 20}}>
+                <BackspaceRoundedIcon style = {{fill: '#345DA7', cursor: 'pointer', }}  onClick={() => history.push('/admin/products')} />
+              </div>
+              <div class="p2">
+                <h1 style={{ fontSize: 24, fontWeight: 'bold', color: "black" }}>{product === undefined ? "" : product.title}</h1>
+              </div>
+            </div>
+
+            {/* <i style={{ cursor: "pointer" }} onClick={() => history.push('/admin/products')} className="fas mb-5 fa-2x fa-arrow-left"></i>
 
             <div>
               <h1 style={{ fontSize: 24, color: "black" }}>
                 {product === undefined ? "" : product.title}
               </h1>
-            </div>
+            </div> */}
 
             <div className="mb-3" style={{ paddingTop: 25 }}>
-              <label className="form-label" style={{ color: "black" }}>
+              <label className="form-label" style={{ color: "black", fontWeight: '600' }}>
                 Title
               </label>
               <input
@@ -244,7 +255,7 @@ const ProductDetail = () => {
               <div>
                 <label
                   className="form-label"
-                  style={{ color: "black", paddingTop: 25 }}
+                  style={{ color: "black", paddingTop: 25, fontWeight: '600'  }}
                 >
                   Description
                 </label>
@@ -259,7 +270,7 @@ const ProductDetail = () => {
             <div className="row">
               <div className="col">
                 <div className="mb-3">
-                  <label className="form-label" style={{ color: "black" }}>
+                  <label className="form-label" style={{ color: "black", fontWeight: '600'  }}>
                     Price
                   </label>
                   <input
@@ -274,7 +285,7 @@ const ProductDetail = () => {
               </div>
               <div className="col">
                 <div className="mb-3">
-                  <label className="form-label" style={{ color: "black" }}>
+                  <label className="form-label" style={{ color: "black", fontWeight: '600'  }}>
                     Quantity
                   </label>
                   <input
@@ -301,7 +312,7 @@ const ProductDetail = () => {
             }}
           >
             <div className="col">
-              <h1 style={{ fontSize: 20, color: "black" }}>Media</h1>
+              <h1 style={{ fontSize: 24, color: "black",  fontWeight: 'bold'  }}>Media</h1>
               <div style={{ display: "flex", justifyContent: "center" }}>
                 <img
                   src={`${path === "" ? product.image : path}`}
@@ -314,7 +325,7 @@ const ProductDetail = () => {
                 <form>
                   <label
                     className="form-label"
-                    style={{ color: "black", padding: 5 }}
+                    style={{ color: "black", padding: 5, fontWeight: '600'  }}
                   >
                     Image
                   </label>
@@ -327,13 +338,13 @@ const ProductDetail = () => {
                     required
                   />
                   <div style={{ marginTop: 5 }}>
-                    <button
-                      className="btn btn-success"
-                      style={{ width: "14%", backgroundColor: '#3B8AC4' }}
+                    <Button
+                      variant = "outlined"
+                      style={{ width: "14%", backgroundColor: "#3B8AC4", color: "#FFFFFF", boxShadow: '0px 8px 15px rgba(0, 0, 0, 0.1)', fontWeight: 500  }}
                       onClick={(e) => uploadImages(e)}
                     >
                       Upload
-                    </button>
+                    </Button>
                   </div>
                 </form>
               </div>
@@ -353,7 +364,7 @@ const ProductDetail = () => {
             <div className="row">
               <div className="col">
                 <div className="mb-3">
-                  <label className="form-label" style={{ color: "black" }}>
+                  <label className="form-label" style={{ color: "black", fontWeight: '600'  }}>
                     Brand
                   </label>
                   <select
@@ -378,7 +389,7 @@ const ProductDetail = () => {
               </div>
               <div className="col">
                 <div className="mb-3">
-                  <label className="form-label" style={{ color: "black" }}>
+                  <label className="form-label" style={{ color: "black", fontWeight: '600'  }}>
                     Collection
                   </label>
                   <select
@@ -407,7 +418,7 @@ const ProductDetail = () => {
             <div className="row">
               <div className="col">
                 <div className="mb-3">
-                  <label className="form-label" style={{ color: "black" }}>
+                  <label className="form-label" style={{ color: "black",  fontWeight: '600' }}>
                     Status
                   </label>
                   <select
@@ -425,13 +436,13 @@ const ProductDetail = () => {
                 </div>
               </div>
             </div>
-            <button
-              className="btn btn-success"
-              style={{ width: "25%", backgroundColor: '#3B8AC4' }}
+            <Button
+              variant = "outlined"
+              style={{ width: "25%", backgroundColor: "#3B8AC4", color: "#FFFFFF", boxShadow: '0px 8px 15px rgba(0, 0, 0, 0.1)', fontWeight: 500  }}
               onClick={(e) => updateProducts(e)}
             >
               Update Product
-            </button>
+            </Button>
           </div>
         </div>
       </form>
