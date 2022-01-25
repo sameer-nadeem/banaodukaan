@@ -5,7 +5,8 @@ import { useHistory } from "react-router-dom";
 import Alert from "../Alerts/Alert";
 import Select from 'react-select'
 import countryList from 'react-select-country-list'
-
+import BackspaceRoundedIcon from '@mui/icons-material/BackspaceRounded';
+import { Button } from '@material-ui/core'
 const AddCustomers = () => {
     //success modal
     const [show, setShow] = useState(false);
@@ -128,14 +129,22 @@ const AddCustomers = () => {
                             backgroundColor: "white",
                         }}
                     >
-                        <i style={{ cursor: "pointer" }} onClick={() => history.push('/admin/customers')} className="fas mb-5 fa-2x fa-arrow-left"></i>
+                        <div class = "d-flex flex-row"> 
+                            <div class="p2" style = {{marginRight: 20}}>
+                                <BackspaceRoundedIcon style = {{fill: '#345DA7', cursor: 'pointer', }}  onClick={() => history.push('/admin/customers')}/>
+                            </div>
+                            <div class="p2">
+                                <h1 style={{ fontSize: 24, fontWeight: 'bold', color: "black" }}>Add Customer</h1>
+                            </div>
+                        </div>
+                        {/* <i style={{ cursor: "pointer" }} onClick={() => history.push('/admin/customers')} className="fas mb-5 fa-2x fa-arrow-left"></i>
 
                         <div>
                             <h1 style={{ fontSize: 24, color: "black" }}>Add Customers</h1>
-                        </div>
+                        </div> */}
 
                         <div className="mb-3" style={{ paddingTop: 25 }}>
-                            <label className="form-label" style={{ color: "black" }}>
+                            <label className="form-label" style={{ color: "black", fontWeight: '600'}}>
                                 Email
                             </label>
                             <input
@@ -150,7 +159,7 @@ const AddCustomers = () => {
                         <div className="row">
                             <div className="col">
                                 <div className="mb-3">
-                                    <label className="form-label" style={{ color: "black" }}>
+                                    <label className="form-label" style={{ color: "black" , fontWeight: '600'}}>
                                         First Name
                                     </label>
                                     <input
@@ -165,7 +174,7 @@ const AddCustomers = () => {
                             </div>
                             <div className="col">
                                 <div className="mb-3">
-                                    <label className="form-label" style={{ color: "black" }}>
+                                    <label className="form-label" style={{ color: "black" , fontWeight: '600'}}>
                                         Last Name
                                     </label>
                                     <input
@@ -180,7 +189,7 @@ const AddCustomers = () => {
                             </div>
                         </div>
                         <div className="mb-3">
-                            <label className="form-label" style={{ color: "black" }}>
+                            <label className="form-label" style={{ color: "black", fontWeight: '600' }}>
                                 Phone Number
                             </label>
                             <input
@@ -205,14 +214,14 @@ const AddCustomers = () => {
                         }}
                     >
                         <div className="mb-3" style={{ paddingTop: 25 }}>
-                            <label className="form-label" style={{ color: "black" }}>
+                            <label className="form-label" style={{ color: "black", fontWeight: '600' }}>
                                 Country/region
                             </label>
                             <Select options={options} value={country} onChange={onChangeCountry} />
                         </div>
 
                         <div className="mb-3">
-                            <label className="form-label" style={{ color: "black" }}>
+                            <label className="form-label" style={{ color: "black", fontWeight: '600' }}>
                                 Address
                             </label>
                             <input
@@ -226,7 +235,7 @@ const AddCustomers = () => {
 
 
                         <div className="mb-3">
-                            <label className="form-label" style={{ color: "black" }}>
+                            <label className="form-label" style={{ color: "black", fontWeight: '600'}}>
                                 Apartment,suite,etc.
                             </label>
                             <input
@@ -241,7 +250,7 @@ const AddCustomers = () => {
                         <div className="row">
                             <div className="col">
                                 <div className="mb-3">
-                                    <label className="form-label" style={{ color: "black" }}>
+                                    <label className="form-label" style={{ color: "black",fontWeight: '600' }}>
                                         City
                                     </label>
                                     <input
@@ -255,7 +264,7 @@ const AddCustomers = () => {
                             </div>
                             <div className="col">
                                 <div className="mb-3">
-                                    <label className="form-label" style={{ color: "black" }}>
+                                    <label className="form-label" style={{ color: "black", fontWeight: '600' }}>
                                         Postal code
                                     </label>
                                     <input
@@ -269,13 +278,13 @@ const AddCustomers = () => {
                             </div>
                         </div>
 
-                        <button
-                            className="btn btn-success"
-                            style={{ width: "25%", backgroundColor: '#3B8AC4' }}
+                        <Button
+                            variant = "outlined"
+                            style={{ width: "25%", backgroundColor: "#3B8AC4", color: "#FFFFFF", boxShadow: '0px 8px 15px rgba(0, 0, 0, 0.1)', fontWeight: 500 }}
                             onClick={(e) => addCustomer(e)}
                         >
                             Add Customer
-                        </button>
+                        </Button>
                     </div>
                 </div>
             </form>
