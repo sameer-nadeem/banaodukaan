@@ -4,7 +4,9 @@ import JoditEditor from "jodit-react";
 import axios from "axios";
 import { uri } from "../../api.json";
 import { useHistory } from "react-router-dom";
+import { Button } from '@material-ui/core'
 import Alert from "../Alerts/Alert";
+import BackspaceRoundedIcon from '@mui/icons-material/BackspaceRounded';
 const AddCollections = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -78,7 +80,7 @@ const AddCollections = () => {
         handleClose={handleClose}
         handleShow={handleShow}
       />
-      <div style={{ display: "flex", justifyContent: "center", padding: 20 }}>
+      <div style={{ display: "flex", justifyContent: "center", padding: 45 }}>
         <div
           className="card form-card"
           style={{
@@ -88,14 +90,18 @@ const AddCollections = () => {
             backgroundColor: "white",
           }}
         >
-          <i style={{ cursor: "pointer" }} onClick={() => history.push('/admin/collections')} class="fas mb-5 fa-2x fa-arrow-left"></i>
-
-          <div style={{ display: "flex" }}>
-            <h1 style={{ fontSize: 22, color: "black" }}>Create Collection</h1>
+          <div class = "d-flex flex-row"> 
+            <div class="p2" style = {{marginRight: 20}}>
+              <BackspaceRoundedIcon style = {{fill: '#345DA7', cursor: 'pointer', }}  onClick={() => history.push('/admin/collections')} />
+            </div>
+            <div class="p2">
+              <h1 style={{ fontSize: 24, fontWeight: 'bold', color: "black" }}>Add Collection</h1>
+            </div>
           </div>
+          
           <form style={{ paddingTop: 25 }} onSubmit={handleSubmit}>
             <div className="mb-3">
-              <label className="form-label" style={{ color: "black" }}>
+              <label className="form-label" style={{ color: "black", fontWeight: '600' }}>
                 Title
               </label>
               <input
@@ -105,7 +111,7 @@ const AddCollections = () => {
               />
             </div>
             <div className="mb-3">
-              <label className="form-label" style={{ color: "black" }}>
+              <label className="form-label" style={{ color: "black", fontWeight: '600'}}>
                 Description
               </label>
               <JoditEditor
@@ -115,13 +121,12 @@ const AddCollections = () => {
                 onChange={newContent => { }}
               />
             </div>
-            <button
-              type="submit"
-              className="btn btn-success"
-              style={{ width: "12%", backgroundColor: '#3B8AC4' }}
+            <Button
+              variant="outlined"
+              style={{ width: "15%", backgroundColor: "#3B8AC4", color: "#FFFFFF", boxShadow: '0px 8px 15px rgba(0, 0, 0, 0.1)', fontWeight: 500 }}
             >
               Save
-            </button>
+            </Button>
           </form>
         </div>
       </div>

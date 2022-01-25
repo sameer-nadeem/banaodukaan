@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Button } from '@material-ui/core'
 import axios from "axios";
 import { uri } from "../../api.json";
 import { useHistory } from "react-router-dom";
@@ -217,26 +218,25 @@ const AddProducts = () => {
             <div class = "d-flex flex-row"> 
               <div class="p2" style = {{marginRight: 20}}>
                 <BackspaceRoundedIcon style = {{fill: '#345DA7', cursor: 'pointer', }}  onClick={() => history.push('/admin/products')} />
-                {/* <i style={{ cursor: "pointer", }} onClick={() => history.push('/admin/products')} class="fas mb-5 fa-2x fa-arrow-left"></i> */}
               </div>
               <div class="p2">
-                <h1 style={{ fontSize: 24, fontWeight: 'bold', color: "black" }}>Add Products</h1>
+                <h1 style={{ fontSize: 24, fontWeight: 'bold', color: "black" }}>Add Product</h1>
               </div>
             </div>
 
             <div className="mb-3" style={{ paddingTop: 25 }}>
-              <label className="form-label" style={{ color: "black" }}>
+              <label className="form-label" style={{ color: "black", fontWeight: '600'}}>
                 Title
               </label>
               <input
                 className="form-control"
-                style={{ backgroundColor: "white", color: "black" }}
+                style={{ backgroundColor: "white", color: 'black' }}
                 onChange={onChangeTitle}
                 required
               />
             </div>
             <div className="mb-3">
-              <label className="form-label" style={{ color: "black" }}>
+              <label className="form-label" style={{ color: "black", fontWeight: '600' }}>
                 Description
               </label>
               {/* <Editor
@@ -256,7 +256,7 @@ const AddProducts = () => {
               <div className="col">
                 <div className="mb-3">
                   <form>
-                    <label className="form-label" style={{ color: "black" }}>
+                    <label className="form-label" style={{ color: "black", fontWeight: '600'}}>
                       Image
                     </label>
                     <input
@@ -275,20 +275,20 @@ const AddProducts = () => {
                       />
                     )}
                     <div style={{ marginTop: 5 }}>
-                      <button
-                        className="btn btn-success"
-                        style={{ width: "100%", backgroundColor: '#3B8AC4' }}
+                      <Button
+                        variant = "outlined"
+                        style={{width: '50%', backgroundColor: "#3B8AC4", color: "#FFFFFF", boxShadow: '0px 8px 15px rgba(0, 0, 0, 0.1)', fontWeight: 500 }}
                         onClick={(e) => uploadImages(e)}
                       >
                         Upload
-                      </button>
+                      </Button>
                     </div>
                   </form>
                 </div>
               </div>
               <div className="col">
                 <div className="mb-3">
-                  <label className="form-label" style={{ color: "black" }}>
+                  <label className="form-label" style={{ color: "black", fontWeight: '600'}}>
                     Price
                   </label>
                   <input
@@ -302,7 +302,7 @@ const AddProducts = () => {
               </div>
               <div className="col">
                 <div className="mb-3">
-                  <label className="form-label" style={{ color: "black" }}>
+                  <label className="form-label" style={{ color: "black", fontWeight: '600' }}>
                     Quantity
                   </label>
                   <input
@@ -330,7 +330,7 @@ const AddProducts = () => {
             <div className="row">
               <div className="col">
                 <div className="mb-3">
-                  <label className="form-label" style={{ color: "black" }}>
+                  <label className="form-label" style={{ color: "black", fontWeight: '600' }}>
                     Brand
                   </label>
                   <select
@@ -352,7 +352,7 @@ const AddProducts = () => {
               </div>
               <div className="col">
                 <div className="mb-3">
-                  <label className="form-label" style={{ color: "black" }}>
+                  <label className="form-label" style={{ color: "black", fontWeight: '600' }}>
                     Collection
                   </label>
                   <select
@@ -376,7 +376,7 @@ const AddProducts = () => {
             <div className="row">
               <div className="col">
                 <div className="mb-3">
-                  <label className="form-label" style={{ color: "black" }}>
+                  <label className="form-label" style={{ color: "black", fontWeight: '600' }}>
                     Status
                   </label>
                   <select
@@ -392,15 +392,13 @@ const AddProducts = () => {
                 </div>
               </div>
             </div>
-            <button
-
-              class="btn btn-success"
-              style={{ width: "25%", backgroundColor: '#3B8AC4', boxShadow: '0px 8px 15px rgba(0, 0, 0, 0.1)'}}
-
+            <Button
+              variant = "outlined"
+              style={{  width: "25%", backgroundColor: "#3B8AC4", color: "#FFFFFF", boxShadow: '0px 8px 15px rgba(0, 0, 0, 0.1)', fontWeight: 500 }}
               onClick={(e) => addProducts(e)}
             >
               Add Product
-            </button>
+            </Button>
           </div>
         </div>
       </form>

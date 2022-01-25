@@ -5,7 +5,8 @@ import { uri } from "../../api.json";
 import { useHistory } from "react-router-dom";
 import Alert from "../Alerts/Alert";
 import JoditEditor from "jodit-react";
-
+import BackspaceRoundedIcon from '@mui/icons-material/BackspaceRounded';
+import { Button } from '@material-ui/core'
 const AddBrands = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -78,7 +79,7 @@ const AddBrands = () => {
         handleClose={handleClose}
         handleShow={handleShow}
       />
-      <div style={{ display: "flex", justifyContent: "center", padding: 20 }}>
+      <div style={{ display: "flex", justifyContent: "center", padding: 45 }}>
         <div
           className="card form-card"
           style={{
@@ -88,14 +89,23 @@ const AddBrands = () => {
             backgroundColor: "white",
           }}
         >
-          <i style={{ cursor: "pointer" }} onClick={() => history.push('/admin/brands')} className="fas mb-5 fa-2x fa-arrow-left"></i>
+          <div class = "d-flex flex-row"> 
+            <div class="p2" style = {{marginRight: 20}}>
+              <BackspaceRoundedIcon style = {{fill: '#345DA7', cursor: 'pointer', }}  onClick={() => history.push('/admin/brands')} />
+            </div>
+            <div class="p2">
+              <h1 style={{ fontSize: 24, fontWeight: 'bold', color: "black" }}>Create Brand</h1>
+            </div>
+          </div>
+
+          {/* <i style={{ cursor: "pointer" }} onClick={() => history.push('/admin/brands')} className="fas mb-5 fa-2x fa-arrow-left"></i>
 
           <div style={{ display: "flex" }}>
             <h1 style={{ fontSize: 22, color: "black" }}>Create Brand</h1>
-          </div>
+          </div> */}
           <form style={{ paddingTop: 25 }} onSubmit={(e) => addBrand(e)}>
             <div className="mb-3">
-              <label className="form-label" style={{ color: "black" }}>
+              <label className="form-label" style={{ color: "black", fontWeight: '600'}}>
                 Title
               </label>
               <input
@@ -105,7 +115,7 @@ const AddBrands = () => {
               />
             </div>
             <div className="mb-3">
-              <label className="form-label" style={{ color: "black" }}>
+              <label className="form-label" style={{ color: "black", fontWeight: '600' }}>
                 Description
               </label>
               <JoditEditor
@@ -115,13 +125,12 @@ const AddBrands = () => {
                 onChange={newContent => { }}
               />
             </div>
-            <button
-              type="submit"
-              className="btn btn-success"
-              style={{ width: "12%", backgroundColor: '#3B8AC4' }}
+            <Button
+             variant="outlined"
+             style={{ width: "15%", backgroundColor: "#3B8AC4", color: "#FFFFFF", boxShadow: '0px 8px 15px rgba(0, 0, 0, 0.1)', fontWeight: 500 }}
             >
               Save
-            </button>
+            </Button>
           </form>
         </div>
       </div>
