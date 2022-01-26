@@ -1,28 +1,25 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button } from '@material-ui/core'
 import axios from "axios";
 import { uri } from "../../api.json";
 import { useHistory } from "react-router-dom";
-import Alert from "../Alerts/Alert";
+// import Alert from "../Alerts/Alert";
+import Alert from '@mui/material/Alert';
+import AlertDialog from "../Alerts/AlertDialog";
 import { ProgressBar } from "react-bootstrap";
 import JoditEditor from "jodit-react";
 import BackspaceRoundedIcon from '@mui/icons-material/BackspaceRounded';
 const AddProducts = () => {
-  //success modal
-  const [show, setShow] = useState(false);
-  const handleClose = () => {
-    setShow(false);
-    if (alertType === 'success') {
-      history.push("/admin/products");
-    }
-  };
-  const handleShow = () => setShow(true);
-  //success modal states end
-
-  const [alertTitle, setAlertTitle] = useState('')
+  const topRef = useRef(null)
   const [alertType, setAlertType] = useState('')
   const [alertMessage, setAlertMessage] = useState('')
 
+  const [alertDialogShow, setAlertDialogShow] = useState(false)
+  const handleShow = () => setAlertDialogShow(true)
+  const handleClose = () => {
+    setAlertDialogShow(false)
+    history.push('/admin/products')
+  }
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -92,30 +89,23 @@ const AddProducts = () => {
 
   // add products handler
   const addProducts = async (event) => {
+    event.preventDefault();
     if (
-      image.length === 0 ||
       title === "" ||
       description === "" ||
       brand === "" ||
       collection === "" ||
       status === ""
     ) {
-      //event.preventDefault();
-      //alert("Please Check Fields");
-      handleShow();
-      setAlertTitle("Error")
       setAlertMessage("Please fill in all of the fields")
-      setAlertType("failure")
+      setAlertType("error")
+      topRef.current.scrollIntoView()
       return;
-    } else if (!buttonCheck) {
-      event.preventDefault();
-      //alert("Upload Image First");
-      handleShow();
-      setAlertTitle("Error")
+    } else if (!buttonCheck || image.length === 0) {
       setAlertMessage("Upload Image First")
-      setAlertType("failure")
+      setAlertType("error")
+      topRef.current.scrollIntoView()
     } else {
-      event.preventDefault();
       const data = {
         title: title,
         price: price,
@@ -132,15 +122,12 @@ const AddProducts = () => {
             "Content-Type": "application/json",
           },
         });
-        handleShow();
-        setAlertTitle("Success")
-        setAlertMessage("The product was succesfuly added to the store")
-        setAlertType("success")
+
+        handleShow()
       } catch (err) {
-        setAlertTitle("Error")
         setAlertMessage("Error occured, please try again later")
-        setAlertType("failure")
-        setShow(true);
+        setAlertType("error")
+        topRef.current.scrollIntoView()
       }
     }
   };
@@ -150,13 +137,12 @@ const AddProducts = () => {
     event.preventDefault();
 
     if (image.length === 0) {
-      handleShow();
-      setAlertTitle("Error")
+
       setAlertMessage("Please select the image first")
-      setAlertType("failure")
+      setAlertType("error")
+      topRef.current.scrollIntoView()
+
     } else {
-      console.log(image);
-      event.preventDefault();
       const formData = new FormData();
       formData.append("myImage", image);
       const config = {
@@ -175,11 +161,6 @@ const AddProducts = () => {
           formData,
           config
         );
-        // alert("File has been uploaded successfully.");
-        handleShow();
-        setAlertTitle("Success")
-        setAlertMessage("File has been uploaded successfully")
-        setAlertType("successs")
         setButtonCheck(true);
         setPath(res.data);
         setUploadPercentage(
@@ -195,14 +176,14 @@ const AddProducts = () => {
   };
 
   return (
-    <div>
-      <Alert
-        title={alertTitle}
-        message={alertMessage}
-        show={show}
-        variant={alertType === "success" ? "success" : "failure"}
+    <div ref={topRef}>
+      <AlertDialog
         handleClose={handleClose}
         handleShow={handleShow}
+        show={alertDialogShow}
+        title={'Success'}
+        message={"Product was successfuly added"}
+        variant={'success'}
       />
       <form style={{ paddingTop: 25 }}>
         <div style={{ display: "flex", justifyContent: "center", padding: 20 }}>
@@ -215,17 +196,17 @@ const AddProducts = () => {
               backgroundColor: "white",
             }}
           >
-            <div class = "d-flex flex-row"> 
-              <div class="p2" style = {{marginRight: 20}}>
-                <BackspaceRoundedIcon style = {{fill: '#345DA7', cursor: 'pointer', }}  onClick={() => history.push('/admin/products')} />
+            <div class="d-flex flex-row">
+              <div class="p2" style={{ marginRight: 20 }}>
+                <BackspaceRoundedIcon style={{ fill: '#345DA7', cursor: 'pointer', }} onClick={() => history.push('/admin/products')} />
               </div>
               <div class="p2">
                 <h1 style={{ fontSize: 24, fontWeight: 'bold', color: "black" }}>Add Product</h1>
               </div>
             </div>
-
+            <Alert severity={alertType}>{alertMessage}</Alert>
             <div className="mb-3" style={{ paddingTop: 25 }}>
-              <label className="form-label" style={{ color: "black", fontWeight: '600'}}>
+              <label className="form-label" style={{ color: "black", fontWeight: '600' }}>
                 Title
               </label>
               <input
@@ -256,7 +237,7 @@ const AddProducts = () => {
               <div className="col">
                 <div className="mb-3">
                   <form>
-                    <label className="form-label" style={{ color: "black", fontWeight: '600'}}>
+                    <label className="form-label" style={{ color: "black", fontWeight: '600' }}>
                       Image
                     </label>
                     <input
@@ -276,8 +257,8 @@ const AddProducts = () => {
                     )}
                     <div style={{ marginTop: 5 }}>
                       <Button
-                        variant = "outlined"
-                        style={{width: '50%', backgroundColor: "#3B8AC4", color: "#FFFFFF", boxShadow: '0px 8px 15px rgba(0, 0, 0, 0.1)', fontWeight: 500 }}
+                        variant="outlined"
+                        style={{ width: '50%', backgroundColor: "#3B8AC4", color: "#FFFFFF", boxShadow: '0px 8px 15px rgba(0, 0, 0, 0.1)', fontWeight: 500 }}
                         onClick={(e) => uploadImages(e)}
                       >
                         Upload
@@ -288,7 +269,7 @@ const AddProducts = () => {
               </div>
               <div className="col">
                 <div className="mb-3">
-                  <label className="form-label" style={{ color: "black", fontWeight: '600'}}>
+                  <label className="form-label" style={{ color: "black", fontWeight: '600' }}>
                     Price
                   </label>
                   <input
@@ -393,8 +374,8 @@ const AddProducts = () => {
               </div>
             </div>
             <Button
-              variant = "outlined"
-              style={{  width: "25%", backgroundColor: "#3B8AC4", color: "#FFFFFF", boxShadow: '0px 8px 15px rgba(0, 0, 0, 0.1)', fontWeight: 500 }}
+              variant="outlined"
+              style={{ width: "25%", backgroundColor: "#3B8AC4", color: "#FFFFFF", boxShadow: '0px 8px 15px rgba(0, 0, 0, 0.1)', fontWeight: 500 }}
               onClick={(e) => addProducts(e)}
             >
               Add Product
