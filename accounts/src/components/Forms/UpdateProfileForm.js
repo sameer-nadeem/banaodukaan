@@ -6,6 +6,8 @@ import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import { InputAdornment, IconButton } from "@material-ui/core";
 import TextField from "@mui/material/TextField";
+import BackspaceRoundedIcon from '@mui/icons-material/BackspaceRounded';
+import { Button } from '@material-ui/core'
 
 const UpdateProfileForm = () => {
   //success modal
@@ -210,7 +212,17 @@ const UpdateProfileForm = () => {
               backgroundColor: "white",
             }}
           >
-            <i
+
+            <div class = "d-flex flex-row"> 
+              <div class="p2" style = {{marginRight: 20}}>
+                <BackspaceRoundedIcon style = {{fill: '#345DA7', cursor: 'pointer', }}  onClick={() => history('/my-stores')} />
+              </div>
+              <div class="p2">
+                <h1 style={{ fontSize: 24, fontWeight: 'bold', color: "black" }}>Profile</h1>
+              </div>
+            </div>
+            
+            {/* <i
               style={{ cursor: "pointer" }}
               onClick={() => history("/my-stores")}
               class="fas mb-5 fa-2x fa-arrow-left"
@@ -218,12 +230,12 @@ const UpdateProfileForm = () => {
 
             <div>
               <h1 style={{ fontSize: 24, color: "black" }}>Profile</h1>
-            </div>
+            </div> */}
 
-            <div className="row">
+            <div className="row" style = {{paddingTop: 25}}>
               <div className="col">
                 <div className="mb-3">
-                  <label className="form-label" style={{ color: "black" }}>
+                  <label className="form-label" style={{ color: "black", fontWeight: '600' }}>
                     First name
                   </label>
                   <input
@@ -237,7 +249,7 @@ const UpdateProfileForm = () => {
               </div>
               <div className="col">
                 <div className="mb-3">
-                  <label className="form-label" style={{ color: "black" }}>
+                  <label className="form-label" style={{ color: "black", fontWeight: '600' }}>
                     Last name
                   </label>
                   <input
@@ -251,8 +263,8 @@ const UpdateProfileForm = () => {
               </div>
             </div>
 
-            <div className="mb-3" style={{ paddingTop: 25 }}>
-              <label className="form-label" style={{ color: "black" }}>
+            <div className="mb-3" style={{ }}>
+              <label className="form-label" style={{ color: "black" , fontWeight: '600'}}>
                 Email Address
               </label>
               <input
@@ -278,13 +290,13 @@ const UpdateProfileForm = () => {
             <div
               style={{ flexDirection: "row", justifyContent: "space-between" }}
             >
-              <button
-                className="btn btn-success"
-                style={{ width: "25%" }}
+              <Button
+                variant = "outlined"
+                style={{ width: "25%", backgroundColor: "#3B8AC4", color: "#FFFFFF", boxShadow: '0px 8px 15px rgba(0, 0, 0, 0.1)', fontWeight: 500 }}
                 onClick={(e) => updateProfile(e)}
               >
                 Update Profile
-              </button>
+              </Button>
             </div>
           </div>
         </div>
@@ -301,7 +313,7 @@ const UpdateProfileForm = () => {
             }}
           >
             <div>
-              <h1 style={{ fontSize: 24, color: "black" }}>Security</h1>
+              <h1 style={{ fontSize: 24, fontWeight: 'bold', color: "black" }}>Security</h1>
             </div>
 
             <div className="row">
@@ -421,13 +433,13 @@ const UpdateProfileForm = () => {
             <div
               style={{ flexDirection: "row", justifyContent: "space-between" }}
             >
-              <button
-                className="btn btn-success"
-                style={{ width: "25%" }}
+              <Button
+                variant = "outlined"
+                style={{ width: "25%", backgroundColor: "#3B8AC4", color: "#FFFFFF", boxShadow: '0px 8px 15px rgba(0, 0, 0, 0.1)', fontWeight: 500 }}
                 onClick={(e) => changePassword(e)}
               >
                 Change Password
-              </button>
+              </Button>
             </div>
           </div>
         </div>

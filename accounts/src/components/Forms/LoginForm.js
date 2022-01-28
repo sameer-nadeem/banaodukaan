@@ -197,7 +197,7 @@ const LoginForm = () => {
             }}
           >
             <GoogleLogin
-              clientId="1008574452559-43bj1lusj5shgu89fb0hpgkqlkglk91j.apps.googleusercontent.com"
+              clientId="1008574452559-sik3r2dpsclo9unv6tkv5n9lfjvdhn4c.apps.googleusercontent.com"
               buttonText="Login with Google"
               onSuccess={responseSuccessGoogle}
               onFailure={responseErrorGoogle}
