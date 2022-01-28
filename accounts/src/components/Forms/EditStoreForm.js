@@ -4,6 +4,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import Alert from "../Alerts/Alert";
 import countryList from "react-select-country-list";
 import Select from "react-select";
+import BackspaceRoundedIcon from '@mui/icons-material/BackspaceRounded';
+import { Button } from '@material-ui/core'
 
 const EditStoreForm = () => {
   const { id } = useParams();
@@ -129,17 +131,25 @@ const EditStoreForm = () => {
               backgroundColor: "white",
             }}
           >
-            <i
+            <div class = "d-flex flex-row"> 
+              <div class="p2" style = {{marginRight: 20}}>
+                <BackspaceRoundedIcon style = {{fill: '#345DA7', cursor: 'pointer', }}  onClick={() => history('/my-stores')} />
+              </div>
+              <div class="p2">
+                <h1 style={{ fontSize: 24, fontWeight: 'bold', color: "black" }}>Edit Store</h1>
+              </div>
+            </div>
+            {/* <i
               style={{ cursor: "pointer" }}
               onClick={() => history("/my-stores")}
               className="fas mb-5 fa-2x fa-arrow-left"
             ></i>
             <div>
               <h1 style={{ fontSize: 24, color: "black" }}>Edit Store</h1>
-            </div>
+            </div> */}
 
             <div className="mb-3" style={{ paddingTop: 25 }}>
-              <label className="form-label" style={{ color: "black" }}>
+              <label className="form-label" style={{ color: "black", fontWeight: '600' }}>
                 Title
               </label>
               <input
@@ -153,7 +163,7 @@ const EditStoreForm = () => {
             </div>
 
             <div className="mb-3" style={{ paddingTop: 25 }}>
-              <label className="form-label" style={{ color: "black" }}>
+              <label className="form-label" style={{ color: "black" , fontWeight: '600'}}>
                 Country/region
               </label>
               <Select
@@ -166,7 +176,7 @@ const EditStoreForm = () => {
             <div className="row">
               <div className="col">
                 <div className="mb-3">
-                  <label className="form-label" style={{ color: "black" }}>
+                  <label className="form-label" style={{ color: "black", fontWeight: '600' }}>
                     First name
                   </label>
                   <input
@@ -178,7 +188,7 @@ const EditStoreForm = () => {
               </div>
               <div className="col">
                 <div className="mb-3">
-                  <label className="form-label" style={{ color: "black" }}>
+                  <label className="form-label" style={{ color: "black", fontWeight: '600' }}>
                     Last name
                   </label>
                   <input
@@ -191,7 +201,7 @@ const EditStoreForm = () => {
             </div>
 
             <div className="mb-3" style={{ paddingTop: 25 }}>
-              <label className="form-label" style={{ color: "black" }}>
+              <label className="form-label" style={{ color: "black", fontWeight: '600' }}>
                 Address
               </label>
               <input
@@ -204,7 +214,7 @@ const EditStoreForm = () => {
             </div>
 
             <div className="mb-3" style={{ paddingTop: 25 }}>
-              <label className="form-label" style={{ color: "black" }}>
+              <label className="form-label" style={{ color: "black", fontWeight: '600' }}>
                 Apartment,suite,etc.
               </label>
               <input
@@ -219,7 +229,7 @@ const EditStoreForm = () => {
             <div className="row">
               <div className="col">
                 <div className="mb-3">
-                  <label className="form-label" style={{ color: "black" }}>
+                  <label className="form-label" style={{ color: "black", fontWeight: '600' }}>
                     City
                   </label>
                   <input
@@ -233,7 +243,7 @@ const EditStoreForm = () => {
               </div>
               <div className="col">
                 <div className="mb-3">
-                  <label className="form-label" style={{ color: "black" }}>
+                  <label className="form-label" style={{ color: "black", fontWeight: '600' }}>
                     Postal code
                   </label>
                   <input
@@ -246,7 +256,7 @@ const EditStoreForm = () => {
                 </div>
               </div>
               <div className="mb-3" style={{ paddingTop: 25 }}>
-                <label className="form-label" style={{ color: "black" }}>
+                <label className="form-label" style={{ color: "black", fontWeight: '600' }}>
                   Phone
                 </label>
                 <input
@@ -259,7 +269,7 @@ const EditStoreForm = () => {
               </div>
 
               <div className="mb-3" style={{ paddingTop: 25 }}>
-                <label className="form-label" style={{ color: "black" }}>
+                <label className="form-label" style={{ color: "black" , fontWeight: '600'}}>
                   Business or personal website(optional)
                 </label>
                 <input
@@ -283,13 +293,13 @@ const EditStoreForm = () => {
               backgroundColor: "white",
             }}
           >
-            <button
-              className="btn btn-success"
-              style={{ width: "25%" }}
+            <Button
+              variant = "outlined"
+              style={{ width: "25%", backgroundColor: "#3B8AC4", color: "#FFFFFF", boxShadow: '0px 8px 15px rgba(0, 0, 0, 0.1)', fontWeight: 500 }}
               onClick={(e) => updateStore(e)}
             >
               Update Store
-            </button>
+            </Button>
           </div>
         </div>
       </form>
