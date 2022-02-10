@@ -19,12 +19,12 @@ const sendMail = ({ to, subject, html }) => {
     to,
     subject,
     html,
-    attachments: [
-      {   // file on disk as an attachment
-        filename: ' ',
-        path: `${path.join(__dirname, '..', '..', 'html', "images", 'banaodukaan_logo_text.png')}` // stream this file
-      }
-    ]
+    // attachments: [
+    //   {   // file on disk as an attachment
+    //     filename: ' ',
+    //     path: `${path.join(__dirname, '..', '..', 'html', "images", 'banaodukaan_logo_text.png')}` // stream this file
+    //   }
+    // ]
   };
 
   transporter.sendMail(mailOptions, function (err, info) {
