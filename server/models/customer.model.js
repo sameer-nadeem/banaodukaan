@@ -2,38 +2,40 @@ const mongoose = require("mongoose")
 const Schema = mongoose.Schema
 
 const customerSchema = new Schema({
-    userId:{
+    userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
-    myOrders:[{
+    myOrders: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Order'
     }],
-    address:{
+    storeId: {
+        type: mongoose.Schema.Types.ObjectId,
+    },
+    address: {
         type: String
     },
     deleteFlag: {
         type: Boolean,
         default: false
-
     },
-    phone:{
+    phone: {
         type: String
     },
-    apartment:{
+    apartment: {
         type: String
     },
-    country:{
+    country: {
         type: String
     },
-    city:{
+    city: {
         type: String
     },
-    postalCode:{
+    postalCode: {
         type: String
     },
 
 })
 
-module.exports = mongoose.model('Customer', customerSchema );
+module.exports = mongoose.model('Customer', customerSchema);
