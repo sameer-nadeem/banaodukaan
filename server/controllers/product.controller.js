@@ -54,15 +54,38 @@ const addProduct = async (req, res) => {
 const getProducts = async (req, res) => {
 
     try {
+        const query = req.query.q ? req.query.q.split(" ") : ['.*']
+        const collections = req.query.collections ? req.query.collections : "*"
+
+        // const query = req.query.q ? req.query : "*"
+        const filters = {}
+        if (collections !== '*') filters['collectionId'] = {
+            $in: collections.split(',')
+        }
+        filters["$or"] = [
+            {
+                title: {
+                    $in: query.map(q => new RegExp(q, "i"))
+                }
+            },
+            {
+                description: {
+                    $in: query.map(q => new RegExp(q, "i"))
+                }
+            }
+        ]
+        console.log(query)
         const products = await Product.find({
             deleteFlag: false,
-            storeId: req.storeId
+            storeId: req.storeId,
+            ...filters
         }).populate(['collectionId', 'brandId'])
         console.log(products)
         return res.status(200).json({
-            products
+            products, length: products.length
         })
     } catch (err) {
+        console.log(err)
         return res.status(500).json({
             error: "Server Error"
         })

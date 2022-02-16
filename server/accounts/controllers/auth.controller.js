@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken')
 const config = require('config')
 const { OAuth2Client } = require('google-auth-library');
 const sendMail = require('../../util/email')
+const path = require('path')
 
 const client = new OAuth2Client(config.get('google-auth-client-id'));
 
@@ -46,9 +47,13 @@ const registerMerchant = async (req, res) => {
         // Hello ${merchant.firstName}, welcome to Banaodukaan.com. Start by creating a new store at <a href="http://accounts.bdstaging.com:4000/my-stores/new/">Create new store!</a>
         // </h1>
         // `
-        // const fs = require('fs/promises')
-        // const htmlMsg = await fs.readFile("../../../html/email.html")
-        // sendMail({ to: merchant.email, subject: "Welcome to Banaodukaan", html: htmlMsg })
+        const fs = require('fs/promises')
+        // const htmlMsg = await fs.readFile(path.join("..", "..", "..", "html", "email.html"))
+        sendMail(
+            {
+                to: merchant.email, subject: "Welcome to Banaodukaan", html: "Congratulation on Sign Up, Create a store now at <a href=`https://accounts.banaodukaan.com/my-stores`></a>"
+            }
+        )
 
         const payload = {
             type: 'Merchant',
