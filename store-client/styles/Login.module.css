@@ -1,0 +1,17 @@
+/* .h2 {
+    color: var(--h2Color,#212121);
+    font-family: system-ui;
+    font-size: var(--h2FontSize,24px);
+    font-style: var(--h2FontStyle,"regular");
+    font-weight: var(--h2FontWeight,700);
+    letter-spacing: var(--h2LetterSpacing,0);
+    line-height: var(--h2LineHeight,1.625);
+}
+
+.form{
+    border: 1px solid #e6e6e6;
+    border-radius: 12px;
+    margin-bottom: 30px;
+    margin-top: 0;
+    padding: 20px;
+} */
