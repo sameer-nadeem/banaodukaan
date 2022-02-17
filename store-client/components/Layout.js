@@ -1,9 +1,28 @@
 import Head from 'next/head'
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { loadUser } from '../actions/auth'
+import setAuthToken from '../utils/setAuthToken';
+if (typeof window !== 'undefined') {
+  if (localStorage.customerToken)
+    setAuthToken();
+}
 import Navbar from './Navbar'
 import Links from './Links'
 
 
 export default function Layout({ children }) {
+  const dispatch = useDispatch()
+  const token = useSelector(state => state.auth.token)
+  console.log("token", token)
+  useEffect(() => {
+    dispatch(loadUser())
+  }, [])
+
+  useEffect(() => {
+    setAuthToken()
+  }, [token])
+
   return (
     <>
       <Head>
@@ -27,3 +46,4 @@ export default function Layout({ children }) {
     </>
   )
 }
+
