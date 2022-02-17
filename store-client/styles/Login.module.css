@@ -1,17 +1,51 @@
-/* .h2 {
+.h2 {
     color: var(--h2Color,#212121);
     font-family: system-ui;
     font-size: var(--h2FontSize,24px);
-    font-style: var(--h2FontStyle,"regular");
-    font-weight: var(--h2FontWeight,700);
-    letter-spacing: var(--h2LetterSpacing,0);
     line-height: var(--h2LineHeight,1.625);
 }
 
+
+
+
+.entry{
+    margin: 0;
+}
+
 .form{
-    border: 1px solid #e6e6e6;
-    border-radius: 12px;
-    margin-bottom: 30px;
-    margin-top: 0;
+    /* border: 1px solid #d3ced2; */
     padding: 20px;
-} */
+    margin: 2em 0;
+    text-align: left;
+    border-radius: 5px;
+}
+
+.login{
+    background: #212121;
+    border: 1px solid;
+    border-color: #212121;
+    border-radius: 6px;
+    color: #fff;
+    cursor: pointer;
+    font-weight: 400;
+    height: 48px;
+    line-height: 1;
+    padding:5px;
+    width:100%;
+
+
+}
+
+
+.img{
+    width : 100%;
+    padding-bottom: 10vh
+}
+
+.cardInside{
+    padding-top: 5vh;
+    padding-left: 5vh;
+    padding-right: 5vh;
+    border-left: 5vh;
+    padding-bottom: 5vh;
+}
