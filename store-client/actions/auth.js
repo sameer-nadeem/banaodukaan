@@ -49,7 +49,17 @@ export const register = (
     dispatch({
       type: 'REGISTER_FAIL'
     })
-    alertHandler.setShowError(true)
+
+    const error = err.response.data.error
+    if (error === "USER_ALREADY_EXIST") {
+      alertHandler.setError("User with such email already exists")
+      alertHandler.setShowError(true)
+    }
+    else {
+      alertHandler.setError("Something went wrong")
+      alertHandler.setShowError(true)
+    }
+
 
   }
 }
@@ -92,6 +102,7 @@ export const login = (email, password, alertHandler, ref = null) => async dispat
       type: 'LOGIN_FAIL'
     })
     console.log(err.response.data)
+    alertHandler.setError("Invalid credentials entered")
     alertHandler.setShowError(true)
 
   }
