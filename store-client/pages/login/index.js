@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux'
 import LoginForm from '../../components/Forms/LoginForm'
 import RegisterForm from '../../components/Forms/RegisterForm'
 import { useRouter } from 'next/router'
+import styles from "../../styles/Login.module.css";
 
 export default function Login() {
   const isAuth = useSelector(state => state.auth.isAuthenticated)
@@ -33,4 +34,5 @@ export default function Login() {
       </div>
     </div>
   )
+
 }
