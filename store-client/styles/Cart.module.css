@@ -1,0 +1,160 @@
+
+.MainContainer{
+    position: relative;
+}
+
+.Overlay{
+    position : fixed;
+    top : 0;
+    height : 100%;
+    width: 100%;
+    background : rgba(0,0,0,0.4);
+    z-index : 500; 
+}
+
+.ProductList{
+    max-width: 1000px;
+    margin : 0 auto;
+    margin-top: 50px;
+    height : 75px;
+    line-height : 75px;
+    display : grid;
+    align-items: center;
+    grid-template-columns: repeat( auto-fill,minmax(280 , 1fr) );
+    grid-gap : 20px;
+    align-items: stretch;
+
+}
+
+.Wrapper{
+    display : block;
+    margin  : 0 5px;
+    cursor : pointer;
+    position: relative;
+
+}
+
+.Icon{
+    padding: 5px;
+    font-size:  24px;
+    color: #ffffff;
+
+} 
+
+.cartCount  {
+    position: absolute;
+    bottom: -5px;
+    right: -5px;
+    padding : 3px 7px;
+    border-radius: 50px;
+    background: #f05454;
+    color : #ffffff;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.cartSideBar{
+    z-index : 1000;
+    width: 350px;
+    background: #ffffff;
+    top : 0;
+    right: 0;
+    padding: 25px;
+    position: fixed;
+    overflow : auto;
+    height : 100%;
+    box-shadow: 0 10px 20px rgba(0,0,0.19), 06px 6px rgba(0,0,0.23);
+    transition: all ease-in-out 0.3s;
+
+   
+
+}
+
+.cartSideBar.expand{
+    transition: all ease-in-out 0.3s;
+    right: 0;
+}
+
+.cartSideBar.shrink{
+    transition: all ease-in-out 0.3s;
+    right: -400px;
+}
+
+.SideBarHeader{
+    font-weight: 300;
+    font-size: 24px;
+    text-transform: uppercase;
+    position: relative;
+    padding: 15px 0;
+    
+}
+
+.SideBarHeader::after{
+    
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 1px;
+    width: 100%;
+    background: #000000;
+       
+}
+
+.EmptyCart{
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50% , -50%);
+    font-size: 24;
+}
+
+.Card{
+    display: flex;
+  position: relative;
+  margin: 35px 0 75px 0;
+}
+
+.CardImage{
+    flex: 1;
+  height: auto;
+  width: auto;
+  max-width: 100px;
+  max-height: 100px;
+}
+
+.CardBody{
+    flex: 2;
+  margin-left: 25px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+
+}
+
+.CardTitle{
+    font-size: 14px;
+  font-weight: 500;
+}
+
+.CardRemove{
+    font-size: 16px;
+    color: #000000;
+    cursor: pointer;
+}
+.CardRow{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.ClearButton{
+    width: 100%;
+    padding: 18px 24px;
+    background: #1a508b;
+    color: #ffffff;
+    cursor: pointer;
+    border: none;
+    text-align: center;
+}
