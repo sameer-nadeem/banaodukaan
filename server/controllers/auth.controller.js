@@ -2,6 +2,10 @@ const Merchant = require('../models/merchant.model')
 const Customer = require('../models/customer.model')
 const bcrypt = require('bcryptjs')
 const mongoose = require('mongoose')
+const sendMail = require('../util/email')
+const jwt = require('jsonwebtoken')
+const config = require('config')
+
 const authStore = async (req, res) => {
   try {
     const merchant = await Merchant.findById(req.user.id)
@@ -81,7 +85,8 @@ const customerSignUp = async (req, res) => {
     } = req.body
 
     const exists = await Customer.exists({
-      email
+      email,
+      storeId: req.storeId
     })
 
     if (exists) {
@@ -106,7 +111,7 @@ const customerSignUp = async (req, res) => {
     sendMail({
       to: customer.email,
       subject: "Welcome to Banaodukaan",
-      html: "Congratulation on Sign Up, Create a store now at <a href=`https://accounts.banaodukaan.com/my-stores`></a>"
+      html: "Congratulation on Sign Up"
     })
 
     const payload = {
@@ -130,8 +135,22 @@ const customerSignUp = async (req, res) => {
   }
 }
 
+const getCustomer = async (req, res) => {
+  try {
+    const customer = await Customer.findById(req.user.id)
+    console.log(customer)
+    return res.status(200).json({
+      customer
+    })
+  } catch (error) {
+    console.log(error)
+    return res.status(500).json({ error: "SERVER_ERROR" })
+  }
+}
+
 module.exports = {
   authStore,
   customerLogin,
-  customerSignUp
+  customerSignUp,
+  getCustomer
 }

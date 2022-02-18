@@ -37,9 +37,9 @@ const sendMail = ({ to, subject, html }) => {
 }
 
 
-fs.readFile(path.join(__dirname, "..", '..', 'html', 'email.html')).then((htmlMsg) =>
-  sendMail({ to: "sameer.nadeem24@gmail.com", subject: "Welcome to Banaodukaan", html: htmlMsg })
-)
+// fs.readFile(path.join(__dirname, "..", '..', 'html', 'email.html')).then((htmlMsg) =>
+//   sendMail({ to: "sameer.nadeem24@gmail.com", subject: "Welcome to Banaodukaan", html: htmlMsg })
+// )
 
 
 module.exports = sendMail
