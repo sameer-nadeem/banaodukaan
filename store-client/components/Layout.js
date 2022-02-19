@@ -35,7 +35,7 @@ export default function Layout({ children }) {
         <Links />
       </Head>
       <Navbar /> 
-      <main className='container'>
+      <main>
         {
           children
         }
