@@ -1,11 +1,11 @@
 import { useEffect } from "react";
 import { useSelector } from 'react-redux'
-import LoginForm from '../../components/Forms/LoginForm'
-import RegisterForm from '../../components/Forms/RegisterForm'
+import ProfileForm from "../../components/Forms/ProfileForm";
+import PasswordForm from "../../components/Forms/PasswordForm";
 import { useRouter } from 'next/router'
 import styles from "../../styles/Login.module.css";
 
-export default function Login() {
+export default function Profile() {
   const isAuth = useSelector(state => state.auth.isAuthenticated)
   const router = useRouter()
   useEffect(() => {
@@ -20,16 +20,16 @@ export default function Login() {
         </div>
 
         <div class="cartsy-page-title-content">
-          <span>explore</span>
+          <span>Profile</span>
           <h1>My account</h1>
         </div>
       </div>
       <div className="row">
         <div className="col">
-          <LoginForm />
+          <ProfileForm />
         </div>
         <div className="col">
-          <RegisterForm></RegisterForm>
+          <PasswordForm/>
         </div>
       </div>
     </>

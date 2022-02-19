@@ -94,7 +94,7 @@ const Navbar = () => {
           class="cartsy-join-us-btn"
           href="https://cartsy.redq.io/furniture/my-account/"
         >
-          My Accounz
+          My Account
         </a>
 
         <div class="cartsy-mini-cart-on-desktop">

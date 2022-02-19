@@ -53,9 +53,12 @@ const RegisterForm = () => {
     setShowError(false)
   }, [registerForm])
   return (
-    <div className="card">
+    <>
+    <div style={{marginTop: '9%', marginLeft: '5%'}}>
+      <h2 className={styles.h2}>Register</h2>
+    </div>
+    <div className="card" style={{marginTop: '3%', marginLeft: '5%', borderRadius:'10px'}}>
       <div className={styles.cardInside}>
-        <h2 className={styles.h2}>Register</h2>
         <form className={styles.form}>
           <Alert style={{
             display: showError ? "" : "none"
@@ -120,6 +123,8 @@ const RegisterForm = () => {
         </form>
       </div>
     </div>
+    </>
+
   )
 }
 
