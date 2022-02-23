@@ -32,12 +32,12 @@ export default function Layout({ children }) {
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <title>Essence - Fashion Ecommerce Template</title>
-        <link rel="icon" href="/img/core-img/favicon.ico" />
-        <link rel="stylesheet" href="/css/core-style.css" />
-        <link rel="stylesheet" href="/css/style.css" />
+
 
       </Head>
-
+      <link rel="icon" href="img/core-img/favicon.ico" />
+      <link rel="stylesheet" href="/css/core-style.css" />
+      <link rel="stylesheet" href="/css/style.css" />
       <Navbar />
 
       <main>
@@ -52,7 +52,7 @@ export default function Layout({ children }) {
             <div className="col-12 col-md-6">
               <div className="single_widget_area d-flex mb-30">
                 <div className="footer-logo mr-50">
-                  <a href="#"><img src="img/core-img/logo2.png" alt="" /></a>
+                  <a href="#"><img src="/img/core-img/logo2.png" alt="" /></a>
                 </div>
                 <div className="footer_menu">
                   <ul>

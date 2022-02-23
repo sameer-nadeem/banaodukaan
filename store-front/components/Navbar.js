@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-// import styles from '../styles/Navbar.module.css'
-// import MenuIcon from '@mui/icons-material/Menu';
+import Link from 'next/link'
 const Navbar = () => {
   return (
     <header className="header_area">
       <div className="classy-nav-container breakpoint-off d-flex align-items-center justify-content-between">
         <nav className="classy-navbar" id="essenceNav">
-          <a className="nav-brand" href="index.html"><img src="img/core-img/logo.png" alt="" /></a>
+          <Link href="/">
+            <a className="nav-brand"><img src="/img/core-img/logo.png" alt="" /></a>
+          </Link>
           <div className="classy-navbar-toggler">
             <span className="navbarToggler"><span></span><span></span><span></span></span>
           </div>
@@ -43,7 +44,7 @@ const Navbar = () => {
                       <li><a href="shop.html">Trench</a></li>
                     </ul>
                     <div className="single-mega cn-col-4">
-                      <img src="img/bg-img/bg-6.jpg" alt="" />
+                      <img src="/img/bg-img/bg-6.jpg" alt="" />
                     </div>
                   </div>
                 </li>
@@ -73,14 +74,17 @@ const Navbar = () => {
               <button type="submit"><i className="fa fa-search" aria-hidden="true"></i></button>
             </form>
           </div>
-          <div className="favourite-area">
-            <a href="#"><img src="img/core-img/heart.svg" alt="" /></a>
-          </div>
+          {/* <div className="favourite-area">
+            <a href="#"><img src="/img/core-img/heart.svg" alt="" /></a>
+          </div> */}
           <div className="user-login-info">
-            <a href="#"><img src="img/core-img/user.svg" alt="" /></a>
+            <Link href="/login">
+              <a><img src="/img/core-img/user.svg" alt="" /></a>
+            </Link>
           </div>
+
           <div className="cart-area">
-            <a href="#" id="essenceCartBtn"><img src="img/core-img/bag.svg" alt="" /> <span>3</span></a>
+            <a href="#" id="essenceCartBtn"><img src="/img/core-img/bag.svg" alt="" /> <span>3</span></a>
           </div>
         </div>
 

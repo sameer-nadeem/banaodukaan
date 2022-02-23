@@ -54,75 +54,76 @@ const RegisterForm = () => {
   }, [registerForm])
   return (
     <>
-    <div style={{marginTop: '9%', marginLeft: '5%'}}>
-      <h2 className={styles.h2}>Register</h2>
-    </div>
-    <div className="card" style={{marginTop: '3%', marginLeft: '5%', borderRadius:'10px'}}>
-      <div className={styles.cardInside}>
-        <form className={styles.form}>
-          <Alert style={{
-            display: showError ? "" : "none"
-          }}
-            className="mb-3"
-            severity={"error"}>
-            {errorMsg}
-          </Alert>
-          <div className={styles.p}>
-            <div className="col">
+      <div style={{ marginTop: '9%', marginLeft: '5%' }}>
+        <h2 className={styles.h2}>Register</h2>
+      </div>
+      <div className="card" style={{ marginTop: '3%', marginLeft: '5%', borderRadius: '10px' }}>
+        <div className={styles.cardInside}>
+          <form className={styles.form}>
+            <Alert style={{
+              display: showError ? "" : "none"
+            }}
+              className="mb-3"
+              severity={"error"}>
+              {errorMsg}
+            </Alert>
+            <div className={styles.p}>
+              <div className="col">
+
+              </div>
               <label className="form-label">Full Name</label>
               <input type="text"
                 className="form-control"
                 onChange={onRegisterChange}
                 value={registerForm.fullName}
                 name='fullName'></input>
-            </div>
-            <label htmlFor="exampleInputEmail1" className="form-label mt-3">
-              Email address
-            </label>
-            <input
-              type="email"
-              className="form-control"
-              value={registerForm.emailRegister}
-              onChange={onRegisterChange}
-              aria-describedby="emailHelp"
-              name='emailRegister'
-            />
-
-            <div id="emailHelp" className="form-text"></div>
-
-            <div className="mb-3">
-              <label htmlFor="password" className="form-label mt-3">
-                Password
+              <label htmlFor="exampleInputEmail1" className="form-label mt-3">
+                Email address
               </label>
               <input
-                type="password"
+                type="email"
                 className="form-control"
-                value={registerForm.passwordRegister}
+                value={registerForm.emailRegister}
                 onChange={onRegisterChange}
-                name='passwordRegister'
+                aria-describedby="emailHelp"
+                name='emailRegister'
               />
-            </div>
 
-            <div className="mb-3">
-              <label htmlFor="password" className="form-label mt-3">
-                Confirm Password
-              </label>
-              <input
-                type="password"
-                className="form-control"
-                name='passwordRegister2'
-                onChange={onRegisterChange}
-                value={registerForm.passwordRegister2}
-              />
+              <div id="emailHelp" className="form-text"></div>
+
+              <div className="mb-3">
+                <label htmlFor="password" className="form-label mt-3">
+                  Password
+                </label>
+                <input
+                  type="password"
+                  className="form-control"
+                  value={registerForm.passwordRegister}
+                  onChange={onRegisterChange}
+                  name='passwordRegister'
+                />
+              </div>
+
+              <div className="mb-3">
+                <label htmlFor="password" className="form-label mt-3">
+                  Confirm Password
+                </label>
+                <input
+                  type="password"
+                  className="form-control"
+                  name='passwordRegister2'
+                  onChange={onRegisterChange}
+                  value={registerForm.passwordRegister2}
+                />
+              </div>
             </div>
-          </div>
-          <div className="mt-3" style={{ marginTop: "10%" }}></div>
-          <button disabled={loginLoading} onClick={onRegister} className={styles.login} type="submit">
-            Register
-          </button>
-        </form>
+            <div className="mt-3" style={{ marginTop: "10%" }}></div>
+            <button disabled={loginLoading} onClick={onRegister} className={styles.login} type="submit">
+              Register
+            </button>
+          </form>
+        </div>
       </div>
-    </div>
     </>
 
   )

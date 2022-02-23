@@ -7,7 +7,7 @@ const Cart = () => {
       <div className="right-side-cart-area">
 
         <div className="cart-button">
-          <a href="#" id="rightSideCart"><img src="img/core-img/bag.svg" alt="" /> <span>3</span></a>
+          <a href="#" id="rightSideCart"><img src="/img/core-img/bag.svg" alt="" /> <span>3</span></a>
         </div>
 
         <div className="cart-content d-flex">
@@ -15,7 +15,7 @@ const Cart = () => {
           <div className="cart-list">
             <div className="single-cart-item">
               <a href="#" className="product-image">
-                <img src="img/product-img/product-1.jpg" className="cart-thumb" alt="" />
+                <img src="/img/product-img/product-1.jpg" className="cart-thumb" alt="" />
                 <div className="cart-item-desc">
                   <span className="product-remove"><i className="fa fa-close" aria-hidden="true"></i></span>
                   <span className="badge">Mango</span>
@@ -29,7 +29,7 @@ const Cart = () => {
 
             <div className="single-cart-item">
               <a href="#" className="product-image">
-                <img src="img/product-img/product-2.jpg" className="cart-thumb" alt="" />
+                <img src="/img/product-img/product-2.jpg" className="cart-thumb" alt="" />
                 <div className="cart-item-desc">
                   <span className="product-remove"><i className="fa fa-close" aria-hidden="true"></i></span>
                   <span className="badge">Mango</span>
@@ -43,7 +43,7 @@ const Cart = () => {
 
             <div className="single-cart-item">
               <a href="#" className="product-image">
-                <img src="img/product-img/product-3.jpg" className="cart-thumb" alt="" />
+                <img src="/img/product-img/product-3.jpg" className="cart-thumb" alt="" />
                 <div className="cart-item-desc">
                   <span className="product-remove"><i className="fa fa-close" aria-hidden="true"></i></span>
                   <span className="badge">Mango</span>
