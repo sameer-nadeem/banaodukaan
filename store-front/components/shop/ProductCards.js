@@ -1,15 +1,23 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import useURL from "../../utils/useURL";
+import { useRouter } from 'next/router'
 
 const ProductCards = () => {
     const [products, setProducts] = useState([]);
     const url = useURL();
+    const router = useRouter();
+    const handleClick = (e, id) => {
+        e.preventDefault()
+        router.push({
+            pathname: '/product/'+ id,
+        })
+    }
     const getProducts = async () => {
         try {
             const url = useURL()
             const res = await axios.get(`${url}:5000/api/product`)
-            console.log('products, ',res.data.products)
+            console.log('products, ', res.data.products)
             setProducts(res.data.products)
         } catch (err) {
             console.log(err)
@@ -27,7 +35,7 @@ const ProductCards = () => {
                         <div class="col-12 col-sm-6 col-lg-4">
                             <div class="single-product-wrapper">
                                 <div class="product-img">
-                                    <img src={`${url + ':5000'+ product.image}`} alt="" />
+                                    <img src={`${url + ':5000' + product.image}`} alt="" />
                                     <img class="hover-img" src={product.image} alt="" />
 
                                     <div class="product-badge offer-badge">
@@ -40,7 +48,7 @@ const ProductCards = () => {
 
                                 <div class="product-description">
                                     <span>topshop</span>
-                                    <a href="single-product-details.html">
+                                    <a onClick={(e) => handleClick(e, product._id)} style={{ cursor: 'pointer' }}>
                                         <h6>{product.title}</h6>
                                     </a>
                                     <p class="product-price"><span class="old-price">Rs.{product.price}</span> Rs.{product.price}</p>
