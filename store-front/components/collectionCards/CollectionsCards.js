@@ -8,7 +8,7 @@ const CollectionsCards = () => {
     const getCollections = async () => {
         try {
             const url = useURL()
-            const res = await axios.get(`${url}:5000/api/collection/customer/collections`)
+            const res = await axios.get(`${url}:5000/api/collection`)
             console.log(res.data.collections)
             setCollections(res.data.collections)
         } catch (err) {
@@ -26,7 +26,6 @@ const CollectionsCards = () => {
                 <div className="row justify-content-center">
                     {
                         collections.map((collection, index) => {
-                            console.log(collection)
                             return (
                                 <div className="col-12 col-sm-6 col-md-4">
                                     <div className="single_catagory_area d-flex align-items-center justify-content-center bg-img" style={{ backgroundImage: "url(img/bg-img/bg-2.jpg)" }}>

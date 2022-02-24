@@ -51,7 +51,7 @@ const Navbar = () => {
                 <li><a href="#">Pages</a>
                   <ul className="dropdown">
                     <li><a href="index.html">Home</a></li>
-                    <li><a href="shop.html">Shop</a></li>
+                    <li><a href="/products">Shop</a></li>
                     <li><a href="single-product-details.html">Product Details</a></li>
                     <li><a href="checkout.html">Checkout</a></li>
                     <li><a href="blog.html">Blog</a></li>
