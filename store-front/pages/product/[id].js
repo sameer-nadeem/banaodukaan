@@ -1,20 +1,42 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
+import axios from 'axios'
+import useURL from "../../utils/useURL";
+
 
 const Product = () => {
+  const router = useRouter()
+  const url = useURL();
+  const [product, setProduct] = useState([]);
+  const { id } = router.query
+  const getProduct = async () => {
+
+    try {
+        const url = useURL()
+        const res = await axios.get(`${url}:5000/api/product/${id}`)
+        setProduct(res.data.product)
+    } catch (err) {
+        console.log(err)
+    }
+}
+  useEffect(() => {
+    getProduct();
+  }, [])
+
   return (
     <section class="single_product_details_area d-flex align-items-center">
 
       <div class="single_product_thumb clearfix">
-        <img src="/img/product-img/product-big-1.jpg" alt="" />
+        <img style={{width: '40%', marginLeft: '30%'}} src={`${url + ':5000' + product.image}`} alt="" />
       </div>
 
       <div class="single_product_desc clearfix">
-        <span>mango</span>
+        <span>{product.brandId !== undefined && product.brandId.name}</span>
         <a href="cart.html">
-          <h2>One Shoulder Glitter Midi Dress</h2>
+          <h2>{product !== undefined && product.title}</h2>
         </a>
-        <p class="product-price"><span class="old-price">$65.00</span> $49.00</p>
-        <p class="product-desc">Mauris viverra cursus ante laoreet eleifend. Donec vel fringilla ante. Aenean finibus velit id urna vehicula, nec maximus est sollicitudin.</p>
+        <p class="product-price"><span class="old-price">Rs {product !== undefined && product.price}</span> Rs {product.price}</p>
+        <p class="product-desc">{product.description !== undefined && product.description.replace(/<[^>]+>/g, '')}</p>
 
         <form class="cart-form clearfix" method="post">
           <div class="select-box d-flex mt-50 mb-30">
