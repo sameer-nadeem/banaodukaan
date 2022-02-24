@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import BrandStrip from '../components/BrandStrip'
+import CollectionsCards from '../components/collectionCards/CollectionsCards'
 export default function Home() {
   return (
     <>
@@ -16,8 +17,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+      <CollectionsCards />
 
-      <div className="top_catagory_area section-padding-80 clearfix">
+      {/* <div className="top_catagory_area section-padding-80 clearfix">
         <div className="container">
           <div className="row justify-content-center">
             <div className="col-12 col-sm-6 col-md-4">
@@ -43,7 +45,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
 
       <div className="cta-area">
         <div className="container">
