@@ -57,6 +57,24 @@ const getCollection = async (req, res) => {
     }
 }
 
+const getCustomerCollections = async (req, res) => {
+    try {
+
+
+        const collections = await Collection.find({ deleteFlag: false, storeId: req.storeId })
+        return res.status(200).json({
+            collections
+        })
+    }
+    catch (err) {
+        console.log(err)
+
+        return res.status(500).json({
+            error: errors.SERVER_ERROR
+        })
+    }
+}
+
 
 const getCollections = async (req, res) => {
     try {
@@ -138,5 +156,6 @@ module.exports = {
     deleteCollection,
     getCollection,
     getCollections,
-    updateCollection
+    updateCollection,
+    getCustomerCollections
 }
