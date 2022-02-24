@@ -128,7 +128,7 @@ const AddBrands = () => {
             </div>
             <Button
              variant="outlined"
-             onClick={(e) => AddCollections(e)}
+             onClick={(e) => addBrand(e)}
              style={{ width: "15%", backgroundColor: "#3B8AC4", color: "#FFFFFF", boxShadow: '0px 8px 15px rgba(0, 0, 0, 0.1)', fontWeight: 500 }}
             >
               Save
