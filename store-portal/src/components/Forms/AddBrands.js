@@ -7,6 +7,7 @@ import Alert from "../Alerts/Alert";
 import JoditEditor from "jodit-react";
 import BackspaceRoundedIcon from '@mui/icons-material/BackspaceRounded';
 import { Button } from '@material-ui/core'
+import AddCollections from "./AddCollections";
 const AddBrands = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -127,6 +128,7 @@ const AddBrands = () => {
             </div>
             <Button
              variant="outlined"
+             onClick={(e) => AddCollections(e)}
              style={{ width: "15%", backgroundColor: "#3B8AC4", color: "#FFFFFF", boxShadow: '0px 8px 15px rgba(0, 0, 0, 0.1)', fontWeight: 500 }}
             >
               Save
