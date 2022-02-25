@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import useURL from "../utils/useURL";
+
 
 var product = [
   {
@@ -21,8 +23,9 @@ const Cart = () => {
   const [cart, setCart] = useState({products:[]});
   const [isEmpty, setEmpty] = useState(false);
   const [total, setTotal] = useState(0);
+  const url = useURL();
 
-  useEffect(() => {
+  function updateCart () {
     let cs = localStorage.getItem("cart");
 
     if (!cs) {
@@ -33,17 +36,15 @@ const Cart = () => {
       cs = JSON.parse(cs)
       setCart(cs);
       console.log('cart' , cart)
-
-      
     }
-    
+  }
+
+  useEffect(() => {
+    updateCart();
   }, []);
 
   
   useEffect(()=>{
-
-    
-    
 
   },total)
 
@@ -160,7 +161,7 @@ const Cart = () => {
     let newTotal ;
 
     for (const product of cart.products) {
-      if (product.id === id) {
+      if (product._id === id) {
         if (product.qty >= 2) {
           found =  true
           console.log("item found");
@@ -176,7 +177,7 @@ const Cart = () => {
 
     if (toRemove === true) {
       const newCart = cart.products.filter((product) => {
-        return product.id !== id;
+        return product._id !== id;
       });
       cart = {
         products: newCart,
@@ -211,16 +212,16 @@ const Cart = () => {
               <div className="single-cart-item">
                 <a href="#" className="product-image">
                   <img
-                    src= {item.url}
+                    src={`${url + ':5000' + item.url}`}
                     className="cart-thumb"
                     alt=""
                   />
                   <div className="cart-item-desc">
                     <span className="product-remove">
-                      <i onClick = {()=> {removeFromCart(item.id); }}  className="fa fa-close" aria-hidden="true"></i>
+                      <i onClick = {()=> {removeFromCart(item._id); }}  className="fa fa-close" aria-hidden="true"></i>
                     </span>
-                    <span className="badge">Mango</span>
-                    <h6>{item.title}</h6>
+                    <span className="badge">{item.title}</span>
+                    {/* <h6>{item.brand}</h6> */}
                     <p className="size">Quantity:  {item.qty}</p>
                     <p className="price">$ {item.price}</p>
                   </div>
