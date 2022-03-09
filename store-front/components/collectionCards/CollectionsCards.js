@@ -1,10 +1,17 @@
 import React, { useEffect, useState } from 'react'
-
+import { useRouter } from 'next/router'
 import axios from 'axios'
 import useURL from "../../utils/useURL";
 
 const CollectionsCards = () => {
     const [collections, setCollections] = useState([])
+    const router = useRouter();
+    const handleClick = (e, id) => {
+        e.preventDefault()
+        router.push({
+            pathname: '/collection/' + id,
+        })
+    }
     const getCollections = async () => {
         try {
             const url = useURL()
@@ -30,7 +37,9 @@ const CollectionsCards = () => {
                                 <div className="col-12 col-sm-6 col-md-4">
                                     <div className="single_catagory_area d-flex align-items-center justify-content-center bg-img" style={{ backgroundImage: "url(img/bg-img/bg-2.jpg)" }}>
                                         <div className="catagory-content">
-                                            <a href="#">{collection.name}</a>
+                                            <a onClick={(e) => handleClick(e, collection._id)} style={{ cursor: 'pointer' }}>
+                                                {collection.name}
+                                            </a>
                                         </div>
                                     </div>
                                 </div>

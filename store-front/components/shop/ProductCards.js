@@ -3,7 +3,7 @@ import axios from 'axios'
 import useURL from "../../utils/useURL";
 import { useRouter } from 'next/router'
 
-const ProductCards = () => {
+const ProductCards = (props) => {
     const [cart, setCart] = useState({products:[]});
     const [isEmpty, setEmpty] = useState(false);
     const [total, setTotal] = useState(0);
@@ -30,8 +30,9 @@ const ProductCards = () => {
         }
     }
     useEffect(() => {
-        getProducts();
-    }, [])
+
+        props.collectionProducts !== undefined ? setProducts(props.collectionProducts) : getProducts();
+    }, [props])
 
     useEffect(() => {
         let cs = localStorage.getItem("cart");
