@@ -11,6 +11,7 @@ import { Button } from '@material-ui/core'
 
 const CollectionDetail = () => {
   const [title, setTitle] = useState("");
+  const [path, setPath] = useState("");
   const [description, setDescription] = useState("");
   const [collection, setCollection] = useState([]);
   const { id: collectionId } = useParams();
@@ -31,12 +32,15 @@ const CollectionDetail = () => {
   const [alertTitle, setAlertTitle] = useState('')
   const [alertType, setAlertType] = useState('')
   const [alertMessage, setAlertMessage] = useState('')
+  const [image, setImage] = useState([]);
 
 
   const onChangeTitle = (event) => {
     setTitle(event.target.value);
   };
-
+  const onChangeImage = (event) => {
+    setImage(event.target.files[0]);
+  };
   // function that handles the update collection button click
   const updateCollection = async (event) => {
     event.preventDefault();
@@ -70,6 +74,42 @@ const CollectionDetail = () => {
     }
   };
 
+  const uploadImages = async (event) => {
+    if (image.length === 0) {
+      handleShow();
+      setAlertTitle("Error")
+      setAlertMessage("Please select the image first")
+      setAlertType("failure")
+    } else {
+      console.log(image);
+      event.preventDefault();
+      const formData = new FormData();
+      formData.append("myImage", image);
+      const config = {
+        headers: {
+          "content-type": "multipart/form-data",
+        },
+      };
+
+      try {
+        const res = await axios.post(
+          `${uri}/upload/collection/image`,
+          formData,
+          config
+        );
+
+        handleShow();
+        setAlertTitle("Success")
+        setAlertMessage("Image has been uploaded successfully")
+        setAlertType("successs")
+        setPath(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  };
+
+
   // use effect to get collection details from its id
   useEffect(() => {
     const getCollection = async (id) => {
@@ -78,6 +118,7 @@ const CollectionDetail = () => {
         setCollection(res.data.collection);
         setTitle(res.data.collection.name);
         setDescription(res.data.collection.description);
+        setPath(res.data.collection.image);
       } catch (err) {
         console.log(err);
       }
@@ -106,9 +147,9 @@ const CollectionDetail = () => {
               backgroundColor: "white",
             }}
           >
-            <div class = "d-flex flex-row"> 
-              <div class="p2" style = {{marginRight: 20}}>
-                <BackspaceRoundedIcon style = {{fill: '#345DA7', cursor: 'pointer', }}  onClick={() => history.push('/admin/collections')} />
+            <div class="d-flex flex-row">
+              <div class="p2" style={{ marginRight: 20 }}>
+                <BackspaceRoundedIcon style={{ fill: '#345DA7', cursor: 'pointer', }} onClick={() => history.push('/admin/collections')} />
               </div>
               <div class="p2">
                 <h1 style={{ fontSize: 24, fontWeight: 'bold', color: "black" }}>{collection === undefined ? "" : collection.name}</h1>
@@ -151,9 +192,50 @@ const CollectionDetail = () => {
                 />
               </div>
             </div>
+            <div style={{ display: "flex", justifyContent: "center", padding: 20 }}>
+              
+                <div className="col">
+                  <h1 style={{ fontSize: 24, color: "black", fontWeight: 'bold' }}>Media</h1>
+                  <div style={{ display: "flex", justifyContent: "center" }}>
+                    <img
+                      src={`${path === "" ? collection.image : path}`}
+                      width="400"
+                      height="400"
+                      alt=""
+                    />
+                  </div>
+                  <div className="mb-3">
+                    <form>
+                      <label
+                        className="form-label"
+                        style={{ color: "black", padding: 5, fontWeight: '600' }}
+                      >
+                        Image
+                      </label>
+                      <input
+                        className="form-control"
+                        type="file"
+                        name="myImage"
+                        style={{ backgroundColor: "white", color: "black" }}
+                        onChange={onChangeImage}
+                        required
+                      />
+                      <div style={{ marginTop: 5 }}>
+                        <Button
+                          variant="outlined"
+                          style={{ width: "14%", backgroundColor: "#3B8AC4", color: "#FFFFFF", boxShadow: '0px 8px 15px rgba(0, 0, 0, 0.1)', fontWeight: 500 }}
+                          onClick={(e) => uploadImages(e)}
+                        >
+                          Upload
+                        </Button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+            </div>
             <Button
-              variant = "outlined"
-              style={{ width: "25%", backgroundColor: "#3B8AC4", color: "#FFFFFF", boxShadow: '0px 8px 15px rgba(0, 0, 0, 0.1)', fontWeight: 500  }}
+              variant="outlined"
+              style={{ width: "25%", backgroundColor: "#3B8AC4", color: "#FFFFFF", boxShadow: '0px 8px 15px rgba(0, 0, 0, 0.1)', fontWeight: 500 }}
               onClick={(e) => updateCollection(e)}
             >
               Update Collection

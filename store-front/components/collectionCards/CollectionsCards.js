@@ -5,6 +5,7 @@ import useURL from "../../utils/useURL";
 
 const CollectionsCards = () => {
     const [collections, setCollections] = useState([])
+    const url = useURL()
     const router = useRouter();
     const handleClick = (e, id) => {
         e.preventDefault()
@@ -16,7 +17,6 @@ const CollectionsCards = () => {
         try {
             const url = useURL()
             const res = await axios.get(`${url}:5000/api/collection`)
-            console.log(res.data.collections)
             setCollections(res.data.collections)
         } catch (err) {
             console.log(err)
@@ -33,9 +33,11 @@ const CollectionsCards = () => {
                 <div className="row justify-content-center">
                     {
                         collections.map((collection, index) => {
+                            const img_url = `${url + ':5000' + collection.image}`
+                            img_url = img_url.replace(/\\+\b/g, '/')
                             return (
                                 <div className="col-12 col-sm-6 col-md-4">
-                                    <div className="single_catagory_area d-flex align-items-center justify-content-center bg-img" style={{ backgroundImage: "url(img/bg-img/bg-2.jpg)" }}>
+                                    <div className="single_catagory_area d-flex align-items-center justify-content-center bg-img" style={{ backgroundImage: `url(${img_url})` }}>
                                         <div className="catagory-content">
                                             <a onClick={(e) => handleClick(e, collection._id)} style={{ cursor: 'pointer' }}>
                                                 {collection.name}

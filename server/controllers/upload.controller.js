@@ -19,7 +19,20 @@ const uploadProductImage = (req, res) => {
     res.send(`/${req.file.path}`)
   })
 }
-
+const uploadCollectionImage = (req, res) => {
+  upload(req, res, (err) => {
+    console.log(req.file.path)
+    res.send(`/${req.file.path}`)
+  })
+}
+const uploadStoreImage = (req, res) => {
+  upload(req, res, (err) => {
+    console.log(req.file.path)
+    res.send(`/${req.file.path}`)
+  })
+}
 module.exports = {
-  uploadProductImage
+  uploadProductImage,
+  uploadCollectionImage,
+  uploadStoreImage
 }

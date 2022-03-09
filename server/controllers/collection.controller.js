@@ -10,13 +10,15 @@ const addCollection = async (req, res) => {
     try {
         var {
             name,
-            description
+            description,
+            image
         } = req.body
 
         const collection = new Collection({
             name,
             description,
-            storeId: req.storeId
+            storeId: req.storeId,
+            image
         })
 
         await collection.save()
