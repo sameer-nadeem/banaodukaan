@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import Link from 'next/link'
+import { useSelector } from 'react-redux'
 const Navbar = () => {
+  const isAuth = useSelector(state => state.auth.isAuthenticated)
   return (
     <header className="header_area">
       <div className="classy-nav-container breakpoint-off d-flex align-items-center justify-content-between">
@@ -78,9 +80,14 @@ const Navbar = () => {
             <a href="#"><img src="/img/core-img/heart.svg" alt="" /></a>
           </div> */}
           <div className="user-login-info">
-            <Link href="/login">
+            {
+              isAuth ? (<Link href="/profile">
               <a><img src="/img/core-img/user.svg" alt="" /></a>
-            </Link>
+            </Link>) : (<Link href="/login">
+              <a><img src="/img/core-img/user.svg" alt="" /></a>
+            </Link>)
+            }
+            
           </div>
 
           <div className="cart-area">

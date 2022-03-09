@@ -9,6 +9,7 @@ const Collection = () => {
     const router = useRouter()
     const url = useURL();
     const [product, setProduct] = useState([]);
+    const [count, setCount] = useState(0)
     const { id } = router.query
     const getProduct = async () => {
 
@@ -32,7 +33,7 @@ const Collection = () => {
                     <div class="row h-100 align-items-center">
                         <div class="col-12">
                             <div class="page-title text-center">
-                                <h2>Products</h2>
+                                <h2>{product.length != 0 ? product[0].collectionId.name : 'Collection'}</h2>
                             </div>
                         </div>
                     </div>
@@ -52,7 +53,7 @@ const Collection = () => {
                                     <div class="col-12">
                                         <div class="product-topbar d-flex align-items-center justify-content-between">
                                             <div class="total-products">
-                                                <p><span>10</span> products found</p>
+                                                <p><span>{count}</span> products found</p>
                                             </div>
                                             <div class="product-sorting d-flex">
                                                 <p>Sort by:</p>
@@ -70,7 +71,7 @@ const Collection = () => {
                                     </div>
                                 </div>
 
-                                <ProductCards collectionProducts={product} />
+                                <ProductCards collectionProducts={product} counter={setCount}/>
                             </div>
                             <nav aria-label="navigation">
                                 <ul class="pagination mt-50 mb-70">
