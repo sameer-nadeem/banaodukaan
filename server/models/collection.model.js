@@ -15,6 +15,9 @@ const CollectionSchema = new Schema({
     },
     storeId: {
         type: Schema.Types.ObjectId
+    },
+    image: {
+        type: String
     }
 })
 

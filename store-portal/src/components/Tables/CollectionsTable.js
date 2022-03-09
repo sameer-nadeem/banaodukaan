@@ -11,7 +11,36 @@ const CollectionsTable = () => {
   theme = responsiveFontSizes(theme);
   const history = useHistory();
 
-  const columns = ["Id", "Title"];
+  const columns = [
+
+    {
+      name: "id",
+      label: "Id",
+      options: {
+        filter: false,
+        sort: false,
+      }
+    },
+    {
+      name: "title",
+      label: "Title",
+      options: {
+        filter: true,
+        sort: false,
+      },
+    },
+    {
+      name: "image",
+      label: "Picture",
+      options: {
+        filter: false,
+        sort: false,
+        customBodyRender: (p) => <img alt="" width="75px" src={p}></img>,
+      },
+    },
+    
+  ];
+
 
   const [collections, setCollections] = useState([]);
   const [newRows, setRows] = useState([]);
@@ -73,7 +102,7 @@ const CollectionsTable = () => {
     const cleanedCollections = [];
 
     collections.forEach(function (collection) {
-      const coll = [collection._id, collection.name];
+      const coll = [collection._id, collection.name, collection.image];
       cleanedCollections.push(coll);
     });
 
