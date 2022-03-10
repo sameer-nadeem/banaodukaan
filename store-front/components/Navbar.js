@@ -1,10 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link'
 import { useSelector, useDispatch } from 'react-redux'
 import { logout } from "../actions/auth";
 const Navbar = () => {
+  const [length, setLength] = useState(0);
   const isAuth = useSelector(state => state.auth.isAuthenticated)
   const dispatch = useDispatch();
+  const [cart, setCart] = useState({products:[]});
+
+  function getCart() {
+    let cs = localStorage.getItem("cart");
+    if (!cs) {
+      setLength(0);
+    } else {
+      cs = JSON.parse(cs)
+      setLength(cs.products.length)
+      setCart(cs)
+    }
+  }
+  useEffect(() => {
+    getCart();
+  }, [cart]);
   return (
     <header className="header_area">
       <div className="classy-nav-container breakpoint-off d-flex align-items-center justify-content-between">
@@ -106,7 +122,7 @@ const Navbar = () => {
           </div>
 
           <div className="cart-area">
-            <a href="#" id="essenceCartBtn"><img src="/img/core-img/bag.svg" alt="" /> <span>3</span></a>
+            <a style = {{cursor: 'pointer'}} id="essenceCartBtn"><img src="/img/core-img/bag.svg" alt="" /> <span>{length}</span></a>
           </div>
         </div>
 
