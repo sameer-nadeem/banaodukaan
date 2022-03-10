@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import Link from 'next/link'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { logout } from "../actions/auth";
 const Navbar = () => {
   const isAuth = useSelector(state => state.auth.isAuthenticated)
+  const dispatch = useDispatch();
   return (
     <header className="header_area">
       <div className="classy-nav-container breakpoint-off d-flex align-items-center justify-content-between">
@@ -81,13 +83,26 @@ const Navbar = () => {
           </div> */}
           <div className="user-login-info">
             {
-              isAuth ? (<Link href="/profile">
-              <a><img src="/img/core-img/user.svg" alt="" /></a>
-            </Link>) : (<Link href="/login">
-              <a><img src="/img/core-img/user.svg" alt="" /></a>
-            </Link>)
+              isAuth ? (<div class="dropdown show">
+                <a href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="/img/core-img/user.svg" alt="" /></a>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                  <Link href="/profile">
+                    <a className="dropdown">My Profile</a>
+                  </Link>
+                  <Link href="/">
+                    <a className="dropdown" onClick={() => dispatch(logout())}>Logout</a>
+                  </Link>
+                </div>
+              </div>) : (<div class="dropdown show">
+                <a href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="/img/core-img/user.svg" alt="" /></a>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                  <Link href="/login">
+                    <a className="dropdown">Log in</a>
+                  </Link>
+                </div>
+              </div>)
             }
-            
+
           </div>
 
           <div className="cart-area">

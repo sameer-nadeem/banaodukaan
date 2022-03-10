@@ -1,28 +1,28 @@
 import Head from 'next/head'
 import Cart from './Cart'
-// import { useEffect } from 'react'
-// import { useDispatch, useSelector } from 'react-redux'
-// import { loadUser } from '../actions/auth'
-// import setAuthToken from '../utils/setAuthToken';
-// if (typeof window !== 'undefined') {
-//   if (localStorage.customerToken)
-//     setAuthToken();
-// }
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { loadUser } from '../actions/auth'
+import setAuthToken from '../utils/setAuthToken';
+if (typeof window !== 'undefined') {
+  if (localStorage.customerToken)
+    setAuthToken();
+}
 import Navbar from './Navbar'
 // import Links from './Links'
 
 
 export default function Layout({ children }) {
-  // const dispatch = useDispatch()
-  // const token = useSelector(state => state.auth.token)
-  // console.log("token", token)
-  // useEffect(() => {
-  //   dispatch(loadUser())
-  // }, [])
+  const dispatch = useDispatch()
+  const token = useSelector(state => state.auth.token)
+  console.log("token", token)
+  useEffect(() => {
+    dispatch(loadUser())
+  }, [])
 
-  // useEffect(() => {
-  //   setAuthToken()
-  // }, [token])
+  useEffect(() => {
+    setAuthToken()
+  }, [token])
 
   return (
     <>
@@ -107,7 +107,7 @@ export default function Layout({ children }) {
           <div className="row mt-5">
             <div className="col-md-12 text-center">
               <p>
-                Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i className="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved
               </p>
             </div>
           </div>
