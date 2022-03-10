@@ -1,5 +1,6 @@
 const User = require("../models/user.model")
 const Customer = require("../models/customer.model")
+const bcrypt = require('bcryptjs')
 
 
 const addCustomer = async (req, res) => {
@@ -103,6 +104,43 @@ const updateCustomer = async (req, res) => {
 
 }
 
+const updateCustomerPassword = async (req, res) => {
+    const id = req.user.id
+
+    try {
+
+        var {
+            password,
+            newPassword
+        } = req.body
+
+        const customer = await Customer.findOne({ _id: id })
+        const passMatch = await bcrypt.compare(password, customer.password)
+        if (passMatch) {
+            const salt = await bcrypt.genSalt(10)
+            const hashedPassword = await bcrypt.hash(newPassword, salt)
+            customer.password = hashedPassword
+
+            customer.save()
+        }
+        else {
+            return res.status(400).json({
+                error: "Invalid Password"
+            })
+        }
+
+        return res.status(200).json({
+            customer
+        })
+    } catch (err) {
+        return res.status(500).json({
+            error: "Server Error"
+        })
+    }
+
+
+}
+
 
 
 const getCustomer = async (req, res) => {
@@ -184,6 +222,7 @@ module.exports = {
     getCustomer,
     deleteCustomer,
     updateCustomer,
+    updateCustomerPassword,
     getCustomers
 
 }
