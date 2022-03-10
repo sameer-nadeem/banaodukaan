@@ -20,7 +20,7 @@ const ProfileForm = () => {
     setFullName(event.target.value);
   };
 
-  const onChangeemail = (event) => {
+  const onChangeEmail = (event) => {
     setEmail(event.target.value);
   };
 
@@ -54,6 +54,7 @@ const ProfileForm = () => {
                 className="form-control"
                 name="fullName"
                 value={fullName}
+                onChange = {onChangeName}
               ></input>
               <label htmlFor="exampleInputEmail1" className="form-label mt-3">
                 Email address
@@ -64,6 +65,7 @@ const ProfileForm = () => {
                 aria-describedby="emailHelp"
                 name="emailRegister"
                 value={email}
+                onChange = {onChangeEmail}
               />
 
               <div id="emailHelp" className="form-text"></div>
@@ -72,7 +74,7 @@ const ProfileForm = () => {
                 <label htmlFor="exampleInputEmail1" className="form-label mt-3">
                   Address
                 </label>
-                <input type="text" className="form-control" value={address}/>
+                <input type="text" className="form-control" value={address} onChange = {onChangeAddress} />
               </div>
             </div>
             <div className="mt-3" style={{ marginTop: "10%" }}></div>

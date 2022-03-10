@@ -1,28 +1,11 @@
 import React, { useEffect, useState } from "react";
 import useURL from "../utils/useURL";
 
-
-var product = [
-  {
-    id: 3,
-    title: "Gaming Mouse",
-    imageURL:
-      "https://m.media-amazon.com/images/I/51S6IQ2lGwL._AC_UY327_FMwebp_QL65_.jpg",
-    price: 49.5,
-  },
-  {
-    id: 1,
-    title: "Gaming Chair",
-    imageURL:
-      "https://m.media-amazon.com/images/I/61HEqHMkRhL._AC_UL480_FMwebp_QL65_.jpg",
-    price: 149.0,
-  },
-];
-
 const Cart = () => {
   const [cart, setCart] = useState({products:[]});
   const [isEmpty, setEmpty] = useState(false);
   const [total, setTotal] = useState(0);
+  const [length, setLength] = useState(0)
   const url = useURL();
 
   function updateCart () {
@@ -34,6 +17,7 @@ const Cart = () => {
     } else {
       console.log(cs);
       cs = JSON.parse(cs)
+      setLength(cs.products.length)
       setCart(cs);
       console.log('cart' , cart)
     }
@@ -41,7 +25,7 @@ const Cart = () => {
 
   useEffect(() => {
     updateCart();
-  }, []);
+  }, [cart]);
 
   
   useEffect(()=>{
@@ -188,6 +172,7 @@ const Cart = () => {
 
     localStorage.setItem("cart", JSON.stringify(cart));
     setCart(cart)
+    setLength(cart.products.length)
   }
 
    
@@ -198,7 +183,7 @@ const Cart = () => {
       <div className="right-side-cart-area">
         <div className="cart-button">
           <a href="#" id="rightSideCart">
-            <img src="/img/core-img/bag.svg" alt="" /> <span>3</span>
+            <img src="/img/core-img/bag.svg" alt="" /> <span>{length}</span>
           </a>
         </div>
 

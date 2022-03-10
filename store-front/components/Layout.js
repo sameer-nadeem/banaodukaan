@@ -107,7 +107,7 @@ export default function Layout({ children }) {
           <div className="row mt-5">
             <div className="col-md-12 text-center">
               <p>
-                Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved
+                Copyright &copy;<script>document.write(new Date().getFullYear());</script> BanaoDukaan
               </p>
             </div>
           </div>
