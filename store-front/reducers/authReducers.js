@@ -21,7 +21,7 @@ export const authReducer = (state = initialAuthState, action) => {
       localStorage.removeItem('customerToken')
       return { token: null, isAuthenticated: false, loading: false, user: null }
     case "USER_LOADED":
-      return { ...state, user: action.payload }
+      return { ...state, user: action.payload, isAuthenticated: true }
     default:
       return { ...state };
   }

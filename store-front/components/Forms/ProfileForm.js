@@ -7,10 +7,26 @@ const ProfileForm = () => {
   const [errorMsg, setError] = useState("");
   const loginLoading = useSelector((state) => state.auth.loading);
   const user = useSelector((state) => state.auth.user);
-  console.log('usersssss', user)
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [address, setAddress] = useState("");
   useEffect(() => {
     setShowError(false);
-  }, []);
+    user !== null ? setFullName(user.userId.firstName) : null
+    user !== null ? setEmail(user.email) : null
+    user !== null ? setAddress(user.address) : null
+  }, [user]);
+  const onChangeName = (event) => {
+    setFullName(event.target.value);
+  };
+
+  const onChangeemail = (event) => {
+    setEmail(event.target.value);
+  };
+
+  const onChangeAddress = (event) => {
+    setAddress(event.target.value);
+  };
   return (
     <>
       <div style={{ marginTop: "9%", marginLeft: "5%" }}>
@@ -37,6 +53,7 @@ const ProfileForm = () => {
                 type="text"
                 className="form-control"
                 name="fullName"
+                value={fullName}
               ></input>
               <label htmlFor="exampleInputEmail1" className="form-label mt-3">
                 Email address
@@ -46,6 +63,7 @@ const ProfileForm = () => {
                 className="form-control"
                 aria-describedby="emailHelp"
                 name="emailRegister"
+                value={email}
               />
 
               <div id="emailHelp" className="form-text"></div>
@@ -54,7 +72,7 @@ const ProfileForm = () => {
                 <label htmlFor="exampleInputEmail1" className="form-label mt-3">
                   Address
                 </label>
-                <input type="text" className="form-control" />
+                <input type="text" className="form-control" value={address}/>
               </div>
             </div>
             <div className="mt-3" style={{ marginTop: "10%" }}></div>
