@@ -251,7 +251,7 @@ const Cart = () => {
               </li>
             </ul>
             <div className="checkout-btn mt-100">
-              <a  href="checkout.html" className="btn essence-btn">
+              <a  href="/checkout" className="btn essence-btn">
                 check out
               </a>
             </div>
