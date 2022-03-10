@@ -8,4 +8,5 @@ router.route('/:id').get(customerController.getCustomer)
 router.route('/:id').delete(customerController.deleteCustomer)
 router.route('/:id').put(customerController.updateCustomer)
 router.route('/').get(customerController.getCustomers)
+router.route('/password').put(customerController.updateCustomerPassword)
 module.exports = router
