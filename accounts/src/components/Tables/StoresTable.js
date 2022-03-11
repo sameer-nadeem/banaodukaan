@@ -7,7 +7,7 @@ import { CardActionArea } from "@mui/material";
 import { Link } from "react-router-dom";
 import Grid from "@mui/material/Grid";
 import StoreListLoader from "../Loaders/StoreListLoader";
-import store_url from '../../urls'
+import { store_url } from '../../urls'
 const StoresTable = () => {
   const [stores, setStores] = useState([]);
   const [storeListLoading, setStoreListLoading] = useState(true);
