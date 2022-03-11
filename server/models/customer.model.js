@@ -13,6 +13,12 @@ const customerSchema = new Schema({
     storeId: {
         type: mongoose.Schema.Types.ObjectId,
     },
+    firstName: {
+        type: String
+    },
+    lastName: {
+        type: String
+    },
     email: {
         type: String
     },

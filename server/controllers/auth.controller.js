@@ -90,15 +90,10 @@ const customerSignUp = async (req, res) => {
 
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
-    const user = new User({
-      firstName,
-      lastName,
-    });
-
-    await user.save();
 
     const customer = new Customer({
-      userId: user._id,
+      firstName,
+      lastName,
       email,
       storeId: req.storeId,
       password: hashedPassword,
@@ -141,7 +136,7 @@ const customerSignUp = async (req, res) => {
 
 const getCustomer = async (req, res) => {
   try {
-    const customer = await Customer.findById(req.user.id).populate("userId");
+    const customer = await Customer.findById(req.user.id)
     console.log(customer);
     return res.status(200).json({
       customer,
