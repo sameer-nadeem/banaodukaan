@@ -127,7 +127,8 @@ const updateCollection = async (req, res) => {
         var {
             name,
             deleteFlag,
-            description
+            description,
+            image
         } = req.body
 
         const id = req.params.id
@@ -139,6 +140,7 @@ const updateCollection = async (req, res) => {
         collection.name = name
         collection.deleteFlag = deleteFlag
         collection.description = description
+        collection.image = image
 
         await collection.save()
 
