@@ -13,7 +13,7 @@ export const loadUser = () => async dispatch => {
       type: "USER_LOADED",
       payload: res.data.customer
     })
-    console.log(res.data.customer)
+    console.log("customer", res.data.customer)
   } catch (err) {
     dispatch({
       type: "AUTH_ERROR"
