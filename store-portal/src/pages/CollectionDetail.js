@@ -56,6 +56,7 @@ const CollectionDetail = () => {
       name: title,
       description: description,
       deleteFlag: false,
+      image: path
     };
     try {
       await axios.put(`${uri}/collection/${collection._id}`, body, {
