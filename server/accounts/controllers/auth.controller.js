@@ -44,7 +44,6 @@ const registerMerchant = async (req, res) => {
         await merchant.save()
         // const welcomeMessage = `
         // <h1>
-        // Hello ${merchant.firstName}, welcome to Banaodukaan.com. Start by creating a new store at <a href="http://accounts.bdstaging.com:4000/my-stores/new/">Create new store!</a>
         // </h1>
         // `
         const fs = require('fs/promises')

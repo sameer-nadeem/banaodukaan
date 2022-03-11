@@ -7,6 +7,7 @@ import { CardActionArea } from "@mui/material";
 import { Link } from "react-router-dom";
 import Grid from "@mui/material/Grid";
 import StoreListLoader from "../Loaders/StoreListLoader";
+import store_url from '../../urls'
 const StoresTable = () => {
   const [stores, setStores] = useState([]);
   const [storeListLoading, setStoreListLoading] = useState(true);
@@ -78,8 +79,7 @@ const StoresTable = () => {
   //   },
   //   onRowClick: (rowData) => {
   //     console.log(rowData);
-  //     window.location.href = `http://${rowData[1]}.bdstaging.com:3000/admin`
-  //     // history(`${rowData[1]}.bdstaging.com:5000/admin`);
+
   //   },
   // };
 
@@ -109,7 +109,7 @@ const StoresTable = () => {
   // const history = useNavigate();
   //redirects the merchant to portal of the store that was clicked
   const handleClick = (storeName) => {
-    window.location.href = `http://${storeName}.bdstaging.com:3000/admin`;
+    window.location.href = `http://${storeName}.${store_url}`;
   };
   //rendering the store list
   return (

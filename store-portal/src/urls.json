@@ -1,3 +1,4 @@
 {
-  "accounts":"http://accounts.bdstaging.com:4000"
+  "accounts":"http://accounts.bdstaging.com:4000",
+  "domain":".bdstaging.com"
 }
