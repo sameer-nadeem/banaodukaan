@@ -16,7 +16,7 @@ const CollectionsCards = () => {
     const getCollections = async () => {
         try {
             const url = useURL()
-            const res = await axios.get(`${url}:5000/api/collection`)
+            const res = await axios.get(`${url}/api/collection`)
             setCollections(res.data.collections)
         } catch (err) {
             console.log(err)

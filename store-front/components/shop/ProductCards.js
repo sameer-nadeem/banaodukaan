@@ -21,7 +21,7 @@ const ProductCards = (props) => {
   const getProducts = async () => {
     try {
       const url = useURL();
-      const res = await axios.get(`${url}:5000/api/product`);
+      const res = await axios.get(`${url}/api/product`);
       console.log("products, ", res.data.products);
       setProducts(res.data.products);
       props.counter(res.data.products.length);
@@ -177,7 +177,7 @@ const ProductCards = (props) => {
         );
       })}
 
-      {/* 
+      {/*
             <div class="col-12 col-sm-6 col-lg-4">
                 <div class="single-product-wrapper">
                     <div class="product-img">
