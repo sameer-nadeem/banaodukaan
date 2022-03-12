@@ -15,7 +15,7 @@ const Collection = () => {
 
         try {
             const url = useURL()
-            const res = await axios.get(`${url}:5000/api/product`)
+            const res = await axios.get(`${url}/api/product`)
             const FilteredProducts = res.data.products.filter(product => product.collectionId._id === id)
             setProduct(FilteredProducts)
         } catch (err) {
@@ -71,7 +71,7 @@ const Collection = () => {
                                     </div>
                                 </div>
 
-                                <ProductCards collectionProducts={product} counter={setCount}/>
+                                <ProductCards collectionProducts={product} counter={setCount} />
                             </div>
                             <nav aria-label="navigation">
                                 <ul class="pagination mt-50 mb-70">

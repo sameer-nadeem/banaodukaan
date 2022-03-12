@@ -87,7 +87,7 @@ const PasswordForm = () => {
 
             try {
                 const url = useURL();
-                await axios.put(`${url}:5000/api/customer/password`, data, {
+                await axios.put(`${url}/api/customer/password`, data, {
                     headers: {
                         "Content-Type": "application/json",
                     },

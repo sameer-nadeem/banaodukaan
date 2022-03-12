@@ -8,7 +8,7 @@ export const loadUser = () => async dispatch => {
   }
   try {
     const url = useURL()
-    const res = await axios.get(`${url}:5000/api/auth/customer`)
+    const res = await axios.get(`${url}/api/auth/customer`)
     dispatch({
       type: "USER_LOADED",
       payload: res.data.customer
@@ -33,7 +33,7 @@ export const register = (
     dispatch({
       type: "REGISTER_REQUEST"
     })
-    const { data } = await axios.post(`${url}:5000/api/auth/customer/register`,
+    const { data } = await axios.post(`${url}/api/auth/customer/register`,
       { email, firstName, lastName, password }, {
       headers: {
         "Content-Type": "application/json",
@@ -80,7 +80,7 @@ export const login = (email, password, alertHandler, ref = null) => async dispat
       email,
       password,
     };
-    const response = await axios.post(`${url}:5000/api/auth/customer`, body, {
+    const response = await axios.post(`${url}/api/auth/customer`, body, {
       headers: {
         "Content-Type": "application/json",
       },
