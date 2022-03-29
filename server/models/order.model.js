@@ -9,8 +9,13 @@ const OrderSchema = new Schema({
         type: Number
     },
     products: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Product'
+        product:{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Product'
+        },
+        qty: {
+            type : Number
+        }
     }],
     discount: {
         type: Number
