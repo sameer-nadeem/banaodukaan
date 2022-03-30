@@ -27,7 +27,13 @@ const storeSchema = new Schema({
     complaints:[{
         type: mongoose.Schema.Types.ObjectId,
         ref:'Complaint'
-    }]
+    }],
+    logo: {
+        type: String
+    },
+    cover: {
+        type: String
+    }
 })
 
 module.exports = mongoose.model('Store', storeSchema );
