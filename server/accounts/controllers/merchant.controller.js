@@ -5,6 +5,25 @@ const Store = require('../../models/store.model')
 const Settings = require('../../models/setting.model')
 const bcrypt = require('bcryptjs')
 const mongoose = require('mongoose')
+const multer = require('multer')
+const path = require("path")
+
+const Storage = multer.diskStorage({
+    destination: "./uploads/images",
+    filename: function (req, file, cb) {
+      cb(null, "IMAGE-" + Date.now() + path.extname(file.originalname));
+    }
+  })
+  
+  const uploadLogo = multer({
+    storage: Storage,
+    limits: { fileSize: 1000000 },
+  }).single('myLogo')
+
+  const uploadCover = multer({
+    storage: Storage,
+    limits: { fileSize: 1000000 },
+  }).single('myCover')
 
 const getMyStores = async (req, res) => {
 
@@ -39,6 +58,8 @@ const addStore = async (req, res) => {
             adress,
             postalCode,
             website,
+            logo,
+            cover
         } = req.body
 
         const storeWithSameNameExists = await Store.exists({ title })
@@ -62,7 +83,9 @@ const addStore = async (req, res) => {
             orders: [],
             discountCodes: [],
             complaints: [],
-            settings: settings._id
+            settings: settings._id,
+            logo: logo,
+            cover: cover
         })
         await store.save()
         merchant.myStores.push(store._id)
@@ -199,15 +222,29 @@ const updateStore = async (req, res) => {
     const storeId = req.params.id
     try {
         var {
+            title,
             country,
             city,
             phone,
             adress,
             postalCode,
             website,
+            logo,
+            cover,
+            orders,
+            complaints,
+            products
         } = req.body
 
         const store = await Store.findById(storeId)
+
+        store.title = title
+        store.logo = logo
+        store.cover = cover
+        store.orders = orders
+        store.products = products
+        store.complaints = complaints
+        await store.save()
 
         const settings = await Settings.findById(store.settings)
 
@@ -240,6 +277,19 @@ const validateStore = async (req, res) => {
     res.status(200).json({ isValid })
 }
 
+const uploadStoreCover = (req, res) => {
+    uploadCover(req, res, (err) => {
+      console.log(req.file.path)
+      res.send(`/${req.file.path}`)
+    })
+  }
+  const uploadStoreLogo = (req, res) => {
+    uploadLogo(req, res, (err) => {
+      console.log(req.file.path)
+      res.send(`/${req.file.path}`)
+    })
+  }
+
 module.exports = {
     getMyStores,
     addStore,
@@ -248,5 +298,7 @@ module.exports = {
     getStore,
     updateStore,
     updateMyPassword,
-    validateStore
+    validateStore,
+    uploadStoreCover,
+    uploadStoreLogo
 }

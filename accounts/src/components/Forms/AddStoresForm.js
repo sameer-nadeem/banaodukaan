@@ -1,20 +1,22 @@
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Alert from "../Alerts/Alert";
 import countryList from "react-select-country-list";
 import Select from "react-select";
-import BackspaceRoundedIcon from '@mui/icons-material/BackspaceRounded';
-import { Button } from '@material-ui/core'
-
+import BackspaceRoundedIcon from "@mui/icons-material/BackspaceRounded";
+import { Button } from "@material-ui/core";
+import { ProgressBar } from "react-bootstrap";
+import useURL from "../../utils/useURL";
 
 let validationCancelToken;
-
 
 // import { AlertTitle } from "@mui/material";
 
 const AddStoresForm = () => {
   //success modal
+  const url = useURL();
+  const topRef = useRef(null);
   const [show, setShow] = useState(false);
   const history = useNavigate();
   const handleClose = () => {
@@ -28,20 +30,35 @@ const AddStoresForm = () => {
   const [title, setTitle] = useState("");
   const [value, setValue] = useState("");
   const [adress, setAdress] = useState("");
-
+  const [uploadPercentage, setUploadPercentage] = useState(0);
+  const [uploadPercentageTwo, setUploadPercentageTwo] = useState(0);
   const [city, setCity] = useState("");
   const [postalCode, setPostalCode] = useState(0);
   const [phone, setPhone] = useState(0);
   const [website, setWebsite] = useState("");
   const [apartment, setApartment] = useState("");
   const [firstName, setFirstName] = useState("");
-
+  const [logo, setLogo] = useState([]);
+  const [cover, setCover] = useState([]);
+  const [logoPath, setLogoPath] = useState("");
+  const [coverPath, setCoverPath] = useState("");
   const [lastName, setLastName] = useState("");
   const [titleAlert, setAlertTitle] = useState("");
   const [msg, setMsg] = useState("");
   const [status, setStatus] = useState("");
   const [redirectCheck, setRedirectCheck] = useState(false);
+  const [buttonCheck, setButtonCheck] = useState(false);
+  const [buttonCheckTwo, setButtonCheckTwo] = useState(false);
+  const [logoSrc, setLogoSrc] = useState("");
+  const [coverSrc, setCoverSrc] = useState("");
+
   //set the relevant fields once their state changes
+  const onChangeLogo = (event) => {
+    setLogo(event.target.files[0]);
+  };
+  const onChangeCover = (event) => {
+    setCover(event.target.files[0]);
+  };
   const onChangeTitle = (event) => {
     setTitle(event.target.value);
   };
@@ -77,10 +94,131 @@ const AddStoresForm = () => {
       console.log(err);
     }
   };
+  const uploadLogo = async (event) => {
+    event.preventDefault();
+
+    if (logo.length === 0) {
+      setAlertTitle("Error");
+      setMsg("Please select the image first");
+      setStatus("failure");
+      topRef.current.scrollIntoView();
+    } else {
+      const formData = new FormData();
+      formData.append("myLogo", logo);
+      const config = {
+        headers: {
+          "content-type": "multipart/form-data",
+        },
+        onUploadProgress: (progressEvent) => {
+          const percentage = (progressEvent.loaded * 100) / progressEvent.total;
+          if (percentage < 100) setUploadPercentage(Math.floor(percentage));
+          console.log(percentage);
+        },
+      };
+      try {
+        const res = await axios.post(
+          `/api/merchant/store/logo`,
+          formData,
+          config
+        );
+        setButtonCheck(true);
+        setLogoPath(res.data);
+        var img_url = `${url + res.data}`;
+        img_url = img_url.replace(/\\+\b/g, "/");
+        setLogoSrc(img_url);
+        console.log("logo src", img_url);
+        setUploadPercentage(
+          100,
+          setTimeout(() => {
+            setUploadPercentage(0);
+          }, 1000)
+        );
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  };
+
+  const uploadCover = async (event) => {
+    event.preventDefault();
+
+    if (cover.length === 0) {
+      setAlertTitle("Error");
+      setMsg("Please select the image first");
+      setStatus("failure");
+      topRef.current.scrollIntoView();
+    } else {
+      const formData = new FormData();
+      formData.append("myCover", cover);
+      const config = {
+        headers: {
+          "content-type": "multipart/form-data",
+        },
+        onUploadProgress: (progressEvent) => {
+          const percentage = (progressEvent.loaded * 100) / progressEvent.total;
+          if (percentage < 100) setUploadPercentageTwo(Math.floor(percentage));
+          console.log(percentage);
+        },
+      };
+      try {
+        const res = await axios.post(
+          `/api/merchant/store/cover`,
+          formData,
+          config
+        );
+        setButtonCheckTwo(true);
+        setCoverPath(res.data);
+        var img_url = `${url + res.data}`;
+        img_url = img_url.replace(/\\+\b/g, "/");
+        setCoverSrc(img_url);
+        setUploadPercentageTwo(
+          100,
+          setTimeout(() => {
+            setUploadPercentageTwo(0);
+          }, 1000)
+        );
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  };
+
   // function to add store
   const addStores = async (event) => {
     // prevent the default action of onSubmit function
     event.preventDefault();
+    if (
+      title === "" ||
+      adress === "" ||
+      city === "" ||
+      postalCode === "" ||
+      phone === "" ||
+      website === "" ||
+      value.label === ""
+    ) {
+      handleShow();
+      setAlertTitle("Error");
+      setMsg("Please fill in all of the fields");
+      setStatus("failure");
+      return;
+      //we will add toastify here
+    } else if (!buttonCheck || logo.length === 0) {
+      setRedirectCheck(false);
+      setAlertTitle("Error");
+      setMsg("Upload Logo First");
+      setStatus("failure");
+      handleShow();
+      topRef.current.scrollIntoView();
+      return;
+    } else if (!buttonCheckTwo || cover.length === 0) {
+      setRedirectCheck(false);
+      setAlertTitle("Error");
+      setMsg("Upload Logo First");
+      setStatus("failure");
+      handleShow();
+      topRef.current.scrollIntoView();
+      return;
+    }
 
     const data = {
       title: title,
@@ -90,6 +228,8 @@ const AddStoresForm = () => {
       phone: phone,
       website: website,
       country: value.label,
+      logo: logoPath,
+      cover: coverPath,
     };
 
     console.log(data);
@@ -180,12 +320,19 @@ const AddStoresForm = () => {
               backgroundColor: "white",
             }}
           >
-            <div class = "d-flex flex-row"> 
-              <div class="p2" style = {{marginRight: 20}}>
-                <BackspaceRoundedIcon style = {{fill: '#345DA7', cursor: 'pointer', }}  onClick={() => history('/my-stores')} />
+            <div class="d-flex flex-row">
+              <div class="p2" style={{ marginRight: 20 }}>
+                <BackspaceRoundedIcon
+                  style={{ fill: "#345DA7", cursor: "pointer" }}
+                  onClick={() => history("/my-stores")}
+                />
               </div>
               <div class="p2">
-                <h1 style={{ fontSize: 24, fontWeight: 'bold', color: "black" }}>Create Store</h1>
+                <h1
+                  style={{ fontSize: 24, fontWeight: "bold", color: "black" }}
+                >
+                  Create Store
+                </h1>
               </div>
             </div>
             {/* <i
@@ -201,7 +348,10 @@ const AddStoresForm = () => {
             <div className="mb-3" style={{ paddingTop: 25 }}>
               <div className="row">
                 <div className="col">
-                  <label className="form-label" style={{ color: "black", fontWeight: '600' }}>
+                  <label
+                    className="form-label"
+                    style={{ color: "black", fontWeight: "600" }}
+                  >
                     Title{" "}
                   </label>
                   <input
@@ -216,7 +366,10 @@ const AddStoresForm = () => {
                   </span>
                 </div>
                 <div className="col">
-                  <label className="form-label" style={{ color: "black", fontWeight: '600' }}>
+                  <label
+                    className="form-label"
+                    style={{ color: "black", fontWeight: "600" }}
+                  >
                     Store's URL
                   </label>
                   <input
@@ -233,7 +386,99 @@ const AddStoresForm = () => {
               </div>
             </div>
 
-            <div className="mb-3" style={{ paddingTop: 25, fontWeight: '600' }}>
+            <div className="mb-3">
+              <form>
+                <label
+                  className="form-label"
+                  style={{ color: "black", fontWeight: "600" }}
+                >
+                  Store Logo
+                </label>
+                <input
+                  className="form-control"
+                  type="file"
+                  name="myLogo"
+                  style={{ backgroundColor: "white", color: "black" }}
+                  onChange={onChangeLogo}
+                  required
+                />
+                {uploadPercentage > 0 && (
+                  <ProgressBar
+                    striped
+                    now={uploadPercentage}
+                    label={`${uploadPercentage}%`}
+                  />
+                )}
+                <div style={{ marginTop: 5 }}>
+                  <Button
+                    variant="outlined"
+                    style={{
+                      width: "15%",
+                      backgroundColor: "#3B8AC4",
+                      color: "#FFFFFF",
+                      boxShadow: "0px 8px 15px rgba(0, 0, 0, 0.1)",
+                      fontWeight: 500,
+                    }}
+                    onClick={(e) => uploadLogo(e)}
+                  >
+                    Upload
+                  </Button>
+                </div>
+                {logoSrc !== "" ? (
+                  <div style={{ display: "flex", justifyContent: "center", marginTop: '2%' }}>
+                    <img src={logoSrc} width="400" height="400" alt="" />
+                  </div>
+                ) : null}
+              </form>
+            </div>
+
+            <div className="mb-3">
+              <form>
+                <label
+                  className="form-label"
+                  style={{ color: "black", fontWeight: "600" }}
+                >
+                  Cover Photo
+                </label>
+                <input
+                  className="form-control"
+                  type="file"
+                  name="myCover"
+                  style={{ backgroundColor: "white", color: "black" }}
+                  onChange={onChangeCover}
+                  required
+                />
+                {uploadPercentageTwo > 0 && (
+                  <ProgressBar
+                    striped
+                    now={uploadPercentageTwo}
+                    label={`${uploadPercentageTwo}%`}
+                  />
+                )}
+                <div style={{ marginTop: 5 }}>
+                  <Button
+                    variant="outlined"
+                    style={{
+                      width: "15%",
+                      backgroundColor: "#3B8AC4",
+                      color: "#FFFFFF",
+                      boxShadow: "0px 8px 15px rgba(0, 0, 0, 0.1)",
+                      fontWeight: 500,
+                    }}
+                    onClick={(e) => uploadCover(e)}
+                  >
+                    Upload
+                  </Button>
+                </div>
+                {coverSrc !== "" ? (
+                  <div style={{ display: "flex", justifyContent: "center", marginTop: '2%' }}>
+                    <img src={coverSrc} width="1200" height="400" alt="" />
+                  </div>
+                ) : null}
+              </form>
+            </div>
+
+            <div className="mb-3" style={{ paddingTop: 25, fontWeight: "600" }}>
               <label className="form-label" style={{ color: "black" }}>
                 Country/region
               </label>
@@ -247,7 +492,10 @@ const AddStoresForm = () => {
             <div className="row">
               <div className="col">
                 <div className="mb-3">
-                  <label className="form-label" style={{ color: "black", fontWeight: '600' }}>
+                  <label
+                    className="form-label"
+                    style={{ color: "black", fontWeight: "600" }}
+                  >
                     First name
                   </label>
                   <input
@@ -260,7 +508,10 @@ const AddStoresForm = () => {
               </div>
               <div className="col">
                 <div className="mb-3">
-                  <label className="form-label" style={{ color: "black", fontWeight: '600' }}>
+                  <label
+                    className="form-label"
+                    style={{ color: "black", fontWeight: "600" }}
+                  >
                     Last name
                   </label>
                   <input
@@ -274,7 +525,10 @@ const AddStoresForm = () => {
             </div>
 
             <div className="mb-3" style={{ paddingTop: 25 }}>
-              <label className="form-label" style={{ color: "black", fontWeight: '600' }}>
+              <label
+                className="form-label"
+                style={{ color: "black", fontWeight: "600" }}
+              >
                 Address
               </label>
               <input
@@ -286,7 +540,10 @@ const AddStoresForm = () => {
             </div>
 
             <div className="mb-3" style={{ paddingTop: 25 }}>
-              <label className="form-label" style={{ color: "black", fontWeight: '600' }}>
+              <label
+                className="form-label"
+                style={{ color: "black", fontWeight: "600" }}
+              >
                 Apartment,suite,etc.
               </label>
               <input
@@ -301,7 +558,10 @@ const AddStoresForm = () => {
             <div className="row">
               <div className="col">
                 <div className="mb-3">
-                  <label className="form-label" style={{ color: "black", fontWeight: '600' }}>
+                  <label
+                    className="form-label"
+                    style={{ color: "black", fontWeight: "600" }}
+                  >
                     City
                   </label>
                   <input
@@ -314,7 +574,10 @@ const AddStoresForm = () => {
               </div>
               <div className="col">
                 <div className="mb-3">
-                  <label className="form-label" style={{ color: "black", fontWeight: '600' }}>
+                  <label
+                    className="form-label"
+                    style={{ color: "black", fontWeight: "600" }}
+                  >
                     Postal code
                   </label>
                   <input
@@ -326,7 +589,10 @@ const AddStoresForm = () => {
                 </div>
               </div>
               <div className="mb-3" style={{ paddingTop: 25 }}>
-                <label className="form-label" style={{ color: "black", fontWeight: '600' }}>
+                <label
+                  className="form-label"
+                  style={{ color: "black", fontWeight: "600" }}
+                >
                   Phone
                 </label>
                 <input
@@ -337,7 +603,10 @@ const AddStoresForm = () => {
                 />
               </div>
 
-              <div className="mb-3" style={{ paddingTop: 25, fontWeight: '600' }}>
+              <div
+                className="mb-3"
+                style={{ paddingTop: 25, fontWeight: "600" }}
+              >
                 <label className="form-label" style={{ color: "black" }}>
                   Business or personal website(optional)
                 </label>
@@ -362,8 +631,14 @@ const AddStoresForm = () => {
             }}
           >
             <Button
-              variant = "outlined"
-              style={{  width: "25%", backgroundColor: "#3B8AC4", color: "#FFFFFF", boxShadow: '0px 8px 15px rgba(0, 0, 0, 0.1)', fontWeight: 500 }}
+              variant="outlined"
+              style={{
+                width: "25%",
+                backgroundColor: "#3B8AC4",
+                color: "#FFFFFF",
+                boxShadow: "0px 8px 15px rgba(0, 0, 0, 0.1)",
+                fontWeight: 500,
+              }}
               onClick={(e) => addStores(e)}
               disabled={titleError !== null || title === ""}
             >

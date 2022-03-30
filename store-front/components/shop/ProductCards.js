@@ -137,7 +137,7 @@ const ProductCards = (props) => {
           <div class="col-12 col-sm-6 col-lg-4">
             <div class="single-product-wrapper">
               <div class="product-img">
-                <img src={`${url + ":5000" + product.image}`} alt="" />
+                <img src={`${url + product.image}`} alt="" />
                 <img class="hover-img" src={product.image} alt="" />
 
                 <div class="product-badge offer-badge">

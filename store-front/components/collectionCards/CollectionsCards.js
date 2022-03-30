@@ -33,7 +33,7 @@ const CollectionsCards = () => {
                 <div className="row justify-content-center">
                     {
                         collections.map((collection, index) => {
-                            const img_url = `${url + ':5000' + collection.image}`
+                            const img_url = `${url + collection.image}`
                             img_url = img_url.replace(/\\+\b/g, '/')
                             return (
                                 <div className="col-12 col-sm-6 col-md-4">
