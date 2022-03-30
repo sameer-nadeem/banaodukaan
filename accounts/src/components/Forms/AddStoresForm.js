@@ -426,7 +426,7 @@ const AddStoresForm = () => {
                 </div>
                 {logoSrc !== "" ? (
                   <div style={{ display: "flex", justifyContent: "center", marginTop: '2%' }}>
-                    <img src={logoSrc} width="400" height="400" alt="" />
+                    <img src={logoSrc} style={{objectFit: 'cover', width: '80%'}} alt="" />
                   </div>
                 ) : null}
               </form>

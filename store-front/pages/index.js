@@ -1,10 +1,31 @@
 import Head from 'next/head'
+import axios from "axios";
 import BrandStrip from '../components/BrandStrip'
 import CollectionsCards from '../components/collectionCards/CollectionsCards'
+import useURL from "../utils/useURL";
+import React, { useState, useEffect } from 'react';
+
 export default function Home() {
+  const [storeInfo, setStoreInfo] = useState([])
+  const [img, setImg] = useState('')
+  const getStore = async () => {
+    try {
+      const url = useURL();
+      const res = await axios.get(`${url}/api/auth/storeinfo`);
+      setStoreInfo(res.data.store)
+      const img_url = `${url + res.data.store.cover}`
+      img_url = img_url.replace(/\\+\b/g, '/')
+      setImg(img_url)
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  useEffect(() => {
+    getStore();
+  }, []);
   return (
     <>
-      <section className="welcome_area bg-img background-overlay" style={{ backgroundImage: "url(img/bg-img/bg-1.jpg)" }}>
+      <section className="welcome_area bg-img background-overlay" style={{ backgroundImage: img === "" ? "url(img/bg-img/bg-1.jpg)" : `url(${img})`}}>
         <div className="container h-100">
           <div className="row h-100 align-items-center">
             <div className="col-12">

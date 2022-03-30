@@ -1,6 +1,7 @@
 const Merchant = require("../models/merchant.model");
 const Customer = require("../models/customer.model");
 const User = require("../models/user.model");
+const Store = require("../models/store.model");
 const bcrypt = require("bcryptjs");
 const mongoose = require("mongoose");
 const sendMail = require("../util/email");
@@ -21,6 +22,31 @@ const authStore = async (req, res) => {
   } catch (err) {
     return res.status(500).json({ error: "SERVER_ERROR" });
   }
+};
+
+const storeInfo = async (req, res) => {
+  try {
+
+
+    const storeId = req.storeId;
+
+    const store = await Store
+        .findOne({
+            _id: storeId,
+        })
+        .populate(['settings'])
+
+    return res.status(200).json({
+        store
+    })
+}
+catch (err) {
+    console.log(err)
+
+    return res.status(500).json({
+        error: "SERVER_ERROR"
+    })
+}
 };
 
 const customerLogin = async (req, res) => {
@@ -152,4 +178,5 @@ module.exports = {
   customerLogin,
   customerSignUp,
   getCustomer,
+  storeInfo
 };

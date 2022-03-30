@@ -350,7 +350,7 @@ const EditStoreForm = () => {
                 </div>
                 {logoSrc !== "" ? (
                   <div style={{ display: "flex", justifyContent: "center", marginTop: '2%' }}>
-                    <img src={logoSrc} width="400" height="400" alt="" />
+                    <img src={logoSrc} style={{objectFit: 'cover', width: '80%'}} alt="" />
                   </div>
                 ) : null}
               </form>
@@ -396,7 +396,7 @@ const EditStoreForm = () => {
                 </div>
                 {coverSrc !== "" ? (
                   <div style={{ display: "flex", justifyContent: "center", marginTop: '2%' }}>
-                    <img src={coverSrc} width="1200" height="400" alt="" />
+                    <img src={coverSrc} style={{objectFit: 'cover', width: '80%', height: '350px'}} alt="" />
                   </div>
                 ) : null}
               </form>

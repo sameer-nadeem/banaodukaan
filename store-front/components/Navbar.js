@@ -2,12 +2,27 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link'
 import { useSelector, useDispatch } from 'react-redux'
 import { logout } from "../actions/auth";
+import axios from "axios";
+import useURL from "../utils/useURL";
 const Navbar = () => {
   const [length, setLength] = useState(0);
   const isAuth = useSelector(state => state.auth.isAuthenticated)
   const dispatch = useDispatch();
   const [cart, setCart] = useState({products:[]});
-
+  const [storeInfo, setStoreInfo] = useState([])
+  const [img, setImg] = useState('')
+  const getStore = async () => {
+    try {
+      const url = useURL();
+      const res = await axios.get(`${url}/api/auth/storeinfo`);
+      setStoreInfo(res.data.store)
+      const img_url = `${url + res.data.store.logo}`
+      img_url = img_url.replace(/\\+\b/g, '/')
+      setImg(img_url)
+    } catch (err) {
+      console.log(err);
+    }
+  };
   function getCart() {
     let cs = localStorage.getItem("cart");
     if (!cs) {
@@ -21,12 +36,15 @@ const Navbar = () => {
   useEffect(() => {
     getCart();
   }, [cart]);
+  useEffect(() => {
+    getStore();
+  }, []);
   return (
     <header className="header_area">
       <div className="classy-nav-container breakpoint-off d-flex align-items-center justify-content-between">
         <nav className="classy-navbar" id="essenceNav">
           <Link href="/">
-            <a className="nav-brand"><img src="/img/core-img/logo.png" alt="" /></a>
+            <a className="nav-brand"><img src={img === "" ? "/img/core-img/logo.png" : img} alt="" style={{width: '150px', objectFit: 'cover'}}/></a>
           </Link>
           <div className="classy-navbar-toggler">
             <span className="navbarToggler"><span></span><span></span><span></span></span>
