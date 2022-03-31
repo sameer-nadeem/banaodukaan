@@ -9,6 +9,8 @@ import JoditEditor from "jodit-react";
 import BackspaceRoundedIcon from '@mui/icons-material/BackspaceRounded';
 import { Button } from '@material-ui/core'
 import { ProgressBar } from "react-bootstrap";
+import AliceCarousel from 'react-alice-carousel';
+import "react-alice-carousel/lib/alice-carousel.css";
 
 const ProductDetail = () => {
   //success modal
@@ -317,17 +319,20 @@ const ProductDetail = () => {
           >
             <div className="row">
               <h1 style={{ fontSize: 24, color: "black",  fontWeight: 'bold'  }}>Media</h1>
-              {/* <div style={{ display: "flex", justifyContent: "center" }}> */}
-              {
-                path !== [] ? (
-                  path.map(paths => {
-                    return (
-                      <img src={(`http://${window.location.hostname}:5000` + paths).replace(/\\+\b/g, "/")} class="d-block w-50" alt="..." style={{ objectFit: 'cover' }} />
-                    )
-                  })
-                ) : null
-              }
-              {/* </div> */}
+              <AliceCarousel>
+                {
+                  path !== [] ? (
+                    path.map(paths => {
+                      return (
+                        <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                          <img src={(`http://${window.location.hostname}:5000` + paths).replace(/\\+\b/g, "/")} className="d-block w-50 center" alt="..." />
+
+                        </div>
+                      )
+                    })
+                  ) : null
+                }
+              </AliceCarousel>
               <div className="mb-3">
                 <form>
                   <label
