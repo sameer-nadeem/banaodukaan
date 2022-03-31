@@ -9,7 +9,8 @@ import AlertDialog from "../Alerts/AlertDialog";
 import { ProgressBar } from "react-bootstrap";
 import JoditEditor from "jodit-react";
 import BackspaceRoundedIcon from '@mui/icons-material/BackspaceRounded';
-import { Slide } from 'react-slideshow-image';
+import AliceCarousel from 'react-alice-carousel';
+import "react-alice-carousel/lib/alice-carousel.css";
 const AddProducts = () => {
   const topRef = useRef(null)
   const [alertType, setAlertType] = useState('')
@@ -265,7 +266,7 @@ const AddProducts = () => {
             <div className="row">
               <form>
                 <label className="form-label" style={{ color: "black", fontWeight: '600' }}>
-                  Image
+                  Image <span style={{ color: "#808080", fontWeight: '600' }}>- at least 1 image</span>
                 </label>
                 <input
                   className="form-control"
@@ -298,15 +299,20 @@ const AddProducts = () => {
               <label className="form-label" style={{ color: "black", fontWeight: '600' }}>
                 Media
               </label>
-              {
-                path !== [] ? (
-                  path.map(paths => {
-                    return (
-                      <img src={(`http://${window.location.hostname}:5000` + paths).replace(/\\+\b/g, "/")} class="d-block w-50" alt="..." style={{ objectFit: 'cover' }} />
-                    )
-                  })
-                ) : null
-              }
+              <AliceCarousel>
+                {
+                  path !== [] ? (
+                    path.map(paths => {
+                      return (
+                        <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                          <img src={(`http://${window.location.hostname}:5000` + paths).replace(/\\+\b/g, "/")} className="d-block w-50 center" alt="..." />
+
+                        </div>
+                      )
+                    })
+                  ) : null
+                }
+              </AliceCarousel>
             </div>
           </div>
         </div>
