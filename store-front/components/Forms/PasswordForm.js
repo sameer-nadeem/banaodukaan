@@ -93,7 +93,7 @@ const PasswordForm = () => {
                     },
                 });
             } catch (err) {
-                console.log(err);
+                console.log(err.response);
                 setError("Old Password does not match with the one stored in database")
                 setShowError(true)
             }

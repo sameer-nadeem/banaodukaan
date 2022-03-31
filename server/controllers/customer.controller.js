@@ -62,7 +62,7 @@ const addCustomer = async (req, res) => {
 const updateCustomer = async (req, res) => {
     try {
         var {
-            firstName,
+            fullName,
             lastName,
             email,
             phone,
@@ -73,7 +73,7 @@ const updateCustomer = async (req, res) => {
             postalCode
         } = req.body
 
-        const id = req.params.id
+        const id = req.user.id
 
         const customer = await Customer
             .findOne({
@@ -81,9 +81,9 @@ const updateCustomer = async (req, res) => {
             })
 
         console.log(customer)
-        customer.firstName = firstName
+        customer.firstName = fullName
         customer.lastName = lastName
-        customer.email = email
+        // customer.email = email
         customer.phone = phone
         customer.address = address
         customer.country = country
@@ -95,6 +95,7 @@ const updateCustomer = async (req, res) => {
             customer
         })
     } catch (err) {
+        console.log(err)
         return res.status(500).json({
             error: "Server Error"
         })
@@ -104,7 +105,7 @@ const updateCustomer = async (req, res) => {
 
 const updateCustomerPassword = async (req, res) => {
     const id = req.user.id
-
+    console.log("hebfiwifwihfwho    ")
     try {
 
         var {
@@ -131,6 +132,7 @@ const updateCustomerPassword = async (req, res) => {
             customer
         })
     } catch (err) {
+        console.log(err)
         return res.status(500).json({
             error: "Server Error"
         })
