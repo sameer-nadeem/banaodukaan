@@ -14,6 +14,7 @@ import BrandDetail from './pages/BrandDetail'
 import Customers from './pages/Customers'
 import AddCustomers from './components/Forms/AddCustomers';
 import CustomerDetail from './pages/CustomerDetail';
+import Inventory from './pages/Inventory';
 import setAuthToken from './utils/setAuthToken';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
@@ -41,6 +42,7 @@ function App() {
       <Sidebar />
       <Switch>
         <PrivateRoute exact path="/admin/products" component={Products} />
+        <PrivateRoute exact path = "/admin/inventory" component={Inventory} />
         <PrivateRoute exact path="/admin/products/new" component={AddProducts} />
         <PrivateRoute exact path="/admin/collections" component={Collections} />
         <PrivateRoute exact path="/admin/collections/new" component={AddCollections} />
