@@ -12,7 +12,7 @@ const ProfileForm = () => {
   const [address, setAddress] = useState("");
   useEffect(() => {
     setShowError(false);
-    user !== null ? setFullName(user.userId.firstName) : null
+    user !== null ? setFullName(user.firstName) : null
     user !== null ? setEmail(user.email) : null
     user !== null ? setAddress(user.address) : null
   }, [user]);

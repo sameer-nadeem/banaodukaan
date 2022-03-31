@@ -15,11 +15,11 @@ const Cart = () => {
       setEmpty(true);
       return;
     } else {
-      console.log(cs);
+      // console.log(cs);
       cs = JSON.parse(cs)
       setLength(cs.products.length)
       setCart(cs);
-      console.log('cart' , cart)
+      // console.log('cart' , cart)
     }
   }
 
@@ -189,15 +189,14 @@ const Cart = () => {
 
         <div className="cart-content d-flex">
           <div className="cart-list">
-            {console.log('cart map',cart.products)}
-            { 
+          { 
             cart.products.map((item) => {
-              {console.log(item)}
+              // {console.log(item)}
               return(
               <div className="single-cart-item">
                 <a href="#" className="product-image">
                   <img
-                    src={`${url + ':5000' + item.url}`}
+                    src={`${url + item.url}`}
                     className="cart-thumb"
                     alt=""
                   />
@@ -215,8 +214,6 @@ const Cart = () => {
               )
             })
           } 
-
-        
           </div>
 
           <div className="cart-amount-summary">
