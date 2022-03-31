@@ -27,7 +27,7 @@ const Product = () => {
     <section class="single_product_details_area d-flex align-items-center">
 
       <div class="single_product_thumb clearfix">
-        <img style={{ width: '40%', marginLeft: '30%' }} src={`${url + ':5000' + product.image}`} alt="" />
+        <img style={{ width: '40%', marginLeft: '30%' }} src={`${url + product.image}`} alt="" />
       </div>
 
       <div class="single_product_desc clearfix">
