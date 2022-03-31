@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import useURL from "../../utils/useURL";
 import { useRouter } from "next/router";
-
+import { useSelector } from 'react-redux'
 const ProductCards = (props) => {
   const [cart, setCart] = useState({ products: [] });
   const [isEmpty, setEmpty] = useState(false);
   const [total, setTotal] = useState(0);
-
+  const filters = useSelector(state => state.filters)
   const [products, setProducts] = useState([]);
   const url = useURL();
   const router = useRouter();
@@ -21,12 +21,12 @@ const ProductCards = (props) => {
   const getProducts = async () => {
     try {
       const url = useURL();
-      const res = await axios.get(`${url}/api/product`);
+      const res = await axios.get(`${url}/api/product?c_id=${filters.collection}&b_id=${filters.brand}&p_up=${filters.priceUpper}&p_lo=${filters.priceLower}&sortby=${filters.sortBy}`);
       console.log("products, ", res.data.products);
       setProducts(res.data.products);
       props.counter(res.data.products.length);
     } catch (err) {
-      console.log(err);
+      console.log("errrrrrrr", err);
     }
   };
   useEffect(() => {
@@ -36,7 +36,7 @@ const ProductCards = (props) => {
     } else {
       getProducts();
     }
-  }, [props]);
+  }, [props, filters]);
 
   useEffect(() => {
     let cs = localStorage.getItem("cart");

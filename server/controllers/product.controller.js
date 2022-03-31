@@ -55,12 +55,16 @@ const getProducts = async (req, res) => {
 
     try {
         const query = req.query.q ? req.query.q.split(" ") : ['.*']
-        const collections = req.query.collections ? req.query.collections : "*"
-
+        const collections = req.query.c_id !== 'null' ? req.query.c_id : "*"
+        const brands = req.query.b_id !== 'null' ? req.query.b_id : "*"
+        const sortBy = req.query.sortby !== 'null' ? req.query.sortby : 'newest'
         // const query = req.query.q ? req.query : "*"
         const filters = {}
         if (collections !== '*') filters['collectionId'] = {
             $in: collections.split(',')
+        }
+        if (brands !== '*') filters['brandId'] = {
+            $in: brands.split(',')
         }
         filters["$or"] = [
             {
@@ -75,12 +79,19 @@ const getProducts = async (req, res) => {
             }
         ]
         console.log(query)
+        const sort_arg = {}
+        if (sortBy === 'newest') sort_arg['createdAt'] = 'desc'
+        if (sortBy === 'p_desc') sort_arg['price'] = -1
+        if (sortBy === 'p_asc') sort_arg['price'] = 1
+
         const products = await Product.find({
             deleteFlag: false,
             storeId: req.storeId,
             ...filters
-        }).populate(['collectionId', 'brandId'])
-        console.log(products)
+        })
+            .sort(sort_arg)
+            .populate(['collectionId', 'brandId'])
+        console.log(products, collections, brands, sortBy)
         return res.status(200).json({
             products, length: products.length
         })

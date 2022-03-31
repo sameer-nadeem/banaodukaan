@@ -1,9 +1,25 @@
 import React, { useEffect, useState } from "react";
 import Categories from '../../components/shop/Categories'
 import ProductCards from '../../components/shop/ProductCards'
+import Box from '@mui/material/Box';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import { useDispatch } from 'react-redux'
+import { setSortbyFltr } from '../../actions/filter'
 
 const Products = () => {
   const [count, setCount] = useState(0)
+  const [filters, setFilters] = useState({
+    collections: null, brand: null, p_less: Number.MAX_VALUE, p_great: 0
+  })
+  const [sortBy, setSortBy] = React.useState('newest');
+  const dispatch = useDispatch()
+  const handleChange = (event) => {
+    setSortBy(event.target.value);
+    dispatch(setSortbyFltr(event.target.value))
+  };
   return (
     <>
       <div class="breadcumb_area bg-img" style={{ backgroundImage: "url(img/bg-img/breadcumb.jpg)" }}>
@@ -33,23 +49,25 @@ const Products = () => {
                       <div class="total-products">
                         <p><span>{count}</span> products found</p>
                       </div>
-                      <div class="product-sorting d-flex">
-                        <p>Sort by:</p>
-                        <form action="#" method="get">
-                          <select name="select" id="sortByselect">
-                            <option value="value">Highest Rated</option>
-                            <option value="value">Newest</option>
-                            <option value="value">Price: $$ - $</option>
-                            <option value="value">Price: $ - $$</option>
-                          </select>
-                          <input type="submit" class="d-none" value="" />
-                        </form>
-                      </div>
+                      <FormControl >
+                        <InputLabel id="demo-simple-select-label">Sort By</InputLabel>
+                        <Select
+                          labelId="demo-simple-select-label"
+                          id="demo-simple-select"
+                          value={sortBy}
+                          label="Sort By"
+                          onChange={handleChange}
+                        >
+                          <MenuItem selected value={'p_desc'}>Price Desc.</MenuItem>
+                          <MenuItem value={'p_asc'}>Price Asc.</MenuItem>
+                          <MenuItem value={'newest'}>Newest</MenuItem>
+                        </Select>
+                      </FormControl>
                     </div>
                   </div>
                 </div>
 
-                <ProductCards counter={setCount}/>
+                <ProductCards counter={setCount} />
               </div>
               <nav aria-label="navigation">
                 <ul class="pagination mt-50 mb-70">

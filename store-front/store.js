@@ -2,10 +2,11 @@ import { createStore, applyMiddleware, combineReducers } from 'redux'
 import thunk from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import { authReducer } from './reducers/authReducers'
-
+import { filterReducer } from "./reducers/filterReducer"
 
 const rootReducer = combineReducers({
-  auth: authReducer
+  auth: authReducer,
+  filters: filterReducer
 })
 
 
@@ -17,6 +18,13 @@ const initialState = {
     isAuthenticated: token !== null,
     loading: false,
     user: null
+  },
+  filters: {
+    collection: null,
+    brand: null,
+    sortBy: "newest",
+    priceUpper: 99999999,
+    priceLower: 0
   }
 }
 console.log(initialState)

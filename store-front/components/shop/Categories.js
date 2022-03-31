@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import useURL from "../../utils/useURL";
-
+import { useSelector, useDispatch } from 'react-redux'
+import { setCollectionFltr, setBrandFltr, setPlowerFltr, setPupperFltr, clearFilters } from '../../actions/filter'
 const Categories = () => {
     const [collections, setCollections] = useState([]);
     const [brands, setBrands] = useState([])
-
+    const filters = useSelector(state => state.filters)
+    const dispatch = useDispatch()
     const getCollections = async () => {
         try {
             const url = useURL()
@@ -34,56 +36,50 @@ const Categories = () => {
 
     return (
         <div class="shop_sidebar_area">
-
             <div class="widget catagory mb-50">
-                <h6 class="widget-title mb-30">Collections</h6>
+                <button onClick={() => dispatch(clearFilters())} className='btn btn-link'><h4 className='widget-title mb-30'>Clear</h4></button>
+                <h6 class="widget-title2 mb-30">Collections</h6>
 
                 <div class="catagories-menu">
                     <ul id="menu-content2" class="menu-content collapse show">
-                        {
-                            collections.map((collection, index) => {
-                                return (
-                                    <div>
-                                        <li data-toggle="collapse" data-target="#clothing">
-                                            <a href="#">{collection.name}</a>
-                                            <ul class="sub-menu collapse show" id="clothing">
-                                                <li><a href="#">All</a></li>
-                                                <li><a href="#">Bodysuits</a></li>
-                                                <li><a href="#">Dresses</a></li>
-                                                <li><a href="#">Hoodies &amp; Sweats</a></li>
-                                                <li><a href="#">Jackets &amp; Coats</a></li>
-                                                <li><a href="#">Jeans</a></li>
-                                                <li><a href="#">Pants &amp; Leggings</a></li>
-                                                <li><a href="#">Rompers &amp; Jumpsuits</a></li>
-                                                <li><a href="#">Shirts &amp; Blouses</a></li>
-                                                <li><a href="#">Shirts</a></li>
-                                                <li><a href="#">Sweaters &amp; Knits</a></li>
-                                            </ul>
-                                        </li>
-                                    </div>
-                                )
-
-                            })
-                        }
+                        <div>
+                            <ul >
+                                {
+                                    collections.map((collection, index) => {
+                                        return (
+                                            <div>
+                                                <li >
+                                                    <button type="button" className='btn btn-link' onClick={
+                                                        () => dispatch(setCollectionFltr(collection._id))
+                                                    }>
+                                                        {collection.name}
+                                                    </button>
+                                                </li>
+                                            </div>
+                                        )
+                                    })
+                                }
+                            </ul>
+                        </div>
                     </ul>
-                </div>
-            </div>
+                </div >
+            </div >
 
-            <div class="widget price mb-50">
-                <h6 class="widget-title mb-30">Filter by</h6>
-                <p class="widget-title2 mb-30">Price</p>
+            {/* <div class="widget price mb-50">
+                <p class="widget-title2 mb-30">Price range</p>
 
                 <div class="widget-desc">
-                    <div class="slider-range">
-                        <div data-min="49" data-max="360" data-unit="$" class="slider-range-price ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" data-value-min="49" data-value-max="360" data-label-result="Range:">
-                            <div class="ui-slider-range ui-widget-header ui-corner-all"></div>
-                            <span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0"></span>
-                            <span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0"></span>
+                    <div className='row'>
+                        <div className='col-6'>
+                            <input className='form-control' onChange={(e) => dispatch(setPlowerFltr(parseFloat(e.target.value)))} value={filters.priceLower} type='number'></input>
                         </div>
-                        <div class="range-price">Range: $49.00 - $360.00</div>
+
+                        <div className='col-6'>
+                            <input className='form-control' onChange={(e) => dispatch(setPupperFltr(parseFloat(e.target.value)))} value={filters.priceUpper} type={'number'}></input>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </div> */}
 
             <div class="widget brands mb-50">
                 <p class="widget-title2 mb-30">Brands</p>
@@ -93,18 +89,15 @@ const Categories = () => {
                             brands.map((brand, index) => {
                                 return (
                                     <div>
-                                        <li><a href="#">{brand.name}</a></li>
+                                        <li><button type='button' className="btn btn-link" onClick={() => dispatch(setBrandFltr(brand._id))}>{brand.name}</button></li>
                                     </div>
                                 )
                             })
                         }
                     </ul>
-
-
-
                 </div>
             </div>
-        </div>
+        </div >
     )
 }
 
