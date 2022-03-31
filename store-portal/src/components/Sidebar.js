@@ -74,7 +74,7 @@ const Sidebar = () => {
                 <i className='bx bx-chevron-right nav_icon'></i>
                 <span className="nav_name">All Products</span>
               </Link>
-              <Link to="/admin/" className="nav_link">
+              <Link to="/admin/inventory" className="nav_link">
                 <i className='bx bx-chevron-right nav_icon'></i>
                 <span className="nav_name">Inventory</span>
               </Link>
