@@ -1,47 +1,130 @@
 import CheckoutDetails from "./CheckoutDetails";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import useURL from "../../utils/useURL";
+import Router from 'next/router'
+
 const CheckoutForm = () => {
-    const user = useSelector((state) => state.auth.user);
-    const [showError, setShowError] = useState(false);
-    const [fullName, setFullName] = useState("");
-    const [email, setEmail] = useState("");
-    const [address, setAddress] = useState("");
-    const [city, setCity] = useState("");
-    const [terms, setTerms] = useState(false);
-    const [phoneNumber, setPhoneNumber] = useState(0);
-    const [postalCode, setPostalCode] = useState(0);
-    const [buttonClicked, setButtonClicked] = useState(false);
-    useEffect(() => {
-        setShowError(false);
-        user !== null ? setFullName(user.userId.firstName) : null
-        user !== null ? setEmail(user.email) : null
-        user !== null ? setAddress(user.address) : null
-    }, [user]);
+  const user = useSelector((state) => state.auth.user);
+  const [cart, setCart] = useState({ products: [] });
+  const [isEmpty, setEmpty] = useState(false);
+  const [total, setTotal] = useState(0);
+  const [length, setLength] = useState(0);
 
-    const onChangeCity = (city) => {
-        setCity(city);
-    }
-    const onChangePhoneNumber = (phoneNum) => {
-        setPhoneNumber(phoneNum);
-    }
-    const onChangePostalCode = (postCode) => {
-        setPostalCode(postCode);
-    }
-    const onChangeTerms = (t) => {
-        setTerms(t);
-    }
-    const onchangeAddress = (addr) => {
-        setAddress(addr)
-    }
+  const [showError, setShowError] = useState(false);
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [address, setAddress] = useState("");
+  const [city, setCity] = useState("");
+  const [terms, setTerms] = useState(false);
+  const [phoneNumber, setPhoneNumber] = useState(0);
+  const [postalCode, setPostalCode] = useState(0);
+  const [userId, setUserId] = useState("");
+  const [buttonClicked, setButtonClicked] = useState(false);
+  useEffect(() => {
+    setShowError(false);
+    user !== null ? setUserId(user._id) : setUserId("");
+    user !== null ? setFullName(user.firstName) : setFullName("");
+    user !== null ? setEmail(user.email) : setEmail("");
+    user !== null ? setAddress(user.address) : setAddress("");
+  }, [user]);
 
-    const handleClick = () => {
-        if(city === "" || address === "" || phoneNumber === 0 || terms === false || fullName === "" || email === "" || postalcode === ""){
-            console.log("Show error")
-            return
-        }
-        // add code here 
+  function updateCart() {
+    let cs = localStorage.getItem("cart");
+
+    if (!cs) {
+      setEmpty(true);
+      return;
+    } else {
+      // console.log(cs);
+      cs = JSON.parse(cs);
+      setLength(cs.products.length);
+      setCart(cs);
+      // console.log('cart' , cart)
     }
+  }
+
+  useEffect(() => {
+    updateCart();
+  }, []);
+
+  const onChangeFullName = (event) => {
+    setFullName(event.target.value);
+  };
+
+  const onChangeEmail = (event) => {
+    setEmail(event.target.value);
+  };
+
+  const onChangeCity = (event) => {
+    setCity(event.target.value);
+  };
+  const onChangePhoneNumber = (event) => {
+    setPhoneNumber(event.target.value);
+  };
+  const onChangePostalCode = (event) => {
+    setPostalCode(event.target.value);
+  };
+  const onChangeTerms = (event) => {
+    setTerms(event.target.value);
+  };
+  const onchangeAddress = (event) => {
+    setAddress(event.target.value);
+  };
+
+  const handleClick = async () => {
+    if (
+      city === "" ||
+      address === "" ||
+      phoneNumber === "" ||
+      terms === false ||
+      fullName === "" ||
+      email === "" ||
+      postalCode === "" ||
+      cart.products.length === 0
+    ) {
+      console.log("Show error");
+      console.log(user);
+      return;
+    }
+    // making the body here
+    const body = {
+      fullName,
+      email,
+      phoneNumber,
+      postalCode,
+      city,
+      userId,
+      cart,
+      address,
+    };
+
+    try {
+      const url = useURL();
+      await axios.post(`${url}/api/cart`, body, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const cart1 = {
+        products:[] ,
+        total : 0
+      }
+
+      JSON.stringify(cart1)
+      localStorage.setItem("cart", JSON.stringify(cart1))
+      setCart(cart1)
+      //add alert here
+      Router.push('/')
+
+    } catch {
+      console.log("error in post req");
+      //add alert
+      Router.push('/')
+    }
+  };
   return (
     <div>
       <div class="checkout_area section-padding-80">
@@ -64,7 +147,8 @@ const CheckoutForm = () => {
                         class="form-control"
                         id="first_name"
                         value={fullName}
-                        disabled = {user !== null ? true : false}
+                        onChange={onChangeFullName}
+                        disabled={user !== null ? true : false}
                         required
                       />
                     </div>
@@ -76,7 +160,8 @@ const CheckoutForm = () => {
                         type="text"
                         class="form-control mb-3"
                         id="street_address"
-                        value= {address}
+                        value={address}
+                        onChange={onchangeAddress}
                       />
                     </div>
                     <div class="col-12 mb-3">
@@ -87,7 +172,8 @@ const CheckoutForm = () => {
                         type="text"
                         class="form-control"
                         id="postcode"
-                        value=""
+                        value={postalCode}
+                        onChange={onChangePostalCode}
                       />
                     </div>
                     <div class="col-12 mb-3">
@@ -98,7 +184,8 @@ const CheckoutForm = () => {
                         type="text"
                         class="form-control"
                         id="city"
-                        value=""
+                        value={city}
+                        onChange={onChangeCity}
                       />
                     </div>
                     <div class="col-12 mb-3">
@@ -109,8 +196,9 @@ const CheckoutForm = () => {
                         type="number"
                         class="form-control"
                         id="phone_number"
-                        min="0"
-                        value=""
+                        // min="0"
+                        value={phoneNumber}
+                        onChange={onChangePhoneNumber}
                       />
                     </div>
                     <div class="col-12 mb-4">
@@ -121,8 +209,9 @@ const CheckoutForm = () => {
                         type="email"
                         class="form-control"
                         id="email_address"
-                        value= {email}
-                        disabled = {user !== null ? true : false}
+                        value={email}
+                        onChange={onChangeEmail}
+                        disabled={user !== null ? true : false}
                       />
                     </div>
 
@@ -132,21 +221,11 @@ const CheckoutForm = () => {
                           type="checkbox"
                           class="custom-control-input"
                           id="customCheck1"
-                          value = {terms}
+                          value={terms}
+                          onChange={onChangeTerms}
                         />
                         <label class="custom-control-label" for="customCheck1">
                           Terms and conditions
-                        </label>
-                      </div>
-                      <div class="custom-control custom-checkbox d-block mb-2">
-                        <input
-                          type="checkbox"
-                          class="custom-control-input"
-                          id="customCheck2"
-                          disabled = {user !== null ? true : false}
-                        />
-                        <label class="custom-control-label" for="customCheck2">
-                          Create an account
                         </label>
                       </div>
                     </div>
@@ -155,8 +234,7 @@ const CheckoutForm = () => {
               </div>
             </div>
 
-            <CheckoutDetails buttonClick = {handleClick} />
-
+            <CheckoutDetails buttonClick={handleClick} />
           </div>
         </div>
       </div>
