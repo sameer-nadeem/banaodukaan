@@ -56,7 +56,7 @@ const ProductsTable = () => {
       options: {
         filter: false,
         sort: false,
-        customBodyRender: (p) => <img alt="" width="75px" src={p}></img>,
+        customBodyRender: (p) => <img alt="" width="75px" src={p.length !== 1 ? p[0] : p}></img>,
       },
     },
     {

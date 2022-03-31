@@ -43,9 +43,9 @@ const ProductSchema = new Schema({
         enum: ["Active", "Draft"],
         default: "Active"
     },
-    image: {
+    image: [{
         type: String
-    }
+    }]
 })
 
 

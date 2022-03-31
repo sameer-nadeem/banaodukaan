@@ -9,6 +9,7 @@ import AlertDialog from "../Alerts/AlertDialog";
 import { ProgressBar } from "react-bootstrap";
 import JoditEditor from "jodit-react";
 import BackspaceRoundedIcon from '@mui/icons-material/BackspaceRounded';
+import { Slide } from 'react-slideshow-image';
 const AddProducts = () => {
   const topRef = useRef(null)
   const [alertType, setAlertType] = useState('')
@@ -31,7 +32,7 @@ const AddProducts = () => {
   const [collection, setCollection] = useState("");
   const [fetchCollections, setFetchedCollections] = useState([]);
   const [status, setStatus] = useState("");
-  const [path, setPath] = useState("");
+  const [path, setPath] = useState([]);
   const [buttonCheck, setButtonCheck] = useState(false);
   const [uploadPercentage, setUploadPercentage] = useState(0);
 
@@ -43,7 +44,8 @@ const AddProducts = () => {
   //   setDescription(value);
   // };
   const onChangeImage = (event) => {
-    setImage(event.target.files[0]);
+    // console.log(event.target.files)
+    setImage(event.target.files);
   };
   const onChangePrice = (event) => {
     setPrice(event.target.value);
@@ -144,7 +146,9 @@ const AddProducts = () => {
 
     } else {
       const formData = new FormData();
-      formData.append("myImage", image);
+      Object.values(image).forEach(file => {
+        formData.append("myImage", file);
+      });
       const config = {
         headers: {
           "content-type": "multipart/form-data",
@@ -163,6 +167,7 @@ const AddProducts = () => {
         );
         setButtonCheck(true);
         setPath(res.data);
+        console.log(res)
         setUploadPercentage(
           100,
           setTimeout(() => {
@@ -220,12 +225,6 @@ const AddProducts = () => {
               <label className="form-label" style={{ color: "black", fontWeight: '600' }}>
                 Description
               </label>
-              {/* <Editor
-                toolbarClassNameName="toolbarClassNameName"
-                wrapperClassNameName="wrapperClassNameName"
-                editorClassNameName="editorClassNameName"
-                onChange={onChangeDescription}
-              /> */}
               <JoditEditor
                 value={description}
                 tabIndex={1} // tabIndex of textarea
@@ -234,39 +233,6 @@ const AddProducts = () => {
               />
             </div>
             <div className="row">
-              <div className="col">
-                <div className="mb-3">
-                  <form>
-                    <label className="form-label" style={{ color: "black", fontWeight: '600' }}>
-                      Image
-                    </label>
-                    <input
-                      className="form-control"
-                      type="file"
-                      name="myImage"
-                      style={{ backgroundColor: "white", color: "black" }}
-                      onChange={onChangeImage}
-                      required
-                    />
-                    {uploadPercentage > 0 && (
-                      <ProgressBar
-                        striped
-                        now={uploadPercentage}
-                        label={`${uploadPercentage}%`}
-                      />
-                    )}
-                    <div style={{ marginTop: 5 }}>
-                      <Button
-                        variant="outlined"
-                        style={{ width: '50%', backgroundColor: "#3B8AC4", color: "#FFFFFF", boxShadow: '0px 8px 15px rgba(0, 0, 0, 0.1)', fontWeight: 500 }}
-                        onClick={(e) => uploadImages(e)}
-                      >
-                        Upload
-                      </Button>
-                    </div>
-                  </form>
-                </div>
-              </div>
               <div className="col">
                 <div className="mb-3">
                   <label className="form-label" style={{ color: "black", fontWeight: '600' }}>
@@ -295,6 +261,52 @@ const AddProducts = () => {
                   />
                 </div>
               </div>
+            </div>
+            <div className="row">
+              <form>
+                <label className="form-label" style={{ color: "black", fontWeight: '600' }}>
+                  Image
+                </label>
+                <input
+                  className="form-control"
+                  type="file"
+                  name="myImage"
+                  style={{ backgroundColor: "white", color: "black" }}
+                  onChange={onChangeImage}
+                  required
+                  multiple
+                />
+                {uploadPercentage > 0 && (
+                  <ProgressBar
+                    striped
+                    now={uploadPercentage}
+                    label={`${uploadPercentage}%`}
+                  />
+                )}
+                <div style={{ marginTop: 5 }}>
+                  <Button
+                    variant="outlined"
+                    style={{ width: '10%', backgroundColor: "#3B8AC4", color: "#FFFFFF", boxShadow: '0px 8px 15px rgba(0, 0, 0, 0.1)', fontWeight: 500 }}
+                    onClick={(e) => uploadImages(e)}
+                  >
+                    Upload
+                  </Button>
+                </div>
+              </form>
+            </div>
+            <div className="row" style={{ marginTop: '5%' }}>
+              <label className="form-label" style={{ color: "black", fontWeight: '600' }}>
+                Media
+              </label>
+              {
+                path !== [] ? (
+                  path.map(paths => {
+                    return (
+                      <img src={(`http://${window.location.hostname}:5000` + paths).replace(/\\+\b/g, "/")} class="d-block w-50" alt="..." style={{ objectFit: 'cover' }} />
+                    )
+                  })
+                ) : null
+              }
             </div>
           </div>
         </div>
