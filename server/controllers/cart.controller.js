@@ -50,6 +50,7 @@ const checkout = async (req, res) => {
         userId,
         city,
         postalCode,
+        storeId: req.storeId
       });
 
       await order.save();

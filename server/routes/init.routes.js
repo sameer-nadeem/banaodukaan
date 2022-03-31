@@ -6,7 +6,7 @@ const uploadRouter = require('./upload.routes')
 const customerRouter = require('./customer.routes')
 const authRouter = require('./auth.routes')
 const cartRouter = require('./cart.routes')
-
+const merchantRouter = require('./merchant.routes')
 const init = (app) => {
   app.use('/api/example', exampleRouter)
   app.use('/api/product', productRouter)
@@ -15,6 +15,7 @@ const init = (app) => {
   app.use('/api/upload', uploadRouter)
   app.use('/api/customer', customerRouter)
   app.use('/api/cart', cartRouter)
+  app.use('/api/merchant', merchantRouter)
   app.use('/api/auth', authRouter)
 
 }
