@@ -8,6 +8,7 @@ import Alert from "../components/Alerts/Alert";
 import JoditEditor from "jodit-react";
 import BackspaceRoundedIcon from '@mui/icons-material/BackspaceRounded';
 import { Button } from '@material-ui/core'
+import { ProgressBar } from "react-bootstrap";
 
 const ProductDetail = () => {
   //success modal
@@ -24,6 +25,7 @@ const ProductDetail = () => {
   const [alertTitle, setAlertTitle] = useState('')
   const [alertType, setAlertType] = useState('')
   const [alertMessage, setAlertMessage] = useState('')
+  const [uploadPercentage, setUploadPercentage] = useState(0);
 
 
 
@@ -37,7 +39,7 @@ const ProductDetail = () => {
   const [collection, setCollection] = useState("");
   const [fetchCollections, setFetchedCollections] = useState([]);
   const [status, setStatus] = useState("");
-  const [path, setPath] = useState("");
+  const [path, setPath] = useState([]);
   const [product, setProduct] = useState([]);
 
   const { id: productId } = useParams();
@@ -48,7 +50,7 @@ const ProductDetail = () => {
     setTitle(event.target.value);
   };
   const onChangeImage = (event) => {
-    setImage(event.target.files[0]);
+    setImage(event.target.files);
   };
   const onChangePrice = (event) => {
     setPrice(event.target.value);
@@ -174,7 +176,9 @@ const ProductDetail = () => {
       console.log(image);
       event.preventDefault();
       const formData = new FormData();
-      formData.append("myImage", image);
+      Object.values(image).forEach(file => {
+        formData.append("myImage", file);
+      });
       const config = {
         headers: {
           "content-type": "multipart/form-data",
@@ -311,16 +315,19 @@ const ProductDetail = () => {
               backgroundColor: "white",
             }}
           >
-            <div className="col">
+            <div className="row">
               <h1 style={{ fontSize: 24, color: "black",  fontWeight: 'bold'  }}>Media</h1>
-              <div style={{ display: "flex", justifyContent: "center" }}>
-                <img
-                  src={`${path === "" ? product.image : path}`}
-                  width="400"
-                  height="400"
-                  alt=""
-                />
-              </div>
+              {/* <div style={{ display: "flex", justifyContent: "center" }}> */}
+              {
+                path !== [] ? (
+                  path.map(paths => {
+                    return (
+                      <img src={(`http://${window.location.hostname}:5000` + paths).replace(/\\+\b/g, "/")} class="d-block w-50" alt="..." style={{ objectFit: 'cover' }} />
+                    )
+                  })
+                ) : null
+              }
+              {/* </div> */}
               <div className="mb-3">
                 <form>
                   <label
@@ -330,24 +337,32 @@ const ProductDetail = () => {
                     Image
                   </label>
                   <input
-                    className="form-control"
-                    type="file"
-                    name="myImage"
-                    style={{ backgroundColor: "white", color: "black" }}
-                    onChange={onChangeImage}
-                    required
+                  className="form-control"
+                  type="file"
+                  name="myImage"
+                  style={{ backgroundColor: "white", color: "black" }}
+                  onChange={onChangeImage}
+                  required
+                  multiple
+                />
+                {uploadPercentage > 0 && (
+                  <ProgressBar
+                    striped
+                    now={uploadPercentage}
+                    label={`${uploadPercentage}%`}
                   />
-                  <div style={{ marginTop: 5 }}>
-                    <Button
-                      variant = "outlined"
-                      style={{ width: "14%", backgroundColor: "#3B8AC4", color: "#FFFFFF", boxShadow: '0px 8px 15px rgba(0, 0, 0, 0.1)', fontWeight: 500  }}
-                      onClick={(e) => uploadImages(e)}
-                    >
-                      Upload
-                    </Button>
-                  </div>
-                </form>
-              </div>
+                )}
+                <div style={{ marginTop: 5 }}>
+                  <Button
+                    variant="outlined"
+                    style={{ width: '10%', backgroundColor: "#3B8AC4", color: "#FFFFFF", boxShadow: '0px 8px 15px rgba(0, 0, 0, 0.1)', fontWeight: 500 }}
+                    onClick={(e) => uploadImages(e)}
+                  >
+                    Upload
+                  </Button>
+                </div>
+              </form>
+            </div>
             </div>
           </div>
         </div>
