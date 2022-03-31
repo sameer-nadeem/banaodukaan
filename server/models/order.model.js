@@ -41,6 +41,14 @@ const OrderSchema = new Schema({
     userId:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
+    },
+    storeId: {
+        type: mongoose.Schema.Types.ObjectId
+    },
+    deleteFlag: {
+        type: Boolean,
+        default: false
+
     }
 
 
