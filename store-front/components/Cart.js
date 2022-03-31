@@ -196,7 +196,7 @@ const Cart = () => {
               <div className="single-cart-item">
                 <a href="#" className="product-image">
                   <img
-                    src={`${url + item.url}`}
+                    src={`${url + item.url[0]}`}
                     className="cart-thumb"
                     alt=""
                   />
