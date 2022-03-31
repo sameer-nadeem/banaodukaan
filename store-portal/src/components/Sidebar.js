@@ -94,7 +94,7 @@ const Sidebar = () => {
             <Link to="/admin/customers" className={`nav_link ${customerNav.allCustomers && `highlight`}`}>
               <i className='bx bx-user nav_icon'></i>
               <span className="nav_name">Customers</span>
-            </Link> <Link to="#" className="nav_link">
+            </Link> <Link to="/admin/orders" className="nav_link">
               <i className='bx bx-message-square-detail nav_icon'>
               </i>
               <span className="nav_name">Orders</span>
