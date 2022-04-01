@@ -5,6 +5,8 @@ import { useParams, useHistory } from "react-router-dom";
 import Alert from "../components/Alerts/Alert";
 import { Button } from "@material-ui/core";
 import BackspaceRoundedIcon from "@mui/icons-material/BackspaceRounded";
+import AliceCarousel from "react-alice-carousel";
+import "react-alice-carousel/lib/alice-carousel.css";
 
 const OrderDetail = () => {
   const history = useHistory();
@@ -16,6 +18,7 @@ const OrderDetail = () => {
   const [postalCode, setPostalCode] = useState(0);
   const [address, setAddress] = useState("");
   const [total, setTotal] = useState(0);
+  const [products, setProducts] = useState([]);
 
   useEffect(() => {
     const getOrderById = async (id) => {
@@ -28,6 +31,7 @@ const OrderDetail = () => {
         setPostalCode(res.data.order.postalCode);
         setAddress(res.data.order.address);
         setTotal(res.data.order.total);
+        setProducts(res.data.order.products);
       } catch (err) {
         console.log(err);
       }
@@ -164,6 +168,68 @@ const OrderDetail = () => {
                 Products
               </h1>
             </div>
+            {products.map((index, product) => {
+              return (
+                <>
+                  <div className="mb-3" style={{ paddingTop: 25 }}>
+                    <label
+                      className="form-label"
+                      style={{ color: "black", fontWeight: "600" }}
+                    >
+                      Product Name
+                    </label>
+                    <input
+                      className="form-control"
+                      value={products[product].product.title}
+                      style={{ backgroundColor: "white", color: "black" }}
+                      // onChange={onChangeTitle}
+                      required
+                    />
+                  </div>
+                  <div className="mb-3" style={{}}>
+                    <label
+                      className="form-label"
+                      style={{ color: "black", fontWeight: "600" }}
+                    >
+                      Product Quantity
+                    </label>
+                    <input
+                      className="form-control"
+                      value={products[product].qty}
+                      style={{ backgroundColor: "white", color: "black" }}
+                      // onChange={onChangeTitle}
+                      required
+                    />
+                  </div>
+                  <div className="row">
+                    <AliceCarousel>
+                        {products[product].product.image !== []
+                          ? products[product].product.image.map((paths) => {
+                              return (
+                                <div
+                                  style={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                  }}
+                                >
+                                  <img
+                                    src={(
+                                      `http://${window.location.hostname}:5000` +
+                                      paths
+                                    ).replace(/\\+\b/g, "/")}
+                                    className="d-block w-50 center"
+                                    alt="..."
+                                  />
+                                </div>
+                              );
+                            })
+                          : null}
+                    </AliceCarousel>
+                  </div>
+                </>
+              );
+            })}
           </div>
         </div>
 
