@@ -12,6 +12,7 @@ const getOrders = async (req, res) => {
             deleteFlag: false,
             storeId: req.storeId
         })
+
         console.log('hit hit', req.storeId)
         return res.status(200).json({
             orders,
@@ -36,6 +37,13 @@ const getOrder = async (req, res) => {
             .findOne({
                 _id: id,
 
+            }).populate({
+                path: 'products',
+                model: "Product",
+                populate :{
+                    path: 'product',
+                    model: "Product"
+                }
             })
         return res.status(200).json({
             order

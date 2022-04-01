@@ -140,12 +140,12 @@ const ProductCards = (props) => {
                 <img src={`${url + product.image[0]}`} alt="" />
                 <img class="hover-img" src={product.image.length >1 ? `${url + product.image[1]}` : ""} alt="" />
 
-                <div class="product-badge offer-badge">
+                {/* <div class="product-badge offer-badge">
                   <span>-30%</span>
-                </div>
-                <div class="product-favourite">
+                </div> */}
+                {/* <div class="product-favourite">
                   <a href="#" class="favme fa fa-heart"></a>
-                </div>
+                </div> */}
               </div>
 
               <div class="product-description">
@@ -157,8 +157,8 @@ const ProductCards = (props) => {
                   <h6>{product.title}</h6>
                 </a>
                 <p class="product-price">
-                  <span class="old-price">Rs.{product.price}</span> Rs.
-                  {product.price}
+                  {/* <span class="old-price">Rs.{product.price}</span> Rs. */}
+                  Rs. {product.price}
                 </p>
 
                 <div class="hover-content">
