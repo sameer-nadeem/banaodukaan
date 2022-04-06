@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import useURL from "../../utils/useURL";
 import Router from 'next/router'
+import AlertDialog from "../../components/AlertDialog"
 
 const CheckoutForm = () => {
   const user = useSelector((state) => state.auth.user);
@@ -21,7 +22,23 @@ const CheckoutForm = () => {
   const [phoneNumber, setPhoneNumber] = useState(0);
   const [postalCode, setPostalCode] = useState(0);
   const [userId, setUserId] = useState("");
+
+
+  const [variant, serVariant] = useState("");
+  const [alertMessage, setAlertMessage] = useState("")
+  const [alertTitle, setAlertTitle] = useState("");
   const [buttonClicked, setButtonClicked] = useState(false);
+  const [alertDialogShow, setAlertDialogShow] = useState(false)
+  const handleShow = () => setAlertDialogShow(true)
+  const handleClose = () => {
+    setAlertDialogShow(false)
+    Router.push('/')
+  }
+
+
+
+
+
   useEffect(() => {
     setShowError(false);
     user !== null ? setUserId(user._id) : setUserId("");
@@ -86,7 +103,7 @@ const CheckoutForm = () => {
     ) {
       console.log("Show error");
       console.log(user);
-      return;
+      return
     }
     // making the body here
     const body = {
@@ -113,20 +130,35 @@ const CheckoutForm = () => {
         total : 0
       }
 
+      print("oops")
       JSON.stringify(cart1)
       localStorage.setItem("cart", JSON.stringify(cart1))
       setCart(cart1)
-      //add alert here
-      Router.push('/')
+      setAlertTitle("Success!")
+      setAlertMessage("Order was successfully Placed!")
+      serVariant("success")
+      handleShow()
+      
 
-    } catch {
-      console.log("error in post req");
-      //add alert
-      Router.push('/')
+    } catch(err) {
+      console.log(err);
+      setAlertTitle("Ooops!")
+      setAlertMessage("There was a problem placing your Order!")
+      serVariant("failure")
+      handleShow()
+      
     }
   };
   return (
     <div>
+      <AlertDialog
+        handleClose={handleClose}
+        handleShow={handleShow}
+        show={alertDialogShow}
+        title={alertTitle}
+        message={alertMessage}
+        variant={variant}
+      />
       <div class="checkout_area section-padding-80">
         <div class="container">
           <div class="row">
