@@ -1,6 +1,7 @@
 const User = require("../models/user.model")
 const Customer = require("../models/customer.model")
 const bcrypt = require('bcryptjs')
+const Order = require("../models/order.model");
 
 
 const addCustomer = async (req, res) => {
@@ -217,6 +218,62 @@ const deleteCustomer = async (req, res) => {
 
 
 
+const getCustomerOrders = async (req, res) => {
+    try {
+        const id = req.params.id 
+
+        const orders = await Order.find({
+            deleteFlag: false,
+            userId: id
+        })
+
+        
+        return res.status(200).json({
+            orders,
+        })
+    }
+    catch (err) {
+        console.log(err)
+
+        return res.status(500).json({
+            error: "SERVER_ERROR"
+        })
+    }
+}
+
+
+const getCustomerOrder = async (req, res) => {
+    try {
+
+        const id = req.params.id
+
+        const order = await Order
+            .findOne({
+                _id: id,
+
+            }).populate({
+                path: 'products',
+                model: "Product",
+                populate :{
+                    path: 'product',
+                    model: "Product"
+                }
+            })
+        return res.status(200).json({
+            order
+        })
+    }
+    catch (err) {
+        console.log(err)
+
+        return res.status(500).json({
+            error: "SERVER_ERROR"
+        })
+    }
+
+}
+
+
 
 module.exports = {
     addCustomer,
@@ -224,6 +281,8 @@ module.exports = {
     deleteCustomer,
     updateCustomer,
     updateCustomerPassword,
-    getCustomers
+    getCustomers,
+    getCustomerOrders,
+    getCustomerOrder
 
 }
