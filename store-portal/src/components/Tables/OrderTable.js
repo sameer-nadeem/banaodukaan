@@ -55,9 +55,10 @@ const OrderTable = () => {
       });
       const ord = {
         id: order._id,
+        date: order.date,
         customerName: order.fullName,
         address: order.address,
-        city: order.city,
+        status: order.isDelivered ? 'Delivered' : 'In Transit',
         quantity: quantity,
         total: order.total,
       };
@@ -71,6 +72,14 @@ const OrderTable = () => {
     {
       name: "id",
       label: "Id",
+      options: {
+        filter: false,
+        sort: false,
+      },
+    },
+    {
+      name: "date",
+      label: "Date",
       options: {
         filter: false,
         sort: false,
@@ -93,8 +102,8 @@ const OrderTable = () => {
       },
     },
     {
-      name: "city",
-      label: "City",
+      name: "status",
+      label: "Status",
       options: {
         filter: true,
         sort: false,
