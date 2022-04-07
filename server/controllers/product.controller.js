@@ -116,6 +116,7 @@ const getProduct = async (req, res) => {
             .findOne({
                 _id: id,
                 storeId: req.storeId
+
             })
             .populate(['collectionId', 'brandId'])
 
