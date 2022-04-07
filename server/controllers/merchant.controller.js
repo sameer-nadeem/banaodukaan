@@ -86,12 +86,7 @@ const deleteOrder = async (req, res) => {
 const updateOrder = async (req, res) => {
     try {
         var {
-            fullName,
-            email,
-            phone,
-            address,
-            city,
-            postalCode
+            status
         } = req.body
 
         const id = req.params.id
@@ -102,12 +97,10 @@ const updateOrder = async (req, res) => {
             })
 
         console.log(order)
-        order.fullName = fullName
-        order.email = email
-        order.phone = phone
-        order.address = address
-        order.city = city
-        order.postalCode = postalCode
+        console.log('statusssss', status)
+        console.log('before', order.isDelivered)
+        order.isDelivered = status
+        console.log('after', order.isDelivered)
         await order.save()
         return res.status(200).json({
             order

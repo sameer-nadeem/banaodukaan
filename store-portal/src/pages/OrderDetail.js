@@ -11,7 +11,7 @@ import "react-alice-carousel/lib/alice-carousel.css";
 const OrderDetail = () => {
   const history = useHistory();
   const { id: orderId } = useParams();
-
+  const [status, setStatus] = useState("");
   const [customerName, setCustomerName] = useState("");
   const [customerEmail, setCustomerEmail] = useState("");
   const [city, setCity] = useState("");
@@ -19,6 +19,56 @@ const OrderDetail = () => {
   const [address, setAddress] = useState("");
   const [total, setTotal] = useState(0);
   const [products, setProducts] = useState([]);
+  const [show, setShow] = useState(false);
+  const [alertTitle, setAlertTitle] = useState('')
+  const [alertType, setAlertType] = useState('')
+  const [alertMessage, setAlertMessage] = useState('')
+
+  const handleClose = () => {
+    setShow(false);
+    if (alertType === 'success') {
+      history.push("/admin/orders");
+    }
+  };
+  const handleShow = () => setShow(true);
+  const onChangeStatus = (event) => {
+    setStatus(event.target.value);
+  };
+
+  const updateOrder = async (event) => {
+    event.preventDefault();
+    if (
+      status === ""
+    ) {
+
+      handleShow();
+      setAlertTitle("Error")
+      setAlertMessage("Please Select Status")
+      setAlertType("failure")
+      return;
+    } else {
+      event.preventDefault();
+      const data = {
+        status: status
+      };
+
+      try {
+        console.log('over here', orderId)
+        await axios.put(`${uri}/merchant/order/${orderId}`, data, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        handleShow();
+        setAlertTitle("Success")
+        setAlertMessage("Order Status Set Successfully!")
+        setAlertType("success")
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  };
+
 
   useEffect(() => {
     const getOrderById = async (id) => {
@@ -32,6 +82,7 @@ const OrderDetail = () => {
         setAddress(res.data.order.address);
         setTotal(res.data.order.total);
         setProducts(res.data.order.products);
+        setStatus(res.data.order.status)
       } catch (err) {
         console.log(err);
       }
@@ -41,6 +92,16 @@ const OrderDetail = () => {
   return (
     <div>
       <form style={{ paddingTop: 25 }}>
+        <div>
+          <Alert
+            title={alertTitle}
+            message={alertMessage}
+            show={show}
+            variant={alertType === "success" ? "success" : "failure"}
+            handleClose={handleClose}
+            handleShow={handleShow}
+          />
+        </div>
         <div style={{ display: "flex", justifyContent: "center", padding: 20 }}>
           <div
             className="card form-card"
@@ -203,28 +264,28 @@ const OrderDetail = () => {
                   </div>
                   <div className="row">
                     <AliceCarousel>
-                        {products[product].product.image !== []
-                          ? products[product].product.image.map((paths) => {
-                              return (
-                                <div
-                                  style={{
-                                    display: "flex",
-                                    alignItems: "center",
-                                    justifyContent: "center",
-                                  }}
-                                >
-                                  <img
-                                    src={(
-                                      `http://${window.location.hostname}:5000` +
-                                      paths
-                                    ).replace(/\\+\b/g, "/")}
-                                    className="d-block w-50 center"
-                                    alt="..."
-                                  />
-                                </div>
-                              );
-                            })
-                          : null}
+                      {products[product].product.image !== []
+                        ? products[product].product.image.map((paths) => {
+                          return (
+                            <div
+                              style={{
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                              }}
+                            >
+                              <img
+                                src={(
+                                  `http://${window.location.hostname}:5000` +
+                                  paths
+                                ).replace(/\\+\b/g, "/")}
+                                className="d-block w-50 center"
+                                alt="..."
+                              />
+                            </div>
+                          );
+                        })
+                        : null}
                     </AliceCarousel>
                   </div>
                 </>
@@ -264,7 +325,34 @@ const OrderDetail = () => {
                 required
               />
             </div>
+            <div className="row">
+              <div className="col">
+                <div className="mb-3">
+                  <label className="form-label" style={{ color: "black", fontWeight: '600' }}>
+                    Status
+                  </label>
+                  <select
+                    className="form-select"
+                    style={{ backgroundColor: "white", color: "black" }}
+                    onChange={onChangeStatus}
+                    required
+                  >
+                    <option>Select Status</option>
+                    <option value={true}>Delivered</option>
+                    <option value={false}>In Transit</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <Button
+              variant="outlined"
+              style={{ width: "18%", backgroundColor: "#3B8AC4", color: "#FFFFFF", boxShadow: '0px 8px 15px rgba(0, 0, 0, 0.1)', fontWeight: 500 }}
+              onClick={(e) => updateOrder(e)}
+            >
+              Set Status
+            </Button>
           </div>
+
         </div>
       </form>
     </div>
