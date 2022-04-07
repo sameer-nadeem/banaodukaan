@@ -44,7 +44,7 @@ const Navbar = () => {
       <div className="classy-nav-container breakpoint-off d-flex align-items-center justify-content-between">
         <nav className="classy-navbar" id="essenceNav">
           <Link href="/">
-            <a className="nav-brand"><img src={img === "" ? "/img/core-img/logo.png" : img} alt="" style={{width: '150px', objectFit: 'cover'}}/></a>
+            <a className="nav-brand"><img src={img === "" ? "/img/core-img/logo.png" : img} alt="" style={{width: '150px', height: '60px', objectFit: 'cover'}}/></a>
           </Link>
           <div className="classy-navbar-toggler">
             <span className="navbarToggler"><span></span><span></span><span></span></span>
@@ -63,7 +63,6 @@ const Navbar = () => {
                       <li><a href="shop.html">Blouses &amp; Shirts</a></li>
                       <li><a href="shop.html">T-shirts</a></li>
                       <li><a href="shop.html">Rompers</a></li>
-                      <li><a href="shop.html">Bras &amp; Panties</a></li>
                     </ul>
                     <ul className="single-mega cn-col-4">
                       <li className="title">Men's Collection</li>

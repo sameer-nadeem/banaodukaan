@@ -12,6 +12,7 @@ const getOrders = async (req, res) => {
             deleteFlag: false,
             storeId: req.storeId
         })
+
         console.log('hit hit', req.storeId)
         return res.status(200).json({
             orders,
@@ -36,6 +37,13 @@ const getOrder = async (req, res) => {
             .findOne({
                 _id: id,
 
+            }).populate({
+                path: 'products',
+                model: "Product",
+                populate :{
+                    path: 'product',
+                    model: "Product"
+                }
             })
         return res.status(200).json({
             order
@@ -78,12 +86,7 @@ const deleteOrder = async (req, res) => {
 const updateOrder = async (req, res) => {
     try {
         var {
-            fullName,
-            email,
-            phone,
-            address,
-            city,
-            postalCode
+            status
         } = req.body
 
         const id = req.params.id
@@ -94,12 +97,10 @@ const updateOrder = async (req, res) => {
             })
 
         console.log(order)
-        order.fullName = fullName
-        order.email = email
-        order.phone = phone
-        order.address = address
-        order.city = city
-        order.postalCode = postalCode
+        console.log('statusssss', status)
+        console.log('before', order.isDelivered)
+        order.isDelivered = status
+        console.log('after', order.isDelivered)
         await order.save()
         return res.status(200).json({
             order

@@ -5,6 +5,10 @@ const OrderSchema = new Schema({
     orderId: {
         type: mongoose.Schema.Types.ObjectId
     },
+    date: {
+        type: Date,
+        default: Date.now
+    },
     total: {
         type: Number
     },
@@ -45,11 +49,15 @@ const OrderSchema = new Schema({
     storeId: {
         type: mongoose.Schema.Types.ObjectId
     },
+    
     deleteFlag: {
         type: Boolean,
         default: false
-
-    }
+    },
+    isDelivered:{
+        type: Boolean,
+        default: false
+    },
 
 
 
