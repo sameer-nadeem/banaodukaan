@@ -99,7 +99,7 @@ const Sidebar = () => {
               </i>
               <span className="nav_name">Orders</span>
             </Link>
-            <Link to="#" className="nav_link">
+            <Link to="/admin/analytics" className="nav_link">
               <i className='bx bx-bookmark nav_icon'></i>
               <span className="nav_name">Analytics</span>
             </Link>

@@ -49,6 +49,7 @@ const OrderSchema = new Schema({
     storeId: {
         type: mongoose.Schema.Types.ObjectId
     },
+    
     deleteFlag: {
         type: Boolean,
         default: false
