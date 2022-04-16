@@ -18,6 +18,7 @@ import CustomerDetail from './pages/CustomerDetail';
 import Inventory from './pages/Inventory';
 import Orders from './pages/Orders';
 import OrderDetail from './pages/OrderDetail';
+import Landing from './pages/Landing';
 import setAuthToken from './utils/setAuthToken';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
@@ -61,7 +62,7 @@ function App() {
         <PrivateRoute exact path="/admin/customers/new" component={AddCustomers} />
         <PrivateRoute exact path="/admin/customers/:id" component={CustomerDetail} />
         <PrivateRoute exact path="/admin/analytics" component={AnalyticsPage} />
-        <PrivateRoute exact path="/admin/" component={LandingPage} />
+        <PrivateRoute exact path="/admin/" component={Landing} />
       </Switch>
     </Router >
   );
