@@ -53,9 +53,10 @@ const OrderTable = () => {
       order.products.forEach(function (prod) {
         quantity += prod.qty;
       });
+      let convertedDate = order.date.split('T')[0] + " - " + order.date.split('T')[1].slice(0,8)
       const ord = {
         id: order._id,
-        date: order.date,
+        date: convertedDate,
         customerName: order.fullName,
         address: order.address,
         status: order.isDelivered ? 'Delivered' : 'In Transit',
