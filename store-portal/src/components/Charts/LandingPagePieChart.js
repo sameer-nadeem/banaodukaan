@@ -8,7 +8,8 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-
+import { useState, useEffect } from "react";
+import axios from "axios";
 import { Bar, Pie } from "react-chartjs-2";
 
 ChartJS.register(
@@ -22,21 +23,44 @@ ChartJS.register(
 );
 
 const LandingPagePieChart = () => {
+  const [brands, setBrands] = useState(0)
+  const [counts, setCounts] = useState(0)
+  const getBrandSales = async () => {
+    try {
+      const res = await axios.get(`/api/analytics/brand-sales`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      let brand = Object.keys(res.data.BrandSales)
+      let count = Object.values(res.data.BrandSales)
+      setBrands(brand)
+      setCounts(count)
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  useEffect(() => {
+    //Runs only on the first render
+    getBrandSales();
+  }, []);
   return (
     <div>
       <Pie
         data={{
-          labels: ["Armani", "Zara", "Hopscotch"],
+          labels: brands,
           datasets: [
             {
               label: "My First Dataset",
-              data: [300, 50, 100],
+              data: counts,
               backgroundColor: [
                 "rgb(255, 99, 132)",
                 "rgb(54, 162, 235)",
                 "rgb(255, 205, 86)",
+                "rgb(170, 255, 0)",
+                "rgb(180, 0, 255)"
               ],
-              borderColor: ["white", "white", "white"],
+              borderColor: ["white", "white", "white", "white", "white"],
               hoverOffset: 4,
             },
           ],
