@@ -20,10 +20,12 @@ const Landing = () => {
         },
       });
       // setting orders into orders array here
-      setOrdersCount(res.data.orders.length);
+      let count = 0
       res.data.orders.forEach(order => {
-        order._id ? setDelivered(delivered + 1) : setInTransit(inTransit + 1)
+        order._id ? setDelivered(order.sales) : setInTransit(order.sales)
+        count = count + order.sales
       })
+      setOrdersCount(count);
     } catch (err) {
       console.log(err);
     }
