@@ -5,8 +5,34 @@ import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutli
 import LocalShippingOutlinedIcon from "@mui/icons-material/LocalShippingOutlined";
 import LandingPageBarChart from "../components/Charts/LandingPageBarChart";
 import LandingPagePieChart from "../components/Charts/LandingPagePieChart";
+import axios from "axios";
 
 const Landing = () => {
+  const [inTransit, setInTransit] = useState(0)
+  const [delivered, setDelivered] = useState(0)
+  const [ordersCount, setOrdersCount] = useState(0)
+
+  const getOrders = async () => {
+    try {
+      const res = await axios.get(`/api/analytics/order-info`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      // setting orders into orders array here
+      setOrdersCount(res.data.orders.length);
+      res.data.orders.forEach(order => {
+        order._id ? setDelivered(delivered + 1) : setInTransit(inTransit + 1)
+      })
+    } catch (err) {
+      console.log(err);
+    }
+
+  }
+  useEffect(() => {
+    //Runs only on the first render
+    getOrders();
+  }, []);
   return (
     <div className="container" style={{ marginTop: 100 }}>
       <div className="row">
@@ -37,7 +63,7 @@ const Landing = () => {
                         marginTop: 2,
                       }}
                     >
-                      2200
+                      {ordersCount}
                     </h1>
                   </div>
                 </div>
@@ -86,7 +112,7 @@ const Landing = () => {
                         marginTop: 2,
                       }}
                     >
-                      2000
+                      {delivered}
                     </h1>
                   </div>
                 </div>
@@ -135,7 +161,7 @@ const Landing = () => {
                         marginTop: 2,
                       }}
                     >
-                      200
+                      {inTransit}
                     </h1>
                   </div>
                 </div>

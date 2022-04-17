@@ -59,8 +59,8 @@ const Sidebar = () => {
       <nav className="nav">
         <div>
 
-          <Link to="#" className="nav_logo">
-            <StorefrontIcon style={{color: 'white'}}/>
+          <Link to="/admin/" className="nav_logo">
+            <StorefrontIcon style={{ color: 'white' }} />
             <span className="nav_logo-name">Banaodukaan</span>
           </Link>
           <div className="nav_list">

@@ -1,34 +1,57 @@
 import { useState, useEffect } from "react";
 import { Bar } from "react-chartjs-2";
+import axios from "axios";
+
 
 const LandingPageBarChart = () => {
+  const [dates, setDates] = useState([])
+  const [total, setTotal] = useState([])
+  const [background, setBackground] = useState([])
+  const [border, setBorder] = useState([])
+
+  const getSales = async () => {
+    try {
+      const res = await axios.get(`/api/analytics/sales-data`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      let date = []
+      let transaction = []
+      let color = []
+      let bcolor = []
+      res.data.sales.forEach(sale => {
+        date.push(sale._id)
+        transaction.push(sale.sales)
+        color.push('#4BB4DE')
+        bcolor.push('white')
+      });
+      setDates(date)
+      setTotal(transaction)
+      setBackground(color)
+      setBorder(bcolor)
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  useEffect(() => {
+    //Runs only on the first render
+    getSales();
+  }, []);
   return (
     <div style={{ paddingRight: 15, maxWidth: "98%" }}>
       <Bar
         data={{
           // Name of the variables on x-axies for each bar
-          labels: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+          labels: dates,
           datasets: [
             {
               // Data or value of your each variable
-              data: [1552, 1319, 1000, 613, 1400],
+              data: total,
               // Color of each bar
-              backgroundColor: [
-                "#4BB4DE",
-                "#4BB4DE",
-                "#4BB4DE",
-                "#4BB4DE",
-                "#4BB4DE", 
-              ],
+              backgroundColor: background,
               // Border color of each bar
-              borderColor: [
-                "white",
-                "white",
-                "white",
-                "white",
-                "white",
-  
-              ],
+              borderColor: border,
               borderWidth: 0.5,
             },
           ],
