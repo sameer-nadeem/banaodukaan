@@ -225,6 +225,13 @@ const getCustomerOrders = async (req, res) => {
         const orders = await Order.find({
             deleteFlag: false,
             userId: id
+        }).populate({
+            path: 'products',
+            model: "Product",
+            populate :{
+                path: 'product',
+                model: "Product"
+            }
         })
 
         
