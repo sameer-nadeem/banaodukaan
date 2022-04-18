@@ -30,9 +30,9 @@ export default function Home() {
           <div className="row h-100 align-items-center">
             <div className="col-12">
               <div className="hero-content">
-                <h6>asoss</h6>
-                <h2>Winter Collection</h2>
-                <a href="#" className="btn essence-btn">view collection</a>
+                <h6>Zara</h6>
+                <h2>BanaoDukaan</h2>
+                <a href="/products" className="btn essence-btn">view products</a>
               </div>
             </div>
           </div>
@@ -67,7 +67,7 @@ export default function Home() {
           </div>
         </div>
       </div> */}
-
+{/* 
       <div className="cta-area">
         <div className="container">
           <div className="row">
@@ -103,7 +103,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       <BrandStrip />
     </>

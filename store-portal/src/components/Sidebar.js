@@ -103,10 +103,10 @@ const Sidebar = () => {
               <i className='bx bx-bookmark nav_icon'></i>
               <span className="nav_name">Analytics</span>
             </Link>
-            <Link to="#" className="nav_link">
+            {/* <Link to="#" className="nav_link">
               <i className='bx bx-folder nav_icon'></i>
               <span className="nav_name">Discount</span>
-            </Link>
+            </Link> */}
             <Link to="#" className="nav_link">
               <span className="nav_name highlight">Sales Channel</span>
             </Link>
