@@ -70,7 +70,7 @@ const ProductDetail = () => {
   const onChangeStatus = (event) => {
     setStatus(event.target.value);
   };
-  
+
   // use effect to get collections
   useEffect(() => {
     const getCollections = async () => {
@@ -228,9 +228,9 @@ const ProductDetail = () => {
               backgroundColor: "white",
             }}
           >
-            <div class = "d-flex flex-row"> 
-              <div class="p2" style = {{marginRight: 20}}>
-                <BackspaceRoundedIcon style = {{fill: '#345DA7', cursor: 'pointer', }}  onClick={() => history.push('/admin/products')} />
+            <div class="d-flex flex-row">
+              <div class="p2" style={{ marginRight: 20 }}>
+                <BackspaceRoundedIcon style={{ fill: '#345DA7', cursor: 'pointer', }} onClick={() => history.push('/admin/products')} />
               </div>
               <div class="p2">
                 <h1 style={{ fontSize: 24, fontWeight: 'bold', color: "black" }}>{product === undefined ? "" : product.title}</h1>
@@ -261,7 +261,7 @@ const ProductDetail = () => {
               <div>
                 <label
                   className="form-label"
-                  style={{ color: "black", paddingTop: 25, fontWeight: '600'  }}
+                  style={{ color: "black", paddingTop: 25, fontWeight: '600' }}
                 >
                   Description
                 </label>
@@ -276,7 +276,7 @@ const ProductDetail = () => {
             <div className="row">
               <div className="col">
                 <div className="mb-3">
-                  <label className="form-label" style={{ color: "black", fontWeight: '600'  }}>
+                  <label className="form-label" style={{ color: "black", fontWeight: '600' }}>
                     Price
                   </label>
                   <input
@@ -291,7 +291,7 @@ const ProductDetail = () => {
               </div>
               <div className="col">
                 <div className="mb-3">
-                  <label className="form-label" style={{ color: "black", fontWeight: '600'  }}>
+                  <label className="form-label" style={{ color: "black", fontWeight: '600' }}>
                     Quantity
                   </label>
                   <input
@@ -318,14 +318,14 @@ const ProductDetail = () => {
             }}
           >
             <div className="row">
-              <h1 style={{ fontSize: 24, color: "black",  fontWeight: 'bold'  }}>Media</h1>
+              <h1 style={{ fontSize: 24, color: "black", fontWeight: 'bold' }}>Media</h1>
               <AliceCarousel>
                 {
                   path !== [] ? (
                     path.map(paths => {
                       return (
-                        <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                          <img src={(`http://${window.location.hostname}:5000` + paths).replace(/\\+\b/g, "/")} className="d-block w-50 center" alt="..." />
+                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                          <img src={(`http://${window.location.hostname}` + paths).replace(/\\+\b/g, "/")} className="d-block w-50 center" alt="..." />
 
                         </div>
                       )
@@ -337,37 +337,37 @@ const ProductDetail = () => {
                 <form>
                   <label
                     className="form-label"
-                    style={{ color: "black", padding: 5, fontWeight: '600'  }}
+                    style={{ color: "black", padding: 5, fontWeight: '600' }}
                   >
                     Image
                   </label>
                   <input
-                  className="form-control"
-                  type="file"
-                  name="myImage"
-                  style={{ backgroundColor: "white", color: "black" }}
-                  onChange={onChangeImage}
-                  required
-                  multiple
-                />
-                {uploadPercentage > 0 && (
-                  <ProgressBar
-                    striped
-                    now={uploadPercentage}
-                    label={`${uploadPercentage}%`}
+                    className="form-control"
+                    type="file"
+                    name="myImage"
+                    style={{ backgroundColor: "white", color: "black" }}
+                    onChange={onChangeImage}
+                    required
+                    multiple
                   />
-                )}
-                <div style={{ marginTop: 5 }}>
-                  <Button
-                    variant="outlined"
-                    style={{ width: '10%', backgroundColor: "#3B8AC4", color: "#FFFFFF", boxShadow: '0px 8px 15px rgba(0, 0, 0, 0.1)', fontWeight: 500 }}
-                    onClick={(e) => uploadImages(e)}
-                  >
-                    Upload
-                  </Button>
-                </div>
-              </form>
-            </div>
+                  {uploadPercentage > 0 && (
+                    <ProgressBar
+                      striped
+                      now={uploadPercentage}
+                      label={`${uploadPercentage}%`}
+                    />
+                  )}
+                  <div style={{ marginTop: 5 }}>
+                    <Button
+                      variant="outlined"
+                      style={{ width: '10%', backgroundColor: "#3B8AC4", color: "#FFFFFF", boxShadow: '0px 8px 15px rgba(0, 0, 0, 0.1)', fontWeight: 500 }}
+                      onClick={(e) => uploadImages(e)}
+                    >
+                      Upload
+                    </Button>
+                  </div>
+                </form>
+              </div>
             </div>
           </div>
         </div>
@@ -384,7 +384,7 @@ const ProductDetail = () => {
             <div className="row">
               <div className="col">
                 <div className="mb-3">
-                  <label className="form-label" style={{ color: "black", fontWeight: '600'  }}>
+                  <label className="form-label" style={{ color: "black", fontWeight: '600' }}>
                     Brand
                   </label>
                   <select
@@ -409,7 +409,7 @@ const ProductDetail = () => {
               </div>
               <div className="col">
                 <div className="mb-3">
-                  <label className="form-label" style={{ color: "black", fontWeight: '600'  }}>
+                  <label className="form-label" style={{ color: "black", fontWeight: '600' }}>
                     Collection
                   </label>
                   <select
@@ -438,7 +438,7 @@ const ProductDetail = () => {
             <div className="row">
               <div className="col">
                 <div className="mb-3">
-                  <label className="form-label" style={{ color: "black",  fontWeight: '600' }}>
+                  <label className="form-label" style={{ color: "black", fontWeight: '600' }}>
                     Status
                   </label>
                   <select
@@ -457,8 +457,8 @@ const ProductDetail = () => {
               </div>
             </div>
             <Button
-              variant = "outlined"
-              style={{ width: "25%", backgroundColor: "#3B8AC4", color: "#FFFFFF", boxShadow: '0px 8px 15px rgba(0, 0, 0, 0.1)', fontWeight: 500  }}
+              variant="outlined"
+              style={{ width: "25%", backgroundColor: "#3B8AC4", color: "#FFFFFF", boxShadow: '0px 8px 15px rgba(0, 0, 0, 0.1)', fontWeight: 500 }}
               onClick={(e) => updateProducts(e)}
             >
               Update Product

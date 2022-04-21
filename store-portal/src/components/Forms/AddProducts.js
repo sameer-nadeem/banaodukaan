@@ -304,8 +304,8 @@ const AddProducts = () => {
                   path !== [] ? (
                     path.map(paths => {
                       return (
-                        <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                          <img src={(`http://${window.location.hostname}:5000` + paths).replace(/\\+\b/g, "/")} className="d-block w-50 center" alt="..." />
+                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                          <img src={(`http://${window.location.hostname}` + paths).replace(/\\+\b/g, "/")} className="d-block w-50 center" alt="..." />
 
                         </div>
                       )

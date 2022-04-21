@@ -22,7 +22,7 @@ const ProductsTable = () => {
       priceLower: 0
     }
     try {
-      const res = await axios.get(`http://${window.location.hostname}:5000/api/product?c_id=${filters.collection}&b_id=${filters.brand}&p_up=${filters.priceUpper}&p_lo=${filters.priceLower}&sortby=${filters.sortBy}`);
+      const res = await axios.get(`http://${window.location.hostname}/api/product?c_id=${filters.collection}&b_id=${filters.brand}&p_up=${filters.priceUpper}&p_lo=${filters.priceLower}&sortby=${filters.sortBy}`);
 
       // const res = await axios.get(`${uri}/product`, {
       //   headers: {

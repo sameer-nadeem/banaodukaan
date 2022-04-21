@@ -276,7 +276,7 @@ const OrderDetail = () => {
                             >
                               <img
                                 src={(
-                                  `http://${window.location.hostname}:5000` +
+                                  `http://${window.location.hostname}` +
                                   paths
                                 ).replace(/\\+\b/g, "/")}
                                 className="d-block w-50 center"
