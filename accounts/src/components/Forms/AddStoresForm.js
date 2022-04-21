@@ -424,11 +424,11 @@ const AddStoresForm = () => {
                     Upload
                   </Button>
                 </div>
-                {logoSrc !== "" ? (
+                {/* {logoSrc !== "" ? (
                   <div style={{ display: "flex", justifyContent: "center", marginTop: '2%' }}>
-                    <img src={logoSrc} style={{objectFit: 'cover', width: '80%'}} alt="" />
+                    <img src={logoSrc} style={{ objectFit: 'cover', width: '80%' }} alt="" />
                   </div>
-                ) : null}
+                ) : null} */}
               </form>
             </div>
 
@@ -470,11 +470,11 @@ const AddStoresForm = () => {
                     Upload
                   </Button>
                 </div>
-                {coverSrc !== "" ? (
+                {/* {coverSrc !== "" ? (
                   <div style={{ display: "flex", justifyContent: "center", marginTop: '2%' }}>
                     <img src={coverSrc} width="1200" height="400" alt="" />
                   </div>
-                ) : null}
+                ) : null} */}
               </form>
             </div>
 

@@ -44,7 +44,7 @@ const EditStoreForm = () => {
     img_url = `${url + storeInfo.cover}`;
     img_url = img_url.replace(/\\+\b/g, "/");
     setCoverSrc(img_url)
-    
+
   }, [storeInfo, url]);
 
   const [show, setShow] = useState(false);
@@ -279,9 +279,9 @@ const EditStoreForm = () => {
               backgroundColor: "white",
             }}
           >
-            <div class = "d-flex flex-row"> 
-              <div class="p2" style = {{marginRight: 20}}>
-                <BackspaceRoundedIcon style = {{fill: '#345DA7', cursor: 'pointer', }}  onClick={() => history('/my-stores')} />
+            <div class="d-flex flex-row">
+              <div class="p2" style={{ marginRight: 20 }}>
+                <BackspaceRoundedIcon style={{ fill: '#345DA7', cursor: 'pointer', }} onClick={() => history('/my-stores')} />
               </div>
               <div class="p2">
                 <h1 style={{ fontSize: 24, fontWeight: 'bold', color: "black" }}>Edit Store</h1>
@@ -348,11 +348,11 @@ const EditStoreForm = () => {
                     Upload
                   </Button>
                 </div>
-                {logoSrc !== "" ? (
+                {/* {logoSrc !== "" ? (
                   <div style={{ display: "flex", justifyContent: "center", marginTop: '2%' }}>
                     <img src={logoSrc} style={{objectFit: 'cover', width: '80%'}} alt="" />
                   </div>
-                ) : null}
+                ) : null} */}
               </form>
             </div>
 
@@ -394,16 +394,16 @@ const EditStoreForm = () => {
                     Upload
                   </Button>
                 </div>
-                {coverSrc !== "" ? (
+                {/* {coverSrc !== "" ? (
                   <div style={{ display: "flex", justifyContent: "center", marginTop: '2%' }}>
                     <img src={coverSrc} style={{objectFit: 'cover', width: '80%', height: '350px'}} alt="" />
                   </div>
-                ) : null}
+                ) : null} */}
               </form>
             </div>
 
             <div className="mb-3" style={{ paddingTop: 25 }}>
-              <label className="form-label" style={{ color: "black" , fontWeight: '600'}}>
+              <label className="form-label" style={{ color: "black", fontWeight: '600' }}>
                 Country/region
               </label>
               <Select
@@ -511,7 +511,7 @@ const EditStoreForm = () => {
               </div>
 
               <div className="mb-3" style={{ paddingTop: 25 }}>
-                <label className="form-label" style={{ color: "black" , fontWeight: '600'}}>
+                <label className="form-label" style={{ color: "black", fontWeight: '600' }}>
                   Business or personal website(optional)
                 </label>
                 <input
@@ -536,7 +536,7 @@ const EditStoreForm = () => {
             }}
           >
             <Button
-              variant = "outlined"
+              variant="outlined"
               style={{ width: "25%", backgroundColor: "#3B8AC4", color: "#FFFFFF", boxShadow: '0px 8px 15px rgba(0, 0, 0, 0.1)', fontWeight: 500 }}
               onClick={(e) => updateStore(e)}
             >
