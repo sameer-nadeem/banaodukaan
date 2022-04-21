@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from "react";
 import useURL from "../utils/useURL";
-
+import { useSelector, useDispatch } from 'react-redux'
 const Cart = () => {
   const [cart, setCart] = useState({products:[]});
   const [isEmpty, setEmpty] = useState(false);
   const [total, setTotal] = useState(0);
   const [length, setLength] = useState(0)
   const url = useURL();
+  const refreshCart = useSelector(state => state.cart.refresh)
+  const dispatch = useDispatch()
 
   function updateCart () {
     let cs = localStorage.getItem("cart");
-
     if (!cs) {
       setEmpty(true);
       return;
@@ -25,7 +26,7 @@ const Cart = () => {
 
   useEffect(() => {
     updateCart();
-  }, [cart]);
+  }, [refreshCart]);
 
   
   useEffect(()=>{
@@ -171,6 +172,7 @@ const Cart = () => {
     
 
     localStorage.setItem("cart", JSON.stringify(cart));
+    dispatch({type:"REFRESH_CART"})
     setCart(cart)
     setLength(cart.products.length)
   }

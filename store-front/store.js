@@ -3,10 +3,11 @@ import thunk from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import { authReducer } from './reducers/authReducers'
 import { filterReducer } from "./reducers/filterReducer"
-
+import {cartReducer} from "./reducers/cartReducer"
 const rootReducer = combineReducers({
   auth: authReducer,
-  filters: filterReducer
+  filters: filterReducer,
+  cart: cartReducer
 })
 
 
@@ -25,6 +26,9 @@ const initialState = {
     sortBy: "newest",
     priceUpper: 99999999,
     priceLower: 0
+  },
+  cart:{
+    refresh:false
   }
 }
 console.log(initialState)

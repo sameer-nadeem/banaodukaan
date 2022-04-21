@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { logout } from "../actions/auth";
 import axios from "axios";
 import useURL from "../utils/useURL";
+
 const Navbar = () => {
   const [length, setLength] = useState(0);
   const isAuth = useSelector(state => state.auth.isAuthenticated)
@@ -11,6 +12,11 @@ const Navbar = () => {
   const [cart, setCart] = useState({products:[]});
   const [storeInfo, setStoreInfo] = useState([])
   const [img, setImg] = useState('')
+
+  const refreshCart = useSelector(state => state.cart.refresh)
+  
+
+
   const getStore = async () => {
     try {
       const url = useURL();
@@ -35,10 +41,13 @@ const Navbar = () => {
   }
   useEffect(() => {
     getCart();
-  }, [cart]);
+  }, [refreshCart]);
+
+
   useEffect(() => {
     getStore();
   }, []);
+
   return (
     <header className="header_area">
       <div className="classy-nav-container breakpoint-off d-flex align-items-center justify-content-between">
