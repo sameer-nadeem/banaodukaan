@@ -78,12 +78,10 @@ app.use("/uploads", express.static(path.join(__dirname, 'uploads')))
 connectDb()
 initRoutes(app)
 
-if (process.env.NODE_ENV === 'production') {
-  app.use('/admin/', express.static(path.join(__dirname, "../store-portal", 'build')))
-  app.get('/admin/*', function (req, res) {
-    res.sendFile(path.join(__dirname, "../store-portal", 'build', 'index.html'));
-  });
-}
+app.use('/admin/', express.static(path.join(__dirname, "../store-portal", 'build')))
+app.get('/admin/*', function (req, res) {
+  res.sendFile(path.join(__dirname, "../store-portal", 'build', 'index.html'));
+});
 
 app.listen(PORT, () => console.log(`Server started @PORT: ${PORT}`))
 
