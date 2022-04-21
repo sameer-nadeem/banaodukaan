@@ -86,7 +86,7 @@ const Collection = () => {
 
                 <ProductCards collectionProducts={product} counter={setCount} />
               </div>
-              <nav aria-label="navigation">
+              {/* <nav aria-label="navigation">
                 <ul class="pagination mt-50 mb-70">
                   <li class="page-item">
                     <a class="page-link" href="#">
@@ -124,7 +124,7 @@ const Collection = () => {
                     </a>
                   </li>
                 </ul>
-              </nav>
+              </nav> */}
             </div>
           </div>
         </div>

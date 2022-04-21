@@ -1,12 +1,18 @@
 import CheckoutDetails from "./CheckoutDetails";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import Alert from '@mui/material/Alert';
 import axios from "axios";
 import useURL from "../../utils/useURL";
 import Router from 'next/router'
+import AlertDialog from "../../components/AlertDialog"
 
 const CheckoutForm = () => {
+  const topRef = useRef(null)
+  const [alertTypeTop, setAlertTypeTop] = useState('')
+  const [alertMessageTop, setAlertMessageTop] = useState('')
   const user = useSelector((state) => state.auth.user);
+  const isAuth = useSelector(state => state.auth.isAuthenticated)
   const [cart, setCart] = useState({ products: [] });
   const [isEmpty, setEmpty] = useState(false);
   const [total, setTotal] = useState(0);
@@ -21,7 +27,31 @@ const CheckoutForm = () => {
   const [phoneNumber, setPhoneNumber] = useState(0);
   const [postalCode, setPostalCode] = useState(0);
   const [userId, setUserId] = useState("");
+
+  const refreshCart = useSelector(state => state.cart.refresh)
+  const dispatch = useDispatch()
+
+  const [variant, serVariant] = useState("");
+  const [alertMessage, setAlertMessage] = useState("")
+  const [alertTitle, setAlertTitle] = useState("");
   const [buttonClicked, setButtonClicked] = useState(false);
+  const [alertDialogShows, setAlertDialogShows] = useState(false)
+  const handleShow = () => setAlertDialogShows(true)
+  const handleClose = () => {
+    setAlertDialogShows(false)
+    Router.push('/')
+  }
+
+  const [alertDialogShows2, setAlertDialogShows2] = useState(false)
+  const handleShow2 = () => setAlertDialogShows2(true)
+  const handleClose2 = () => {
+    setAlertDialogShows2(false)
+    Router.push('/login')
+  }
+
+
+
+
   useEffect(() => {
     setShowError(false);
     user !== null ? setUserId(user._id) : setUserId("");
@@ -47,7 +77,7 @@ const CheckoutForm = () => {
 
   useEffect(() => {
     updateCart();
-  }, []);
+  }, [refreshCart]);
 
   const onChangeFullName = (event) => {
     setFullName(event.target.value);
@@ -84,8 +114,9 @@ const CheckoutForm = () => {
       postalCode === "" ||
       cart.products.length === 0
     ) {
-      console.log("Show error");
-      console.log(user);
+      setAlertMessageTop("Please fill in all of the fields")
+      setAlertTypeTop("error")
+      topRef.current.scrollIntoView()
       return;
     }
     // making the body here
@@ -100,7 +131,16 @@ const CheckoutForm = () => {
       address,
     };
 
+    if(!isAuth){
+      handleShow2()
+      setAlertTitle("Ooops!")
+      setAlertMessage("You Need to be logged in to place Order")
+      serVariant("failure")}
+    else{
+
     try {
+
+      
       const url = useURL();
       await axios.post(`${url}/api/cart`, body, {
         headers: {
@@ -115,27 +155,56 @@ const CheckoutForm = () => {
 
       JSON.stringify(cart1)
       localStorage.setItem("cart", JSON.stringify(cart1))
+      dispatch({type:"REFRESH_CART"})
       setCart(cart1)
-      //add alert here
-      Router.push('/')
+      handleShow()
+      setAlertTitle("Success!")
+      setAlertMessage("Order was successfully Placed!")
+      serVariant("success")
+      
 
-    } catch {
-      console.log("error in post req");
-      //add alert
-      Router.push('/')
-    }
+    } catch(err) {
+      console.log("11111111111",err.response);
+      if (err.response.status == 400){
+        handleShow()
+        setAlertTitle("Sorry")
+        setAlertMessage("Your Order exceeds the amount of stock in our Inventory")
+        serVariant("failure")}
+      else{
+        handleShow()
+        setAlertTitle("Ooops!")
+        setAlertMessage("There was a problem placing your Order, Try placing your order Later")
+        serVariant("failure")}
+      }}
+        
   };
   return (
-    <div>
-      <div class="checkout_area section-padding-80">
+    <div ref = {topRef}>
+      <AlertDialog
+        handleClose={handleClose}
+        handleShow={handleShow}
+        show={alertDialogShows}
+        title={alertTitle}
+        message={alertMessage}
+        variant={variant}
+      />
+      <AlertDialog
+        handleClose={handleClose2}
+        handleShow={handleShow2}
+        show={alertDialogShows2}
+        title={alertTitle}
+        message={alertMessage}
+        variant={variant}
+      />
+      <div class="checkout_area section-padding-80" >
         <div class="container">
           <div class="row">
             <div class="col-12 col-md-6">
               <div class="checkout_details_area mt-50 clearfix">
                 <div class="cart-page-heading mb-30">
                   <h5>Billing Address</h5>
+                  <Alert severity={alertTypeTop}>{alertMessageTop}</Alert>
                 </div>
-
                 <form action="#" method="post">
                   <div class="row">
                     <div class="col-12 mb-3">
