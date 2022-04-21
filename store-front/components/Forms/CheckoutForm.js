@@ -23,18 +23,19 @@ const CheckoutForm = () => {
   const [postalCode, setPostalCode] = useState(0);
   const [userId, setUserId] = useState("");
 
+  const refreshCart = useSelector(state => state.cart.refresh)
+  const dispatch = useDispatch()
 
   const [variant, serVariant] = useState("");
   const [alertMessage, setAlertMessage] = useState("")
   const [alertTitle, setAlertTitle] = useState("");
   const [buttonClicked, setButtonClicked] = useState(false);
-  const [alertDialogShow, setAlertDialogShow] = useState(false)
-  const handleShow = () => setAlertDialogShow(true)
+  const [alertDialogShows, setAlertDialogShows] = useState(false)
+  const handleShow = () => setAlertDialogShows(true)
   const handleClose = () => {
-    setAlertDialogShow(false)
+    setAlertDialogShows(false)
     Router.push('/')
   }
-
 
 
 
@@ -64,7 +65,7 @@ const CheckoutForm = () => {
 
   useEffect(() => {
     updateCart();
-  }, []);
+  }, [refreshCart]);
 
   const onChangeFullName = (event) => {
     setFullName(event.target.value);
@@ -130,22 +131,22 @@ const CheckoutForm = () => {
         total : 0
       }
 
-      print("oops")
       JSON.stringify(cart1)
       localStorage.setItem("cart", JSON.stringify(cart1))
+      dispatch({type:"REFRESH_CART"})
       setCart(cart1)
+      handleShow()
       setAlertTitle("Success!")
       setAlertMessage("Order was successfully Placed!")
       serVariant("success")
-      handleShow()
       
 
     } catch(err) {
       console.log(err);
+      handleShow()
       setAlertTitle("Ooops!")
       setAlertMessage("There was a problem placing your Order!")
       serVariant("failure")
-      handleShow()
       
     }
   };
@@ -154,7 +155,7 @@ const CheckoutForm = () => {
       <AlertDialog
         handleClose={handleClose}
         handleShow={handleShow}
-        show={alertDialogShow}
+        show={alertDialogShows}
         title={alertTitle}
         message={alertMessage}
         variant={variant}
