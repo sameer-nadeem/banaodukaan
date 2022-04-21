@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { logout } from "../actions/auth";
 import axios from "axios";
 import useURL from "../utils/useURL";
+
 const Navbar = () => {
   const [length, setLength] = useState(0);
   const isAuth = useSelector(state => state.auth.isAuthenticated)
@@ -11,6 +12,11 @@ const Navbar = () => {
   const [cart, setCart] = useState({products:[]});
   const [storeInfo, setStoreInfo] = useState([])
   const [img, setImg] = useState('')
+
+  const refreshCart = useSelector(state => state.cart.refresh)
+  
+
+
   const getStore = async () => {
     try {
       const url = useURL();
@@ -35,10 +41,13 @@ const Navbar = () => {
   }
   useEffect(() => {
     getCart();
-  }, [cart]);
+  }, [refreshCart]);
+
+
   useEffect(() => {
     getStore();
   }, []);
+
   return (
     <header className="header_area">
       <div className="classy-nav-container breakpoint-off d-flex align-items-center justify-content-between">
@@ -55,7 +64,7 @@ const Navbar = () => {
             </div>
             <div className="classynav">
               <ul>
-                <li><a href="#">Shop</a>
+                {/* <li><a href="#">Shop</a>
                   <div className="megamenu">
                     <ul className="single-mega cn-col-4">
                       <li className="title">Women's Collection</li>
@@ -84,17 +93,18 @@ const Navbar = () => {
                       <img src="/img/bg-img/bg-6.jpg" alt="" />
                     </div>
                   </div>
-                </li>
+                </li> */}
                 <li><a href="#">Pages</a>
                   <ul className="dropdown">
-                    <li><a href="index.html">Home</a></li>
+                    <li><a href="/">Home</a></li>
                     <li><a href="/products">Shop</a></li>
-                    <li><a href="single-product-details.html">Product Details</a></li>
-                    <li><a href="checkout.html">Checkout</a></li>
-                    <li><a href="blog.html">Blog</a></li>
+                    {/* <li><a href="single-product-details.html">Product Details</a></li> */}
+                    <li><a href="/checkout">Checkout</a></li>
+                    {isAuth && <li><a href="/orders">Orders</a></li>}
+                    {/* <li><a href="blog.html">Blog</a></li>
                     <li><a href="single-blog.html">Single Blog</a></li>
                     <li><a href="regular-page.html">Regular Page</a></li>
-                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="contact.html">Contact</a></li> */}
                   </ul>
                 </li>
                 <li><a href="blog.html">Blog</a></li>

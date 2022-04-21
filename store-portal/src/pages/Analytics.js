@@ -46,12 +46,39 @@ const AnalyticsPage = () => {
         }
     };
 
+    const getSalesbyDate = async () => {
+        try {
+            const res = await axios.get(`${uri}/analytics/sales-data`, {
+            headers: {
+                "Content-Type": "application/json",
+            },
+            });
+
+            const bes = await axios.get(`${uri}/analytics/order-info`, {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                });
+
+
+                const fes = await axios.get(`${uri}/analytics/brand-sales`, {
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    });
+            
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
 
 
     useEffect(() => {
         //Runs only on the first render
-        getAnalytics();
-      }, []);
+        getAnalytics()
+        getSalesbyDate()
+    }, []);
     
 
 

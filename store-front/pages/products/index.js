@@ -69,7 +69,7 @@ const Products = () => {
 
                 <ProductCards counter={setCount} />
               </div>
-              <nav aria-label="navigation">
+              {/* <nav aria-label="navigation">
                 <ul class="pagination mt-50 mb-70">
                   <li class="page-item"><a class="page-link" href="#"><i class="fa fa-angle-left"></i></a></li>
                   <li class="page-item"><a class="page-link" href="#">1</a></li>
@@ -79,7 +79,7 @@ const Products = () => {
                   <li class="page-item"><a class="page-link" href="#">21</a></li>
                   <li class="page-item"><a class="page-link" href="#"><i class="fa fa-angle-right"></i></a></li>
                 </ul>
-              </nav>
+              </nav> */}
             </div>
           </div>
         </div>

@@ -59,8 +59,8 @@ const Sidebar = () => {
       <nav className="nav">
         <div>
 
-          <Link to="#" className="nav_logo">
-            <StorefrontIcon style={{color: 'white'}}/>
+          <Link to="/admin/" className="nav_logo">
+            <StorefrontIcon style={{ color: 'white' }} />
             <span className="nav_logo-name">Banaodukaan</span>
           </Link>
           <div className="nav_list">
@@ -103,10 +103,10 @@ const Sidebar = () => {
               <i className='bx bx-bookmark nav_icon'></i>
               <span className="nav_name">Analytics</span>
             </Link>
-            <Link to="#" className="nav_link">
+            {/* <Link to="#" className="nav_link">
               <i className='bx bx-folder nav_icon'></i>
               <span className="nav_name">Discount</span>
-            </Link>
+            </Link> */}
             <Link to="#" className="nav_link">
               <span className="nav_name highlight">Sales Channel</span>
             </Link>
