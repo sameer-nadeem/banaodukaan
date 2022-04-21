@@ -10,4 +10,10 @@ router.route('/:id').get(customerController.getCustomer)
 router.route('/:id').delete(customerController.deleteCustomer)
 router.route('/').put(customerAuth, customerController.updateCustomer)
 router.route('/').get(customerController.getCustomers)
+
+router.route('/orders/:id').get(customerController.getCustomerOrders)
+router.route('/order/:id').get(customerController.getCustomerOrder)
+
+
+
 module.exports = router

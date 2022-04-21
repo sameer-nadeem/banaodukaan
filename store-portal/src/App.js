@@ -8,6 +8,7 @@ import ProductDetail from './pages/ProductDetail';
 import { Switch, BrowserRouter as Router, Route } from 'react-router-dom';
 import CollectionDetail from './pages/CollectionDetail';
 import LandingPage from './pages/LandingPage';
+import AnalyticsPage from './pages/Analytics';
 import AddBrands from './components/Forms/AddBrands';
 import Brands from './pages/Brands';
 import BrandDetail from './pages/BrandDetail'
@@ -17,11 +18,13 @@ import CustomerDetail from './pages/CustomerDetail';
 import Inventory from './pages/Inventory';
 import Orders from './pages/Orders';
 import OrderDetail from './pages/OrderDetail';
+import Landing from './pages/Landing';
 import setAuthToken from './utils/setAuthToken';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { loadUser } from './actions/auth';
 import PrivateRoute from './components/Routing/PrivateRoute';
+
 setAuthToken();
 
 
@@ -58,7 +61,8 @@ function App() {
         <PrivateRoute exact path="/admin/customers" component={Customers} />
         <PrivateRoute exact path="/admin/customers/new" component={AddCustomers} />
         <PrivateRoute exact path="/admin/customers/:id" component={CustomerDetail} />
-        <PrivateRoute exact path="/admin/" component={LandingPage} />
+        <PrivateRoute exact path="/admin/analytics" component={AnalyticsPage} />
+        <PrivateRoute exact path="/admin/" component={Landing} />
       </Switch>
     </Router >
   );

@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import useURL from "../../utils/useURL";
 import { useRouter } from "next/router";
-import { useSelector } from 'react-redux'
+
+import { useSelector, useDispatch } from 'react-redux'
 const ProductCards = (props) => {
   const [cart, setCart] = useState({ products: [] });
   const [isEmpty, setEmpty] = useState(false);
@@ -11,6 +12,11 @@ const ProductCards = (props) => {
   const [products, setProducts] = useState([]);
   const url = useURL();
   const router = useRouter();
+
+  const refreshCart = useSelector(state => state.cart.refresh)
+  const dispatch = useDispatch()
+
+
   const handleClick = (e, id) => {
     e.preventDefault();
     router.push({
@@ -39,6 +45,11 @@ const ProductCards = (props) => {
   }, [props, filters]);
 
   useEffect(() => {
+    
+  }, [refreshCart]);
+
+
+  useEffect(() => {
     let cs = localStorage.getItem("cart");
 
     if (!cs) {
@@ -50,7 +61,7 @@ const ProductCards = (props) => {
       setCart(cs);
       console.log("cart", cart);
     }
-  }, []);
+  }, [refreshCart]);
 
   function addProductToCart(product) {
     console.log("product", product);
@@ -127,6 +138,7 @@ const ProductCards = (props) => {
       }
     }
     localStorage.setItem("cart", JSON.stringify(cart1));
+    dispatch({type:"REFRESH_CART"})
     console.log("cart", cart1);
   }
 
@@ -140,12 +152,12 @@ const ProductCards = (props) => {
                 <img src={`${url + product.image[0]}`} alt="" />
                 <img class="hover-img" src={product.image.length >1 ? `${url + product.image[1]}` : ""} alt="" />
 
-                <div class="product-badge offer-badge">
+                {/* <div class="product-badge offer-badge">
                   <span>-30%</span>
-                </div>
-                <div class="product-favourite">
+                </div> */}
+                {/* <div class="product-favourite">
                   <a href="#" class="favme fa fa-heart"></a>
-                </div>
+                </div> */}
               </div>
 
               <div class="product-description">
@@ -157,8 +169,8 @@ const ProductCards = (props) => {
                   <h6>{product.title}</h6>
                 </a>
                 <p class="product-price">
-                  <span class="old-price">Rs.{product.price}</span> Rs.
-                  {product.price}
+                  {/* <span class="old-price">Rs.{product.price}</span> Rs. */}
+                  Rs. {product.price}
                 </p>
 
                 <div class="hover-content">

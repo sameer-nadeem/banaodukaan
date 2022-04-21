@@ -53,11 +53,13 @@ const OrderTable = () => {
       order.products.forEach(function (prod) {
         quantity += prod.qty;
       });
+      let convertedDate = order.date.split('T')[0] + " - " + order.date.split('T')[1].slice(0,8)
       const ord = {
         id: order._id,
+        date: convertedDate,
         customerName: order.fullName,
         address: order.address,
-        city: order.city,
+        status: order.isDelivered ? 'Delivered' : 'In Transit',
         quantity: quantity,
         total: order.total,
       };
@@ -71,6 +73,14 @@ const OrderTable = () => {
     {
       name: "id",
       label: "Id",
+      options: {
+        filter: false,
+        sort: false,
+      },
+    },
+    {
+      name: "date",
+      label: "Date",
       options: {
         filter: false,
         sort: false,
@@ -93,8 +103,8 @@ const OrderTable = () => {
       },
     },
     {
-      name: "city",
-      label: "City",
+      name: "status",
+      label: "Status",
       options: {
         filter: true,
         sort: false,
